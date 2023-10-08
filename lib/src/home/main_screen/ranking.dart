@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class Ranking extends StatefulWidget {
   @override
   _RankingState createState() => _RankingState();
@@ -95,14 +96,6 @@ class _RankingState extends State<Ranking> {
     }
   }
 
-
-  _titleText(String text) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-    );
-  }
-
   String getOrdinalSuffix(int number) {
     if (number % 100 >= 11 && number % 100 <= 13) {
       return '$number' + 'th';
@@ -141,7 +134,7 @@ class _RankingState extends State<Ranking> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Leaderboard",style: TextStyle(fontFamily: 'Feather',fontSize: 17),),
+                        Text(AppLocalizations.of(context)!.leaderboard,style: TextStyle(fontFamily: 'Feather',fontSize: 17),),
 
                       ],
                     ),
@@ -212,7 +205,7 @@ class _RankingState extends State<Ranking> {
                                   fontSize: 15,
                                   fontFamily: 'Feather'
                               ),),
-                              trailing: Text('$userPoints points',style: TextStyle(
+                              trailing: Text('$userPoints ${AppLocalizations.of(context)!.points}',style: TextStyle(
                                 fontFamily: 'Feather',
                                 fontSize: 15,
                               ),),

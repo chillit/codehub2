@@ -10,7 +10,7 @@ import 'package:duolingo/src/home/main_screen/questions/models/result_screen.dar
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:just_audio/just_audio.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 
@@ -42,12 +42,12 @@ class _VideoScreenState extends State<VideoScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 10,),
-                Text('Are you sure you want to quit?',style: TextStyle(
+                Text(AppLocalizations.of(context)!.surequit,style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),),
                 SizedBox(height: 10,),
-                Text('All progress wil be lost',style: TextStyle(
+                Text(AppLocalizations.of(context)!.lostprgrs,style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey
                 ),),
@@ -63,7 +63,7 @@ class _VideoScreenState extends State<VideoScreen> {
                         (){
                       Navigator.of(context).pop();
                     },
-                    child: Text('STAY',style: TextStyle(
+                    child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
                         fontFamily: 'Feather',
                         fontSize: 16
                     ),),
@@ -88,7 +88,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     );
                   },
                   child: Text(
-                      'QUIT',
+                      AppLocalizations.of(context)!.quitb,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -123,7 +123,6 @@ class _VideoScreenState extends State<VideoScreen> {
     super.dispose();
   }
   onPressedContinueButton() {
-    _controller.pause();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -196,7 +195,7 @@ class _VideoScreenState extends State<VideoScreen> {
                   onPressedContinueButton();
                 },
                 child: Text(
-                  'Продолжить',
+                  AppLocalizations.of(context)!.continuee,
                   style: TextStyle(
                     fontFamily: 'Geo',
                     fontSize: 15,
@@ -308,12 +307,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 10,),
-                  Text('Are you sure you want to quit?',style: TextStyle(
+                  Text(AppLocalizations.of(context)!.surequit,style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
                   SizedBox(height: 10,),
-                  Text('All progress wil be lost',style: TextStyle(
+                  Text(AppLocalizations.of(context)!.lostprgrs,style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey
                   ),),
@@ -329,7 +328,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           (){
                             Navigator.of(context).pop();
                       },
-                      child: Text('STAY',style: TextStyle(
+                      child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
                           fontFamily: 'Feather',
                           fontSize: 16
                       ),),
@@ -353,7 +352,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       );
                     },
                     child: Text(
-                      'QUIT',
+                        AppLocalizations.of(context)!.quitb,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -447,14 +446,6 @@ class MultipleChoiceQuestion extends StatefulWidget {
   final Function() onNextQuestion;
   final Function() onAnswerCorrect;
   final List<Question> questions;
-  final List<String> congratulatoryMessages = [
-    'Good Job!',
-    'Great!',
-    'Well done!',
-    'Fantastic!',
-    'Awesome!'
-  ];
-
   MultipleChoiceQuestion({required this.question, required this.onNextQuestion, required this.onAnswerCorrect,required this.questions});
 
   @override
@@ -466,6 +457,10 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
   int? selectedOptionIndex = null;
   bool isAnswerCorrect = false;
   AudioPlayer audioPlayer = AudioPlayer();
+  List<String> congratulatoryMessages = [];
+  void initState(){
+    super.initState();
+  }
 
   String _getRandomCongratulatoryMessage(List<String> messages) {
     final Random random = Random();
@@ -527,7 +522,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
   }
 
   void _showResultDialog(bool isCorrect) {
-    String congratulatoryMessage = _getRandomCongratulatoryMessage(widget.congratulatoryMessages);
+    String congratulatoryMessage = _getRandomCongratulatoryMessage(congratulatoryMessages);
     showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -542,7 +537,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Correct Solution:',
+                AppLocalizations.of(context)!.corrsol,
                 style: TextStyle(fontSize: 20.0, fontFamily: 'Feather',color: Colors.red),
               ),
               SizedBox(height: 12.0),
@@ -581,7 +576,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text('CONTINUE',style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
                 ),
               ),
             ],
@@ -619,7 +614,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text('CONTINUE',style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
                 ),
               ),
             ],
@@ -632,6 +627,13 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    congratulatoryMessages = [
+      AppLocalizations.of(context)!.gj,
+      AppLocalizations.of(context)!.great,
+      AppLocalizations.of(context)!.wd,
+      AppLocalizations.of(context)!.fantastic,
+      AppLocalizations.of(context)!.awesome
+    ];
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -701,7 +703,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                   onPressed: selectedOptionIndex != null ? () {
                     checkAnswer();
                   }: null,
-                  child: Text('CHECK',style: TextStyle(
+                  child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
                     fontFamily: 'Feather',
                     fontSize: 15
                   ),),
@@ -743,16 +745,6 @@ class TextInputQuestion extends StatefulWidget {
   final Function() onAnswerCorrect;
 
 
-
-  final List<String> congratulatoryMessages = [
-    'Good Job!',
-    'Great!',
-    'Well done!',
-    'Fantastic!',
-    'Awesome!'
-  ];
-
-
   TextInputQuestion({required this.question, required this.onNextQuestion, required this.onAnswerCorrect,required this.questions});
 
   @override
@@ -773,13 +765,12 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
 
 
 
-
+  List<String> congratulatoryMessages = [];
 
   @override
   void initState() {
     super.initState();
     answerController.addListener(_checkTextField);
-
   }
 
   void _checkTextField() {
@@ -845,7 +836,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
 
   void _showResultDialog(bool isCorrect) async {
 
-    String congratulatoryMessage = _getRandomCongratulatoryMessage(widget.congratulatoryMessages);
+    String congratulatoryMessage = _getRandomCongratulatoryMessage(congratulatoryMessages);
     showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -860,7 +851,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Correct Solution:',
+                AppLocalizations.of(context)!.corrsol,
                 style: TextStyle(fontSize: 20.0, fontFamily: 'Geo',color: Colors.red),
               ),
               SizedBox(height: 12.0),
@@ -895,7 +886,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text('CONTINUE',style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
                 ),
               ),
             ],
@@ -930,7 +921,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text('CONTINUE',style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
                 ),
               ),
             ],
@@ -943,6 +934,13 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    congratulatoryMessages = [
+      AppLocalizations.of(context)!.gj,
+      AppLocalizations.of(context)!.great,
+      AppLocalizations.of(context)!.wd,
+      AppLocalizations.of(context)!.fantastic,
+      AppLocalizations.of(context)!.awesome
+    ];
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -966,7 +964,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                 ),
                 controller: answerController,
                 decoration: InputDecoration(
-                    hintText:'Напишите сюда свой ответ' ,
+                    hintText:AppLocalizations.of(context)!.wiritesol ,
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -992,7 +990,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     borderRadius: BorderRadius.circular(17.0),
                   ),
                 ),
-                child: Text('CHECK',style: TextStyle(
+                child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
                     fontFamily: 'Feather',
                     fontSize: 15
                       ),),
@@ -1076,12 +1074,12 @@ class _TextScreenState extends State<TextScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 10,),
-                Text('Are you sure you want to quit?',style: TextStyle(
+                Text(AppLocalizations.of(context)!.surequit,style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),),
                 SizedBox(height: 10,),
-                Text('All progress wil be lost',style: TextStyle(
+                Text(AppLocalizations.of(context)!.lostprgrs,style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey
                 ),),
@@ -1097,7 +1095,7 @@ class _TextScreenState extends State<TextScreen> {
                         (){
                       Navigator.of(context).pop();
                     },
-                    child: Text('STAY',style: TextStyle(
+                    child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
                         fontFamily: 'Feather',
                         fontSize: 16
                     ),),
@@ -1121,7 +1119,7 @@ class _TextScreenState extends State<TextScreen> {
                     );
                   },
                   child: Text(
-                      'QUIT',
+                      AppLocalizations.of(context)!.quitb,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -1136,7 +1134,6 @@ class _TextScreenState extends State<TextScreen> {
         }
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -1215,7 +1212,7 @@ class _TextScreenState extends State<TextScreen> {
                   );
                 },
                 child: Text(
-                  'Продолжить',
+                  AppLocalizations.of(context)!.continuee,
                   style: TextStyle(
                     fontFamily: 'Geo',
                     fontSize: 15,

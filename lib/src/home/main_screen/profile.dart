@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:duolingo/src/home/main_screen/questions/models/question_class.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import '../../../main.dart';
 import '../login/login_page.dart';
 
 class Profile extends StatefulWidget {
@@ -35,31 +36,41 @@ class _ProfileState extends State<Profile> {
       });
       final user = _auth.currentUser;
       if (user != null) {
-        _databaseReference = FirebaseDatabase.instance.reference().child('users/${user.uid}');
+        _databaseReference =
+            FirebaseDatabase.instance.reference().child('users/${user.uid}');
         final dataSnapshot = await _databaseReference.once();
-        final Map<dynamic, dynamic> data = dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
+        final Map<dynamic, dynamic> data = dataSnapshot.snapshot.value as Map<
+            dynamic,
+            dynamic>;
 
         // Check if the widget is still mounted before calling setState
         if (mounted) {
           setState(() {
-            name = data['Username'] ?? ''; // Provide a default value if 'Username' is null
-            userPoints = data['points'] ?? 0; // Provide a default value if 'points' is null
-            rank = data['rank'] ?? ''; // Provide a default value if 'rank' is null
-            language = data['language'] ?? ''; // Provide a default value if 'language' is null
+            name = data['Username'] ??
+                ''; // Provide a default value if 'Username' is null
+            userPoints = data['points'] ??
+                0; // Provide a default value if 'points' is null
+            rank =
+                data['rank'] ?? ''; // Provide a default value if 'rank' is null
+            language = data['language'] ??
+                ''; // Provide a default value if 'language' is null
             // Load recent mistakes/questions from data (assuming it's stored in a list)
             recentMistakes = List<Question>.from(
               (data['mistakes'] ?? []).map(
-                    (mistakeData) => Question(
-                  question: (mistakeData['question'] ?? ''), // Начиная с третьего символа
-                  options: List<String>.from(mistakeData['options'] ?? []),
-                  correctAnswerIndex: mistakeData['correctAnswerIndex'] ?? 0,
+                    (mistakeData) =>
+                    Question(
+                      question: (mistakeData['question'] ?? ''),
+                      // Начиная с третьего символа
+                      options: List<String>.from(mistakeData['options'] ?? []),
+                      correctAnswerIndex: mistakeData['correctAnswerIndex'] ??
+                          0,
                       questionType: (mistakeData['questionType'] == "textInput")
                           ? QuestionType.textInput
                           : (mistakeData['questionType'] == "multipleChoice")
-                          ? QuestionType.multipleChoice:
-                          QuestionType.multipleChoice,
-                  correctInputAns: mistakeData['correctInputAns'] ?? '',
-                ),
+                          ? QuestionType.multipleChoice :
+                      QuestionType.multipleChoice,
+                      correctInputAns: mistakeData['correctInputAns'] ?? '',
+                    ),
               ),
             );
             _isLoading = false;
@@ -69,13 +80,11 @@ class _ProfileState extends State<Profile> {
     } catch (error) {
       print('Error: $error');
       setState(() {
-        _isLoading = false; // В случае ошибки также установите состояние загрузки в false
+        _isLoading =
+        false; // В случае ошибки также установите состояние загрузки в false
       });
     }
   }
-
-
-
 
 
   void _showQuestionDialog(Question question) {
@@ -84,43 +93,50 @@ class _ProfileState extends State<Profile> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Answer:"),
+          title: Text("${AppLocalizations.of(context)!.answer}:"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              question.questionType == QuestionType.multipleChoice? Text(question.options![question.correctAnswerIndex!]):Text(question.correctInputAns!)
+              question.questionType == QuestionType.multipleChoice ? Text(
+                  question.options![question.correctAnswerIndex!]) : Text(
+                  question.correctInputAns!)
             ],
           ),
         );
       },
     );
   }
+
   Future<List<Question>> getPythonQuestions() async {
     final user = _auth.currentUser;
     final List<Question> pythonQuestions = [];
     if (user != null) {
       final useruid = user.uid;
       final databaseReference = FirebaseDatabase.instance.reference();
-      final DatabaseEvent dataSnapshot = await databaseReference.child('users/$useruid/mistakes').once();
+      final DatabaseEvent dataSnapshot = await databaseReference.child(
+          'users/$useruid/mistakes').once();
 
       final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
 
       for (final questionData in questionsData) {
         final question = Question(
-          question: (questionData['question']??""),
-          correctAnswerIndex: questionData['correctAnswerIndex'],
-          options: (questionData['options'] as List<dynamic>)?.map((option) => option.toString())?.toList() as List<String>,
+          question: questionData['question'] ?? '',
+          correctAnswerIndex: questionData['correctAnswerIndex'] ?? 0,
+          options: (questionData['options'] as List<dynamic>?)?.map((option) =>
+              option.toString())?.toList() ?? [],
           questionType: QuestionType.values.firstWhere(
-                (type) => type.toString() == 'QuestionType.${questionData['questionType']}',
+                (type) =>
+            type.toString() == 'QuestionType.${questionData['questionType']}',
             orElse: () => QuestionType.multipleChoice,
           ),
-          correctInputAns: questionData['correctInputAns'],
+          correctInputAns: questionData['correctInputAns'] ?? '',
         );
 
         pythonQuestions.add(question);
       }
-      final DatabaseReference reference = FirebaseDatabase.instance.reference().child("users/$useruid/mistakes");
+      final DatabaseReference reference = FirebaseDatabase.instance.reference()
+          .child("users/$useruid/mistakes");
       reference.remove().then((_) {
         print('Папка успешно удалена');
       }).catchError((error) {
@@ -129,27 +145,33 @@ class _ProfileState extends State<Profile> {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => QuestionScreen(questionss: pythonQuestions,pointsto: 20, level:-1, language: 'iscse',topic: "1",component: "1",), // Замените YourNewPage() на вашу новую страницу
+          builder: (context) => QuestionScreen(questionss: pythonQuestions,
+            pointsto: 20,
+            level: -1,
+            language: 'iscse',
+            topic: "1",
+            component: "1",), // Замените YourNewPage() на вашу новую страницу
         ),
       );
-
     }
     return pythonQuestions;
   }
 
 
-_titleText(String text) {
+  _titleText(String text) {
     return Text(
       text,
       style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
     );
   }
 
-    @override
-    Widget build(BuildContext context) => Scaffold(
-        body: _isLoading?
-            Center(child: CircularProgressIndicator())
-            :SingleChildScrollView(
+  @override
+  Widget build(BuildContext context){
+      final locale = Localizations.localeOf(context);
+      return Scaffold(
+        body: _isLoading ?
+        Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -162,15 +184,33 @@ _titleText(String text) {
                     Expanded(
                       child: Text(
                         name,
-                        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold,fontFamily: 'Feather'),
+                        style: TextStyle(fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Feather'),
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    
+
                     Center(
                       child: ClipOval(
                         child: Image.asset(
-                          userPoints>=400?"assets/images/ranks/r.png":userPoints>=350?"assets/images/ranks/i.png":userPoints>=300?"assets/images/ranks/a.png":userPoints>=250?"assets/images/ranks/d.png":userPoints>=200?"assets/images/ranks/p.png":userPoints>=150?"assets/images/ranks/g.png":userPoints>=100?"assets/images/ranks/s.png":userPoints>=50?"assets/images/ranks/b.png":"assets/images/ranks/ir.png",
+                          userPoints >= 400
+                              ? "assets/images/ranks/r.png"
+                              : userPoints >= 350
+                              ? "assets/images/ranks/i.png"
+                              : userPoints >= 300
+                              ? "assets/images/ranks/a.png"
+                              : userPoints >= 250
+                              ? "assets/images/ranks/d.png"
+                              : userPoints >= 200
+                              ? "assets/images/ranks/p.png"
+                              : userPoints >= 150
+                              ? "assets/images/ranks/g.png"
+                              : userPoints >= 100
+                              ? "assets/images/ranks/s.png"
+                              : userPoints >= 50
+                              ? "assets/images/ranks/b.png"
+                              : "assets/images/ranks/ir.png",
                           height: 120,
                         ),
                       ),
@@ -183,7 +223,7 @@ _titleText(String text) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: 10,),
-                    _titleText("Information:"),
+                    _titleText("${AppLocalizations.of(context)!.information}:"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -193,7 +233,10 @@ _titleText(String text) {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             height: 50,
-                            width: MediaQuery.of(context).size.width*0.40,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.40,
                             child: ListTile(
                                 leading: Icon(
                                   Icons.local_fire_department_rounded,
@@ -214,14 +257,17 @@ _titleText(String text) {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               height: 50,
-                              width: MediaQuery.of(context).size.width*0.40,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.40,
                               child: ListTile(
                                   leading: Icon(
                                     Icons.language,
                                     color: Colors.amber,
                                   ),
                                   title: Text(
-                                    language == "CS"?"C#":"$language",
+                                    language == "CS" ? "C#" : "$language",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
@@ -235,19 +281,22 @@ _titleText(String text) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _titleText("Last mistakes"),
+                        _titleText(AppLocalizations.of(context)!.lastmis),
                         Container(
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(13),
-                            border: Border.all(width: 0.8,color: Colors.grey),
+                            border: Border.all(width: 0.8, color: Colors.grey),
 
                           ),
                           child: TextButton(
-                              onPressed: (){
+                              onPressed: () {
                                 getPythonQuestions();
                               },
-                              child: Text("TRAIN",style: TextStyle(fontFamily: "Feather",fontSize: 14,color: Colors.orange),)),
+                              child: Text(AppLocalizations.of(context)!.trainb,
+                                style: TextStyle(fontFamily: "Feather",
+                                    fontSize: 14,
+                                    color: Colors.orange),)),
                         )
                       ],
                     ),
@@ -279,19 +328,20 @@ _titleText(String text) {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(7, 0, 7, 0),
                           child: Text(
-                            'Dangerous Zone',
+                            AppLocalizations.of(context)!.dangerz,
                             style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF7d0c0c),
-                              fontFamily: 'Feather'
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF7d0c0c),
+                                fontFamily: 'Feather'
                             ),
                           ),
                         ),
                         Expanded(
                           child: Container(
                             height: 1.0, // Высота разделителя
-                            color: Colors.grey.withOpacity(0.5), // Цвет с прозрачностью
+                            color: Colors.grey.withOpacity(
+                                0.5), // Цвет с прозрачностью
                           ),
                         ),
                       ],
@@ -305,46 +355,62 @@ _titleText(String text) {
                           padding: EdgeInsets.all(16.0),
                         ),
                         onPressed: () {
+                          final locale = Localizations.localeOf(context);
+                          print(locale.languageCode);
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Log Out',style: TextStyle(fontFamily: "Feather"),),
-                                content: Text('Are you sure you want to exit?',style: TextStyle(fontFamily: 'Feather'),),
-                                actionsPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                                title: Text(
+                                  locale.languageCode=="en"?"Log Out":locale.languageCode=="ru"?"Выйти":"Шығу",
+                                  style: TextStyle(fontFamily: "Feather"),),
+                                content: Text(
+                                  locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шығу керек пе?",
+                                  style: TextStyle(fontFamily: 'Feather'),),
+                                actionsPadding: EdgeInsets.symmetric(
+                                    horizontal: 16.0),
                                 buttonPadding: EdgeInsets.all(0),
                                 actions: [
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 8),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0, 12, 0, 8),
                                     child: ButtonBar(
                                       children: [
                                         TextButton(
                                           onPressed: () async {
                                             Navigator.of(context).pop();
-
                                           },
-                                          child: Text('No',style: TextStyle(fontFamily: 'Feather',color: Colors.grey),),
+                                          child: Text(
+                                            locale.languageCode=="en"?"No":locale.languageCode=="ru"?"Нет":"Жоқ",
+                                            style: TextStyle(
+                                                fontFamily: 'Feather',
+                                                color: Colors.grey),),
                                         ),
                                         ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             primary: Color(0xFF7d0c0c),
-                                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16.0),
                                           ),
                                           onPressed: () async {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => LoginPage(),
+                                                builder: (context) => MyApp(),
                                               ),
                                             );
 
                                             try {
                                               await _auth.signOut();
                                             } catch (error) {
-                                              print('Ошибка при выходе из аккаунта: $error');
+                                              print(
+                                                  'Ошибка при выходе из аккаунта: $error');
                                             }
                                           },
-                                          child: Text('Yes',style: TextStyle(fontFamily: 'Feather'),),
+                                          child: Text(
+                                            locale.languageCode=="en"?"Yes":locale.languageCode=="ru"?"Да":"Иә",
+                                            style: TextStyle(
+                                                fontFamily: 'Feather'),),
                                         ),
                                       ],
                                     ),
@@ -353,11 +419,11 @@ _titleText(String text) {
                               );
                             },
                           );
-
                         },
                         child: Text(
-                          'Log Out',
-                          style: TextStyle(fontSize: 16.0,fontFamily: 'Feather'),
+                          AppLocalizations.of(context)!.logout,
+                          style: TextStyle(
+                              fontSize: 16.0, fontFamily: 'Feather'),
                         ),
                       ),
                     ),
@@ -368,4 +434,5 @@ _titleText(String text) {
           ),
         ),
       );
+  }
 }

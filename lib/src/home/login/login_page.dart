@@ -1,49 +1,21 @@
 import 'package:duolingo/src/pages/create_account.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:duolingo/main.dart";
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final Function(Locale) setLocale;
+
+  const LoginPage({Key? key, required this.setLocale}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-
-  String buttonText = 'The free, fun, and \n effective way to learn  programming!'; // Initial button text
-  String language="en";
-  String FirstText ='GET STARTED';
-  String SecondText ='ALREADY HAVE AN ACCOUNT';
-
-  void changeButtonTexttoRu() {
-    setState(() {
-      FirstText='НАЧАТЬ';
-      SecondText='УЖЕ ЕСТЬ АККАУНТ?';
-      buttonText = 'Бесплатный, веселый и \n эффективный способ обучения программированию!';
-      language='ru';// Change the button text here
-    });
-  }
-
-  void changeButtonTexttoKz() {
-    setState(() {
-      FirstText='BASTAU';
-      SecondText="SIZDE ESEPTIK JAZBA BAR?";
-      buttonText = 'Baǵdarlamalaýdy úırenýdiń \n tegin, kóńildi jáne tıimdi ádisi!';
-      language='kz';// Change the button text here
-    });
-  }
-  void changeButtonTexttoEn() {
-    setState(() {
-      FirstText='GET STARTED';
-      SecondText ='ALREADY HAVE AN ACCOUNT';
-      buttonText = "The free, fun, and \n effective way to learn  programming!";
-      language='en';// Change the button text here
-    });
-  }
-
   void _showResultDialog() {
-
     showModalBottomSheet(
       context: context,
       isDismissible: true,
@@ -62,11 +34,8 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed:
-                      (){
-                    setState(() {
-                      changeButtonTexttoEn();
-                    });
+                  onPressed: () {
+                    widget.setLocale(Locale("en"));
                     Navigator.of(context).pop();
                   },
                   child: Text('English',style: TextStyle(
@@ -91,11 +60,8 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed:
-                      (){
-                    setState(() {
-                      changeButtonTexttoRu();
-                    });
+                  onPressed: () {
+                    widget.setLocale(Locale("ru"));
                     Navigator.of(context).pop();
                   },
                   child: Text('Russian',style: TextStyle(
@@ -120,12 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed:
-                      (){
-                    setState(() {
-                      changeButtonTexttoKz();
-                    });
-                    Navigator.of(context).pop();
+                  onPressed: () {
+                    widget.setLocale(Locale("kk"));
+                    Navigator.of(context).pop();;
                   },
                   child: Text('Kazakh',style: TextStyle(
                       fontFamily: 'Feather',
@@ -148,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
-
 
 
 
@@ -188,11 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                 Image.asset('assets/images/Backend.gif',height: 280,width: 500,),
                 SizedBox(height: 20,),
 
-                Text(buttonText,
+                Text(AppLocalizations.of(context)!.descrip,
                 style: TextStyle(
-                  fontFamily: language=='ru'?"Geo":'Feather',
+                  fontFamily: 'Feather',
                   fontWeight: FontWeight.bold,
-                  fontSize: language=='ru'?27:32,
+                  fontSize: 32,
                   color: Colors.black54
                 ),
                     textAlign: TextAlign.center
@@ -213,14 +175,14 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed:
                         (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage()));
-                        },
-                    child: Text(FirstText,
-                    style: TextStyle(
-                      fontFamily: language=='ru'?"Geo":'Feather',
-                      fontSize: 13,
-                      color: Color.fromRGBO(221,196,173, 1),
-                    ),),
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage(setLocale: widget.setLocale,)));
+                    },
+                    child: Text(AppLocalizations.of(context)!.getstarted,
+                      style: TextStyle(
+                        fontFamily: "Geo",
+                        fontSize: 13,
+                        color: Color.fromRGBO(221,196,173, 1),
+                      ),),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(126,74,59, 1),
                       elevation: 5, // shadow elevation// button padding
@@ -246,14 +208,14 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed:
                         (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogINaccount()));
-                        },
-                    child: Text(SecondText,style:
-                      TextStyle(
-                        fontFamily: language=='ru'?"Geo":'Feather',
-                        fontSize: 13,
-                        color: Color.fromRGBO(221,196,173, 1),
-                      ),),
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogINaccount(setLocale: widget.setLocale),));
+                    },
+                    child: Text(AppLocalizations.of(context)!.haveacc.toUpperCase(),style:
+                    TextStyle(
+                      fontFamily: 'Feather',
+                      fontSize: 13,
+                      color: Color.fromRGBO(221,196,173, 1),
+                    ),),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(126,74,59, 1),
                       elevation: 5, // shadow elevation// button padding
@@ -268,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           )
         ),
-    );
+      );
   }
 }
 

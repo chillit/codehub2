@@ -7,6 +7,7 @@ import 'package:duolingo/src/home/main_screen/questions/models/question_class.da
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:duolingo/src/pages/create_account.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SizedBox(height: 20,),
               SizedBox(height: 40,),
-              Text('I wanna learn...',
+              Text(AppLocalizations.of(context)!.wantlearn,
                 style: TextStyle(
                   fontFamily: 'Feather',
                   fontSize: 32,
@@ -41,9 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/1.png',text: '1 component',language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 2.3,),
+                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/1.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 2.3,),
                   SizedBox(width: 20,),
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: '2 component',language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 2.3)
+                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 2.3)
                 ],),
             ],
           ),
@@ -76,7 +77,7 @@ class _chooseState extends State<choose> {
             children: [
               SizedBox(height: 20,),
               SizedBox(height: 40,),
-              Text('Choose the topic...',
+              Text(AppLocalizations.of(context)!.chstopic,
                 style: TextStyle(
                   fontFamily: 'Feather',
                   fontSize: 32,
@@ -89,25 +90,25 @@ class _chooseState extends State<choose> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/1.png',text: 'topic',language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/1.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/2.png',text: 'topic',language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/2.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
                     ],),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/3.png',text: 'topic',language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/3.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/4.png',text: 'topic',language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/4.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
                     ],),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/5.png',text: 'topic',language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/5.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/6.png',text: 'topic',language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/6.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
                     ],),
                 ],
               ),
@@ -168,10 +169,11 @@ class _qHomeScreenState extends State<qHomeScreen> {
     });
     final databaseReference = FirebaseDatabase.instance.reference();
     print("aloha ${widget.component},${widget.topic}");
-    final DatabaseEvent dataSnapshot = userLanguage=="igcse"?await databaseReference.child('allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('allq/$userLanguage/${widget.topic}').once();
+    final DatabaseEvent dataSnapshot = userLanguage=="igcse"?await databaseReference.child('exams/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('allq/$userLanguage/${widget.topic}').once();
 
     final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
     final List<Question> pythonQuestions = [];
+    print(userLanguage);
     print(questionsData);
     for (final questionData in questionsData) {
       final question = Question(
@@ -187,20 +189,53 @@ class _qHomeScreenState extends State<qHomeScreen> {
 
       pythonQuestions.add(question);
     }
-
-    DatabaseEvent videoRef = await databaseReference.child('videos/${userLanguage}/${widget.component}/${widget.topic}/$level/video').once();
-    final videoValue = videoRef.snapshot.value as String;
-    print(videoValue);
-    DatabaseEvent textRef = await databaseReference.child('texts/${userLanguage}/${widget.component}/${widget.topic}/$level/1').once();
-    final textValue = textRef.snapshot.value;
-    String formattedText = textValue.toString().replaceAll(r'\n', '\n');
     setState(() {
       isLoading = false;
     });
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: videoValue,text: formattedText,topic: widget.topic,language: userLanguage,component: widget.component,), // Замените YourNewPage() на вашу новую страницу
+        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: "dQw4w9WgXcQ",text: "there is no text",topic: widget.topic,language: userLanguage,component: widget.component,), // Замените YourNewPage() на вашу новую страницу
+      ),
+    );
+
+    return pythonQuestions;
+  }
+  Future<List<Question>> getpractice() async {
+    setState(() {
+      isLoading = true;
+    });
+    final databaseReference = FirebaseDatabase.instance.reference();
+    print("aloha ${widget.component},${widget.topic}");
+    final DatabaseEvent dataSnapshot = userLanguage=="igcse"?await databaseReference.child('exams/$userLanguage/practice').once():await databaseReference.child('allq/$userLanguage/practice').once();
+
+    final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
+    final List<Question> pythonQuestions = [];
+    print(questionsData);
+    for (final questionData in questionsData) {
+      final question = Question(
+        question: questionData['question'] ?? '',
+        correctAnswerIndex: questionData['correctAnswerIndex'] ?? 0,
+        options: (questionData['options'] as List<dynamic>?)?.map((option) =>
+            option.toString())?.toList() ?? [],
+        questionType: QuestionType.values.firstWhere(
+              (type) =>
+          type.toString() == 'QuestionType.${questionData['questionType']}',
+          orElse: () => QuestionType.multipleChoice,
+        ),
+        correctInputAns: questionData['correctInputAns'] ?? '',
+      );
+
+      pythonQuestions.add(question);
+    }
+    print("done");
+    setState(() {
+      isLoading = false;
+    });
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:-1,link: "dQw4w9WgXcQ",text: "there is no text",topic: widget.topic,language: userLanguage,component: widget.component,),
       ),
     );
 
@@ -523,9 +558,14 @@ class _qHomeScreenState extends State<qHomeScreen> {
                               height: 50,
                             )),
                       ),
-                      Image.asset(
-                        "assets/images/home_screen/lesson_divisor_castle.png",
-                        height: 85,
+                      GestureDetector(
+                        onTap: (){
+                          getpractice();
+                        },
+                        child: Image.asset(
+                          "assets/images/home_screen/lesson_divisor_castle.png",
+                          height: 85,
+                        ),
                       ),
                       Expanded(
                         child: Container(
