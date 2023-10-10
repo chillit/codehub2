@@ -1,3 +1,4 @@
+import 'package:duolingo/src/components/profile_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -185,30 +186,42 @@ class _RankingState extends State<Ranking> {
                           final rankNumber = index + 1;
                           final isCurrentUser = userName == currentUsername;
 
-                          return Container(
-                            color: isCurrentUser ? Colors.green.withOpacity(0.25) : null,
-                            child: ListTile(
-                              leading: Container(
-                                width: 80.0,
-                                child: Row(
-                                  children: [
-                                    Text('$rankNumber',style: TextStyle(fontSize: 15,fontFamily: 'Feather'),),
-                                    SizedBox(width: 8,),
-                                    Image.asset(
-                                      userPoints>=400?"assets/images/ranks/r.png":userPoints>=350?"assets/images/ranks/i.png":userPoints>=300?"assets/images/ranks/a.png":userPoints>=250?"assets/images/ranks/d.png":userPoints>=200?"assets/images/ranks/p.png":userPoints>=150?"assets/images/ranks/g.png":userPoints>=100?"assets/images/ranks/s.png":userPoints>=50?"assets/images/ranks/b.png":"assets/images/ranks/ir.png",
-                                    ),
-                                  ],
+                            return GestureDetector(
+                              onTap: (){
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                        insetPadding: EdgeInsets.fromLTRB(15, 165, 15, 165),
+                                        child: ProfileCard(nickname: _users[index]['Username'] ?? ''));
+                                  },
+                                );
+                              },
+                            child: Container(
+                              color: isCurrentUser ? Colors.green.withOpacity(0.25) : null,
+                              child: ListTile(
+                                leading: Container(
+                                  width: 80.0,
+                                  child: Row(
+                                    children: [
+                                      Text('$rankNumber',style: TextStyle(fontSize: 15,fontFamily: 'Feather'),),
+                                      SizedBox(width: 8,),
+                                      Image.asset(
+                                        userPoints>=400?"assets/images/ranks/r.png":userPoints>=350?"assets/images/ranks/i.png":userPoints>=300?"assets/images/ranks/a.png":userPoints>=250?"assets/images/ranks/d.png":userPoints>=200?"assets/images/ranks/p.png":userPoints>=150?"assets/images/ranks/g.png":userPoints>=100?"assets/images/ranks/s.png":userPoints>=50?"assets/images/ranks/b.png":"assets/images/ranks/ir.png",
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              title: Text(userName,style: TextStyle(
-                                  color: isCurrentUser ? Colors.green : null,
+                                title: Text(userName,style: TextStyle(
+                                    color: isCurrentUser ? Colors.green : null,
+                                    fontSize: 15,
+                                    fontFamily: 'Feather'
+                                ),),
+                                trailing: Text('$userPoints ${AppLocalizations.of(context)!.points}',style: TextStyle(
+                                  fontFamily: 'Feather',
                                   fontSize: 15,
-                                  fontFamily: 'Feather'
-                              ),),
-                              trailing: Text('$userPoints ${AppLocalizations.of(context)!.points}',style: TextStyle(
-                                fontFamily: 'Feather',
-                                fontSize: 15,
-                              ),),
+                                ),),
+                              ),
                             ),
                           );
                         },

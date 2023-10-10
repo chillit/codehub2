@@ -36,13 +36,10 @@ class _ProfileState extends State<Profile> {
       });
       final user = _auth.currentUser;
       if (user != null) {
-        _databaseReference =
-            FirebaseDatabase.instance.reference().child('users/${user.uid}');
+        _databaseReference = FirebaseDatabase.instance.reference().child('users/${user.uid}');
         final dataSnapshot = await _databaseReference.once();
-        final Map<dynamic, dynamic> data = dataSnapshot.snapshot.value as Map<
-            dynamic,
-            dynamic>;
-
+        final Map<dynamic, dynamic> data = dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
+        print(data);
         // Check if the widget is still mounted before calling setState
         if (mounted) {
           setState(() {

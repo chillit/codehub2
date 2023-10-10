@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale("en"); // Добавьте поле для хранения локализации
+  Locale _locale = Locale("en");
 
   void setLocale(Locale locale) {
     setState(() {
