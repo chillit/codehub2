@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
       fetchUser();
     }
   }
+
   Future<void> fetchUser() async{
     final user = _auth.currentUser;
     if (user != null) {
@@ -106,9 +107,10 @@ class _HomeState extends State<Home> {
                           ? Images.selectedLessons
                           : Images.tabLessons,
                       onPressed: () {
+                        fetchUser();
                         setState(() {
                           _currentIndex = 0;
-                          currentScreen = HomeScreen();
+                          currentScreen = screens[0];
                         });
                       },
                       iconSize: _currentIndex == 0 ? _iconSizeSelected : _iconSize,

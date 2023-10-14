@@ -6,7 +6,7 @@ import 'package:duolingo/src/home/main_screen/questions/question.dart';
 import 'package:duolingo/src/home/main_screen/questions/models/question_class.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../../pages/create_account.dart';
 import 'home_screen.dart';
 
@@ -18,7 +18,7 @@ class chooseent extends StatefulWidget {
 class _chooseentState extends State<chooseent> {
   void pree(topic){
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => HomeScreenEnt(topic: topic,)));
+        MaterialPageRoute(builder: (context) => Home(currScreen: HomeScreenEnt(topic: topic),)));
   }
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _chooseentState extends State<chooseent> {
             children: [
               SizedBox(height: 20,),
               SizedBox(height: 40,),
-              Text('I wanna learn...',
+              Text(AppLocalizations.of(context)!.chstopic,
                 style: TextStyle(
                   fontFamily: 'Feather',
                   fontSize: 32,
@@ -45,23 +45,25 @@ class _chooseentState extends State<chooseent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/igcse.png',text: 'igcse',language: 'igcse',bg: Color(0xFFFFFFFF),press: (){pree(0);}),
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/1.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/ent.png',text: 'ent',language: 'ent', bg: Color(0xFFFFFFFF),press: (){pree(1);})
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/2.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
                     ],),
+                  SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/igcse.png',text: 'igcse',language: 'igcse',bg: Color(0xFFFFFFFF),press: (){pree(2);}),
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/3.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/ent.png',text: 'ent',language: 'ent', bg: Color(0xFFFFFFFF),press: (){pree(3);})
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/4.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
                     ],),
+                  SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/igcse.png',text: 'igcse',language: 'igcse',bg: Color(0xFFFFFFFF),press: (){pree(4);}),
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/5.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/ent.png',text: 'ent',language: 'ent', bg: Color(0xFFFFFFFF),press: (){pree(5);})
+                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/6.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
                     ],),
                 ],
               ),
@@ -88,7 +90,8 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
   String currentUserUID = "";
   int userLevel = 0;
   String userLanguage = "";
-
+  String video = "";
+  String text = "";
 
   bool isLoading = true; // Add this variable to track loading state
 
@@ -104,7 +107,7 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
     if (user != null) {
       currentUserUID = user.uid;
 
-      final levelRef = _database.reference().child('users/$currentUserUID/level');
+      final levelRef = _database.reference().child('users/$currentUserUID/topics/${widget.topic}');
       final languageRef = _database.reference().child('users/$currentUserUID/language');
 
 
@@ -118,51 +121,67 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
     }
   }
   Future<List<Question>> getPythonQuestions(level) async {
+    final locale = Localizations.localeOf(context);
     setState(() {
       isLoading = true;
     });
-    final databaseReference = await FirebaseDatabase.instance.reference();
-    final DatabaseEvent dataSnapshot = await databaseReference.child('allq/$userLanguage/$level').once();
+    final databaseReference = FirebaseDatabase.instance.reference();
+    final DatabaseEvent dataSnapshot = locale.languageCode == "ru"
+        ? await databaseReference.child('exams/ru/allq/$userLanguage/${widget.topic}/${level}').once()
+        :locale.languageCode == "en" ? await databaseReference.child('exams/en/allq/$userLanguage/${widget.topic}/${level}').once() : await databaseReference.child('exams/kz/allq/$userLanguage/${widget.topic}/${level}').once();
 
-    final questionsData = await dataSnapshot.snapshot.value as List<dynamic>;
-    print(questionsData);
+    final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
     final List<Question> pythonQuestions = [];
-
     for (final questionData in questionsData) {
-      final correctInputAns = questionData['correctInputAns'] ?? ''; // Provide a default value, like an empty string
-
-      final optionsList = questionData['options'] as List<dynamic>?;
-
       final question = Question(
         question: questionData['question'] ?? '',
-        correctAnswerIndex: questionData['correctAnswerIndex'] ?? -1, // Provide a default value
-        options: optionsList?.map((option) => option.toString()).toList() ?? [], // Provide an empty list as a default
+        correctAnswerIndex: questionData['correctAnswerIndex'] ?? 0,
+        options: (questionData['options'] as List<dynamic>?)?.map((option) =>
+            option.toString())?.toList() ?? [],
         questionType: QuestionType.values.firstWhere(
-              (type) => type.toString() == 'QuestionType.${questionData['questionType']}',
+              (type) =>
+          type.toString() == 'QuestionType.${questionData['questionType']}',
           orElse: () => QuestionType.multipleChoice,
         ),
-        correctInputAns: correctInputAns,
+        correctInputAns: questionData['correctInputAns'] ?? '',
       );
-
-
 
       pythonQuestions.add(question);
     }
-    DatabaseEvent videoRef = await databaseReference.child('videos/${userLanguage}/$level/video').once();
-    final videoValue = videoRef.snapshot.value as String;
-    DatabaseEvent textRef = await databaseReference.child('texts/${userLanguage}/$level/1').once();
-    final textValue = textRef.snapshot.value;
-    String formattedText = textValue.toString().replaceAll(r'\n', '\n');
+    print(pythonQuestions);
+    DatabaseEvent videoSnapshot = locale.languageCode == "ru"
+        ?await databaseReference.child('exams/ru/videos/$userLanguage/${widget.topic}/${level}/video').once()
+        :locale.languageCode == "en" ? await databaseReference.child('exams/en/videos/$userLanguage/${widget.topic}/${level}/video').once() : await databaseReference.child('exams/kz/videos/$userLanguage/${widget.topic}/${level}/video').once();
+    video = videoSnapshot.snapshot.value as String;
+    print(video);
+    DatabaseEvent textSnapshot = locale.languageCode == "ru"
+        ? await databaseReference.child('exams/ru/texts/$userLanguage/${widget.topic}/${level}/1').once()
+        :locale.languageCode == "en" ? await databaseReference.child('exams/en/texts/$userLanguage/${widget.topic}/${level}/1').once() : await databaseReference.child('exams/kz/texts/$userLanguage/${widget.topic}/${level}/1').once();
+    text = textSnapshot.snapshot.value as String;
+    String updatedText = text.replaceAll("\\n", "\n");
+    print(text);
     setState(() {
       isLoading = false;
     });
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: videoValue,text: formattedText,topic: widget.topic,language: userLanguage,), // Замените YourNewPage() на вашу новую страницу
+        builder: (context) =>
+        locale.languageCode == "ru" ? VideoScreen(questionss: pythonQuestions,
+          pointsto: 50,
+          level: level,
+          link: video,
+          text: updatedText,
+          topic: widget.topic,
+          language: userLanguage,)
+            : TextScreen(questionss: pythonQuestions,
+          pointsto: 50,
+          level: level,
+          text: updatedText,
+          topic: widget.topic,
+          language: userLanguage,),
       ),
     );
-
     return pythonQuestions;
   }
   Text _textCirle(String text) =>

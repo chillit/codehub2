@@ -191,14 +191,11 @@ class _qHomeScreenState extends State<qHomeScreen> {
 
       pythonQuestions.add(question);
     }
-    print(pythonQuestions);
     DatabaseEvent videoSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/videos/$userLanguage/${widget.component}/${widget.topic}/${level}/video').once():locale.languageCode=="en"?await databaseReference.child('exams/en/videos/$userLanguage/${widget.component}/${widget.topic}/${level}/video').once():await databaseReference.child('exams/kz/videos/$userLanguage/${widget.component}/${widget.topic}/${level}/video').once();
     video = videoSnapshot.snapshot.value as String;
-    print(video);
     DatabaseEvent textSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/texts/$userLanguage/${widget.component}/${widget.topic}/${level}/1').once():locale.languageCode=="en"?await databaseReference.child('exams/en/texts/$userLanguage/${widget.component}/${widget.topic}/${level}/1').once():await databaseReference.child('exams/kz/texts/$userLanguage/${widget.component}/${widget.topic}/${level}/1').once();
     text = textSnapshot.snapshot.value as String;
     String updatedText = text.replaceAll("\\n", "\n");
-    print(text);
     setState(() {
       isLoading = false;
     });
