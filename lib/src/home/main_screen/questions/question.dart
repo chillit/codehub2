@@ -1008,7 +1008,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
 
   Future<void> checkAnswer()  async{
     final userAnswer = answerController.text;
-    bool isCorrect = userAnswer == widget.question.correctInputAns;
+    bool isCorrect = userAnswer.toLowerCase() == widget.question.correctInputAns.toLowerCase();
     setState(() {
       isAnswerCorrect = isCorrect;
     });

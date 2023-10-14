@@ -131,7 +131,8 @@ class _qHomeScreenState extends State<qHomeScreen> {
   List<Question> pythonQuestions = [];
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseDatabase _database = FirebaseDatabase.instance;
-
+  String video = "";
+  String text = "";
   String currentUserUID = "";
   int userLevel = 0;
   String userLanguage = "";
@@ -150,7 +151,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
     if (user != null) {
       currentUserUID = user.uid;
 
-      final levelRef = _database.reference().child('users/$currentUserUID/level');
+      final levelRef = _database.reference().child('users/$currentUserUID/topics/${widget.component}/${widget.topic}');
       final languageRef = _database.reference().child('users/$currentUserUID/language');
 
 
@@ -164,12 +165,13 @@ class _qHomeScreenState extends State<qHomeScreen> {
     }
   }
   Future<List<Question>> getPythonQuestions(level) async {
+    final locale = Localizations.localeOf(context);
     setState(() {
       isLoading = true;
     });
     final databaseReference = FirebaseDatabase.instance.reference();
-    print("aloha ${widget.component},${widget.topic}");
-    final DatabaseEvent dataSnapshot = userLanguage=="igcse"?await databaseReference.child('exams/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('allq/$userLanguage/${widget.topic}').once();
+    print("aloha ${widget.component},${widget.topic},${level}");
+    final DatabaseEvent dataSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():locale.languageCode=="en"?await databaseReference.child('exams/en/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('exams/kz/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once();
 
     final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
     final List<Question> pythonQuestions = [];
@@ -189,13 +191,22 @@ class _qHomeScreenState extends State<qHomeScreen> {
 
       pythonQuestions.add(question);
     }
+    print(pythonQuestions);
+    DatabaseEvent videoSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/videos/$userLanguage/${widget.component}/${widget.topic}/${level}/video').once():locale.languageCode=="en"?await databaseReference.child('exams/en/videos/$userLanguage/${widget.component}/${widget.topic}/${level}/video').once():await databaseReference.child('exams/kz/videos/$userLanguage/${widget.component}/${widget.topic}/${level}/video').once();
+    video = videoSnapshot.snapshot.value as String;
+    print(video);
+    DatabaseEvent textSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/texts/$userLanguage/${widget.component}/${widget.topic}/${level}/1').once():locale.languageCode=="en"?await databaseReference.child('exams/en/texts/$userLanguage/${widget.component}/${widget.topic}/${level}/1').once():await databaseReference.child('exams/kz/texts/$userLanguage/${widget.component}/${widget.topic}/${level}/1').once();
+    text = textSnapshot.snapshot.value as String;
+    String updatedText = text.replaceAll("\\n", "\n");
+    print(text);
     setState(() {
       isLoading = false;
     });
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: "dQw4w9WgXcQ",text: "there is no text",topic: widget.topic,language: userLanguage,component: widget.component,), // Замените YourNewPage() на вашу новую страницу
+        builder: (context) => locale.languageCode == "ru"? VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: video,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,)
+            : TextScreen(questionss: pythonQuestions,pointsto: 50,level:level,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,),
       ),
     );
 
