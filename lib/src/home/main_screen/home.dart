@@ -10,10 +10,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+
+
+  final Function(Locale) setLocale;
   @override
   _HomeState createState() => _HomeState();
+
   final Widget? currScreen;
-  Home({this.currScreen});
+  Home({Key? key, required this.setLocale , this.currScreen,}) : super(key: key);
 }
 
 class _HomeState extends State<Home> {
@@ -46,11 +50,11 @@ class _HomeState extends State<Home> {
       userLanguage = languageSnapshot.snapshot.value?.toString() ?? '';
       print("bla $userLanguage");
       screens = [
-        userLanguage == "ent" ? chooseent() : HomeScreen(),
-        Profile(),
+        userLanguage == "ent" ? chooseent(setLocale: widget.setLocale,) : HomeScreen(setLocale: widget.setLocale,),
+        Profile(setLocale: widget.setLocale,),
         Ranking(),
       ];
-      currentScreen = userLanguage == "ent"?chooseent():HomeScreen();
+      currentScreen = userLanguage == "ent"?chooseent(setLocale: widget.setLocale,):HomeScreen(setLocale: widget.setLocale,);
     }
     setState(() {
       isloading = false;
@@ -108,7 +112,7 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         setState(() {
                           _currentIndex = 0;
-                          currentScreen = HomeScreen();
+                          currentScreen = HomeScreen(setLocale: widget.setLocale,);
                         });
                       },
                       iconSize: _currentIndex == 0 ? _iconSizeSelected : _iconSize,
@@ -139,7 +143,7 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         setState(() {
                           _currentIndex = 2;
-                          currentScreen = Profile();
+                          currentScreen = Profile(setLocale: widget.setLocale,);
                         });
                       },
                       iconSize: _currentIndex == 2 ? _iconSizeSelected : _iconSize,

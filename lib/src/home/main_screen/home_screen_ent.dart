@@ -11,6 +11,9 @@ import '../../pages/create_account.dart';
 import 'home_screen.dart';
 
 class chooseent extends StatefulWidget {
+
+  final Function(Locale) setLocale;
+  chooseent({ required this.setLocale});
   @override
   _chooseentState createState() => _chooseentState();
 }
@@ -18,7 +21,7 @@ class chooseent extends StatefulWidget {
 class _chooseentState extends State<chooseent> {
   void pree(topic){
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => HomeScreenEnt(topic: topic,)));
+        MaterialPageRoute(builder: (context) => HomeScreenEnt(setLocale: widget.setLocale,topic: topic,)));
   }
   @override
   Widget build(BuildContext context) {
@@ -74,10 +77,11 @@ class _chooseentState extends State<chooseent> {
 }
 
 class HomeScreenEnt extends StatefulWidget {
+  final Function(Locale) setLocale;
   @override
   _HomeScreenEntState createState() => _HomeScreenEntState();
   final String topic;
-  HomeScreenEnt({required this.topic});
+  HomeScreenEnt({required this.setLocale,required this.topic});
 }
 
 class _HomeScreenEntState extends State<HomeScreenEnt> {
@@ -159,7 +163,7 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: videoValue,text: formattedText,topic: widget.topic,language: userLanguage,), // Замените YourNewPage() на вашу новую страницу
+        builder: (context) => VideoScreen(setLocale: widget.setLocale,questionss: pythonQuestions,pointsto: 50,level:level,link: videoValue,text: formattedText,topic: widget.topic,language: userLanguage,), // Замените YourNewPage() на вашу новую страницу
       ),
     );
 

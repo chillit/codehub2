@@ -276,7 +276,7 @@ class _CreateUserState extends State<CreateUser> {
           showCloseIcon:false,
           title: AppLocalizations.of(context)!.createdacc,
           btnOkOnPress: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale,)));
           },
           btnOkColor: Colors.green
 
@@ -644,7 +644,7 @@ class _LogINaccountState extends State<LogINaccount> {
         print("Error updating locale: $error");
       });
       userLanguage = languageSnapshot.snapshot.value?.toString() ?? '';
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => userLanguage=="ent"?Home(currScreen: chooseent(),):Home(currScreen: HomeScreen(),),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => userLanguage=="ent"?Home(currScreen: chooseent(setLocale: widget.setLocale,),setLocale: widget.setLocale,):Home(currScreen: HomeScreen(setLocale: widget.setLocale,),setLocale: widget.setLocale,),));
     }
 
   }

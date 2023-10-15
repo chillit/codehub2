@@ -9,6 +9,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:duolingo/src/pages/create_account.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class HomeScreen extends StatefulWidget {
+
+  final Function(Locale) setLocale;
+
+   HomeScreen({Key? key, required this.setLocale}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -23,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void pree(component){
     print(component);
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Home(currScreen: choose(component: component,))));
+        MaterialPageRoute(builder: (context) => Home(currScreen: choose(component: component,setLocale: widget.setLocale,), setLocale: widget.setLocale,)));
   }
   @override
   Widget build(BuildContext context) {
@@ -54,13 +59,14 @@ class choose extends StatefulWidget {
   @override
   _chooseState createState() => _chooseState();
   final String component;
-  choose({required this.component});
+  final Function(Locale) setLocale; // Add this line
+  choose({required this.component, required this.setLocale});
 }
 
 class _chooseState extends State<choose> {
   void pree(topic){
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Home(currScreen: qHomeScreen(topic: topic,component: widget.component,),)));
+        MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale ,currScreen: qHomeScreen(setLocale: widget.setLocale,topic: topic,component: widget.component,),)));
   }
   @override
   Widget build(BuildContext context) {
@@ -117,11 +123,12 @@ class _chooseState extends State<choose> {
   }
 }
 class qHomeScreen extends StatefulWidget {
+  final Function(Locale) setLocale;
   @override
   _qHomeScreenState createState() => _qHomeScreenState();
   final String component;
   final String topic;
-  qHomeScreen({required this.component,required this.topic});
+  qHomeScreen({required this.setLocale,required this.component,required this.topic});
 }
 
 class _qHomeScreenState extends State<qHomeScreen> {
@@ -202,8 +209,8 @@ class _qHomeScreenState extends State<qHomeScreen> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => locale.languageCode == "ru"? VideoScreen(questionss: pythonQuestions,pointsto: 50,level:level,link: video,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,)
-            : TextScreen(questionss: pythonQuestions,pointsto: 50,level:level,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,),
+        builder: (context) => locale.languageCode == "ru"? VideoScreen(setLocale: widget.setLocale,questionss: pythonQuestions,pointsto: 50,level:level,link: video,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,)
+            : TextScreen(setLocale: widget.setLocale,questionss: pythonQuestions,pointsto: 50,level:level,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,),
       ),
     );
 
@@ -243,7 +250,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => VideoScreen(questionss: pythonQuestions,pointsto: 50,level:-1,link: "dQw4w9WgXcQ",text: "there is no text",topic: widget.topic,language: userLanguage,component: widget.component,),
+        builder: (context) => VideoScreen(setLocale: widget.setLocale,questionss: pythonQuestions,pointsto: 50,level:-1,link: "dQw4w9WgXcQ",text: "there is no text",topic: widget.topic,language: userLanguage,component: widget.component,),
       ),
     );
 
