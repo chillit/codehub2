@@ -85,54 +85,57 @@ class _ProfileCardState extends State<ProfileCard> {
     return Scaffold(
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                name,
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Feather',
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              ClipOval(
-                child: Image.asset(
-                  // Adjust your image path and conditions as needed.
-                  "assets/images/ranks/${_getRankImage()}",
-                  height: 120,
-                ),
-              ),
-              Divider(color: Colors.grey.shade500),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _titleText("${AppLocalizations.of(context)!.information}:"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      _buildInfoCard(
-                        Icons.local_fire_department_rounded,
-                        "$userPoints",
-                      ),
-                      _buildInfoCard(
-                        Icons.language,
-                        "$language",
-                      ),
-                    ],
+          : ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Feather',
                   ),
-                ],
-              ),
-            ],
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10),
+                ClipOval(
+                  child: Image.asset(
+                    "assets/images/ranks/${_getRankImage()}",
+                    height: 120,
+                  ),
+                ),
+                Divider(color: Colors.grey.shade500),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _titleText("${AppLocalizations.of(context)!.information}:"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        _buildInfoCard(
+                          Icons.local_fire_department_rounded,
+                          "$userPoints",
+                        ),
+                        _buildInfoCard(
+                          Icons.language,
+                          "$language",
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+
   }
 
   Widget _buildInfoCard(IconData icon, String text) {

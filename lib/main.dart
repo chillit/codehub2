@@ -23,12 +23,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale = Locale("en");
-
+  String getFontFamily() {
+    return _locale.languageCode == 'en' ? 'en' : 'kz';
+  }
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -36,7 +39,6 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
       supportedLocales: L10n.all,
       locale: _locale,
@@ -46,8 +48,11 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
         AppLocalizations.delegate,
       ],
+
       title: "Code-Hub",
-      theme: ThemeData(primaryColor: Colors.white),
+      theme: ThemeData(primaryColor: Colors.white,
+      fontFamily: getFontFamily()
+      ),
       home: AuthChecker(setLocale: setLocale,),
     );
   }

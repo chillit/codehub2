@@ -53,12 +53,15 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 ],
               ),
               SizedBox(height: 40,),
-              Text(AppLocalizations.of(context)!.wantlearn,
-              style: TextStyle(
-                fontFamily: "Geo",
-                fontSize: 32,
-                color: Colors.black54,
-              ),),
+              Container(
+                padding: EdgeInsetsDirectional.only(start: 60),
+                child: Text(AppLocalizations.of(context)!.wantlearn,
+                style: TextStyle(
+
+                  fontSize: 32,
+                  color: Colors.black54,
+                ),),
+              ),
               SizedBox(height: 60,),
 
               Row(
@@ -129,7 +132,7 @@ class SquareImageTextWidget extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                fontFamily: 'Feather',
+
                 fontSize: containerSize * 0.1, // Adjust this factor as needed
               ),
             ),
@@ -151,6 +154,11 @@ class CreateUser extends StatefulWidget {
 }
 
 class _CreateUserState extends State<CreateUser> {
+
+  Locale _locale = Locale("en");
+  String getFontFamily() {
+    return _locale.languageCode == 'en' ? 'en' : 'kz';
+  }
 
 
 
@@ -282,7 +290,7 @@ class _CreateUserState extends State<CreateUser> {
           dialogType: DialogType.error,
           animType: AnimType.topSlide,
           showCloseIcon:false,
-          title: 'Something went wrong :(',
+          title:AppLocalizations.of(context)!.oshibka,
           desc: AppLocalizations.of(context)!.checkcreate,
       ).show();
       print('Ошибка отправки данных в Firebase: $e');
@@ -326,7 +334,7 @@ class _CreateUserState extends State<CreateUser> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppLocalizations.of(context)!.createacc,style: TextStyle(fontFamily: 'Feather',fontSize: 25),),
+                  Text(AppLocalizations.of(context)!.createacc,style: TextStyle(fontSize: 25),),
                 ],
               ),
               Column(
@@ -339,7 +347,6 @@ class _CreateUserState extends State<CreateUser> {
                         padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/10),
                         child: Text(AppLocalizations.of(context)!.username,style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'Feather',
                         ),),
                       ),
                     ],
@@ -365,7 +372,7 @@ class _CreateUserState extends State<CreateUser> {
                               borderRadius: BorderRadius.circular(6),
                             ),
                             labelStyle: TextStyle(
-                              fontFamily: 'Feather',
+
                               fontWeight: FontWeight.normal,
                             ),
                             border: OutlineInputBorder(
@@ -373,7 +380,7 @@ class _CreateUserState extends State<CreateUser> {
                             ),
                           ),
                           style: TextStyle(
-                            fontFamily: 'Feather',
+
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -388,7 +395,7 @@ class _CreateUserState extends State<CreateUser> {
                         padding:   EdgeInsets.only(left: MediaQuery.of(context).size.width/10),
                         child: Text('Email',style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'Feather',
+
                         ),),
                       ),
                     ],
@@ -414,7 +421,7 @@ class _CreateUserState extends State<CreateUser> {
                               borderRadius: BorderRadius.circular(6),
                             ),
                             labelStyle: TextStyle(
-                              fontFamily: 'Feather',
+
                               fontWeight: FontWeight.normal,
                             ),
                             border: OutlineInputBorder(
@@ -422,7 +429,7 @@ class _CreateUserState extends State<CreateUser> {
                             ),
                           ),
                           style: TextStyle(
-                            fontFamily: 'Feather',
+
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -438,7 +445,7 @@ class _CreateUserState extends State<CreateUser> {
                         padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/10,),
                         child: Text(AppLocalizations.of(context)!.password,style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'Feather',
+
                         ),),
                       ),
                     ],
@@ -465,7 +472,7 @@ class _CreateUserState extends State<CreateUser> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               labelStyle: TextStyle(
-                                fontFamily: 'Feather',
+
                                 fontWeight: FontWeight.normal,
                               ),
                               border: OutlineInputBorder(
@@ -478,7 +485,7 @@ class _CreateUserState extends State<CreateUser> {
                               suffixIconColor: Colors.black
                           ),
                           style: TextStyle(
-                            fontFamily: 'Feather',
+
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -502,7 +509,7 @@ class _CreateUserState extends State<CreateUser> {
                                sendDataToFirebaseStudent();
                         },
                         child: Text(AppLocalizations.of(context)!.createaccb,style: TextStyle(
-                          fontFamily: 'Feather',
+
                           fontSize: 18
                         ),),
                         style: ElevatedButton.styleFrom(
@@ -531,7 +538,7 @@ class _CreateUserState extends State<CreateUser> {
                           child: Text(
                             AppLocalizations.of(context)!.or,
                             style: TextStyle(color: Colors.grey[700],
-                                fontFamily: 'Feather',
+
                                 fontSize: 17,
                                 ),
                           ),
@@ -548,12 +555,14 @@ class _CreateUserState extends State<CreateUser> {
           SizedBox(height: 30,),
           RichText(
             text: TextSpan(
-              style: TextStyle(fontFamily: 'Feather'),
+              style: TextStyle(
+
+              ),
               children: <TextSpan>[
-                TextSpan(text: AppLocalizations.of(context)!.haveacc),
+                TextSpan(text: AppLocalizations.of(context)!.haveacc,style: TextStyle(fontFamily: _locale.languageCode)),
                 TextSpan(
                     text: AppLocalizations.of(context)!.log_inb,
-                    style: TextStyle(color: Color.fromRGBO	(160,82,45,1),fontFamily: 'Feather'),
+                    style: TextStyle(color: Color.fromRGBO	(160,82,45,1),),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogINaccount(setLocale: widget.setLocale)));
@@ -713,7 +722,7 @@ class _LogINaccountState extends State<LogINaccount> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppLocalizations.of(context)!.log_in,style: TextStyle(fontFamily: 'Feather',fontSize: 25),),
+                  Text(AppLocalizations.of(context)!.log_in,style: TextStyle(fontSize: 25),),
                 ],
               ),
               Column(
@@ -726,7 +735,7 @@ class _LogINaccountState extends State<LogINaccount> {
                         padding:  EdgeInsetsDirectional.only(start: MediaQuery.of(context).size.width/10,),
                         child: Text('Email',style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'Feather',
+
                         ),),
                       ),
                     ],
@@ -753,7 +762,7 @@ class _LogINaccountState extends State<LogINaccount> {
                               borderRadius: BorderRadius.circular(6),
                             ),
                             labelStyle: TextStyle(
-                              fontFamily: 'Feather',
+
                               fontWeight: FontWeight.normal,
                             ),
                             border: OutlineInputBorder(
@@ -761,7 +770,7 @@ class _LogINaccountState extends State<LogINaccount> {
                             ),
                           ),
                           style: TextStyle(
-                            fontFamily: 'Feather',
+
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -777,7 +786,7 @@ class _LogINaccountState extends State<LogINaccount> {
                         padding:  EdgeInsetsDirectional.only(start: MediaQuery.of(context).size.width/10,),
                         child: Text(AppLocalizations.of(context)!.password,style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'Feather',
+
                         ),),
                       ),
                     ],
@@ -804,7 +813,7 @@ class _LogINaccountState extends State<LogINaccount> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               labelStyle: TextStyle(
-                                fontFamily: 'Feather',
+
                                 fontWeight: FontWeight.normal,
                               ),
                               border: OutlineInputBorder(
@@ -817,7 +826,7 @@ class _LogINaccountState extends State<LogINaccount> {
                               suffixIconColor: Colors.black
                           ),
                           style: TextStyle(
-                            fontFamily: 'Feather',
+
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -841,7 +850,7 @@ class _LogINaccountState extends State<LogINaccount> {
                           login();
                         },
                         child: Text(AppLocalizations.of(context)!.log_inb,style: TextStyle(
-                            fontFamily: 'Feather',
+
                             fontSize: 18
                         ),),
                         style: ElevatedButton.styleFrom(
@@ -870,7 +879,7 @@ class _LogINaccountState extends State<LogINaccount> {
                           child: Text(
                             AppLocalizations.of(context)!.or,
                             style: TextStyle(color: Colors.grey[700],
-                              fontFamily: 'Feather',
+
                               fontSize: 17,
                             ),
                           ),
@@ -887,12 +896,12 @@ class _LogINaccountState extends State<LogINaccount> {
                   SizedBox(height: 30,),
                   RichText(
                     text: TextSpan(
-                      style: TextStyle(fontFamily: 'Feather'),
+
                       children: <TextSpan>[
                         TextSpan(text: AppLocalizations.of(context)!.dontacc),
                         TextSpan(
                             text: AppLocalizations.of(context)!.sign_inb,
-                            style: TextStyle(color: Color.fromRGBO	(160,82,45,1),fontFamily: 'Feather'),
+                            style: TextStyle(color: Color.fromRGBO	(160,82,45,1)),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage(setLocale: widget.setLocale,)));

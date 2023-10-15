@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text('English',style: TextStyle(
-                      fontFamily: 'Feather',
+
                       fontSize: 16
                   ),),
                   style: ElevatedButton.styleFrom(
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text('Russian',style: TextStyle(
-                      fontFamily: 'Feather',
+
                       fontSize: 16
                   ),),
                   style: ElevatedButton.styleFrom(
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.of(context).pop();;
                   },
                   child: Text('Kazakh',style: TextStyle(
-                      fontFamily: 'Feather',
+
                       fontSize: 16
                   ),),
                   style: ElevatedButton.styleFrom(
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 Text(AppLocalizations.of(context)!.descrip,
                 style: TextStyle(
-                  fontFamily: 'Feather',
+
                   fontWeight: FontWeight.bold,
                   fontSize: 32,
                   color: Colors.black54
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(AppLocalizations.of(context)!.getstarted,
                       style: TextStyle(
-                        fontFamily: "Geo",
+
                         fontSize: 13,
                         color: Color.fromRGBO(221,196,173, 1),
                       ),),
@@ -212,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(AppLocalizations.of(context)!.haveacc.toUpperCase(),style:
                     TextStyle(
-                      fontFamily: 'Feather',
+
                       fontSize: 13,
                       color: Color.fromRGBO(221,196,173, 1),
                     ),),
