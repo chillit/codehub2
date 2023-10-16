@@ -14,6 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  Locale _locale = Locale("en");
+  String getFontFamily() {
+    return _locale.languageCode == 'en' ? 'en' : 'kz';
+  }
+
   void pree(component){
     print(component);
     Navigator.pushReplacement(context,
@@ -29,22 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20,),
-              SizedBox(height: 40,),
-              Text(AppLocalizations.of(context)!.wantlearn,
-                style: TextStyle(
-                  fontFamily: 'Feather',
-                  fontSize: 32,
-                  color: Colors.black54,
-                ),),
-              SizedBox(height: 60,),
-
+              SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/1.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 2.3,),
+                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/1.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
                   SizedBox(width: 20,),
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 2.3)
+                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
                 ],),
             ],
           ),
@@ -79,7 +76,7 @@ class _chooseState extends State<choose> {
               SizedBox(height: 40,),
               Text(AppLocalizations.of(context)!.chstopic,
                 style: TextStyle(
-                  fontFamily: 'Feather',
+
                   fontSize: 32,
                   color: Colors.black54,
                 ),),

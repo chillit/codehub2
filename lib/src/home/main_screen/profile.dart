@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
                         name,
                         style: TextStyle(fontSize: 26,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Feather'),
+                            ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -291,7 +291,7 @@ class _ProfileState extends State<Profile> {
                                 getPythonQuestions();
                               },
                               child: Text(AppLocalizations.of(context)!.trainb,
-                                style: TextStyle(fontFamily: "Feather",
+                                style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.orange),)),
                         )
@@ -330,7 +330,7 @@ class _ProfileState extends State<Profile> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF7d0c0c),
-                                fontFamily: 'Feather'
+
                             ),
                           ),
                         ),
@@ -359,11 +359,10 @@ class _ProfileState extends State<Profile> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text(
-                                  locale.languageCode=="en"?"Log Out":locale.languageCode=="ru"?"Выйти":"Шығу",
-                                  style: TextStyle(fontFamily: "Feather"),),
+                                  locale.languageCode=="en"?"Log Out":locale.languageCode=="ru"?"Выйти":"Шығу",),
                                 content: Text(
-                                  locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шығу керек пе?",
-                                  style: TextStyle(fontFamily: 'Feather'),),
+                                  locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шыққыңыз келетініне сенімдісіз бе??",
+                                  ),
                                 actionsPadding: EdgeInsets.symmetric(
                                     horizontal: 16.0),
                                 buttonPadding: EdgeInsets.all(0),
@@ -380,7 +379,7 @@ class _ProfileState extends State<Profile> {
                                           child: Text(
                                             locale.languageCode=="en"?"No":locale.languageCode=="ru"?"Нет":"Жоқ",
                                             style: TextStyle(
-                                                fontFamily: 'Feather',
+
                                                 color: Colors.grey),),
                                         ),
                                         ElevatedButton(
@@ -405,9 +404,7 @@ class _ProfileState extends State<Profile> {
                                             }
                                           },
                                           child: Text(
-                                            locale.languageCode=="en"?"Yes":locale.languageCode=="ru"?"Да":"Иә",
-                                            style: TextStyle(
-                                                fontFamily: 'Feather'),),
+                                            locale.languageCode=="en"?"Yes":locale.languageCode=="ru"?"Да":"Иә",),
                                         ),
                                       ],
                                     ),
@@ -420,7 +417,7 @@ class _ProfileState extends State<Profile> {
                         child: Text(
                           AppLocalizations.of(context)!.logout,
                           style: TextStyle(
-                              fontSize: 16.0, fontFamily: 'Feather'),
+                              fontSize: 16.0,),
                         ),
                       ),
                     ),

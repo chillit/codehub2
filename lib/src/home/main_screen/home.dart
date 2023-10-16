@@ -61,8 +61,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    const double _iconSize = 41;
-    const double _iconSizeSelected = 53;
+    const double _iconSize = 40;
+    const double _iconSizeSelected = 50;
     final AppBarHomeScreen appBar = AppBarHomeScreen();
 
     return isloading?

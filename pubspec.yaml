@@ -149,12 +149,18 @@ flutter:
     - family: Bebas
       fonts:
         - asset: fonts/BebasNeue-Regular.ttf
-    - family: Feather
+    - family: en
       fonts:
         - asset: fonts/feather_bold.ttf
     - family: Geo
       fonts:
         - asset: fonts/ofont.ru_Geologica.ttf
+    - family: Kel_Regular
+      fonts:
+        - asset: fonts/Kelson_Sans_Regular.otf
+    - family: kz
+      fonts:
+        - asset: fonts/Kelson_Sans_Bold.otf
 
   #   - family: Trajan Pro
   #     fonts:
