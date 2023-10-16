@@ -308,6 +308,7 @@ class _ProfileState extends State<Profile> {
                     }, icon: Icon(Icons.language,color: Colors.grey,))
                   ],
                 ),
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -434,18 +435,24 @@ class _ProfileState extends State<Profile> {
                     SizedBox(height: 10),
                     // List of recent mistakes/questions
                     ListView.builder(
-                      shrinkWrap: true, // Add this line
-                      itemCount: recentMistakes.length,
-                      itemBuilder: (context, index) {
-                        final question = recentMistakes[index];
-                        return ListTile(
-                          title: Text(question.question),
-                          onTap: () {
-                            // Show the question and its answer when tapped
-                            _showQuestionDialog(question);
-                          },
-                        );
-                      },
+                        shrinkWrap: true,
+                        itemCount: recentMistakes.isEmpty ? 1 : recentMistakes.length + 1, // +1 for the message
+                        itemBuilder: (context, index) {
+                          if (recentMistakes.isEmpty) {
+                            // Display the message when the list is empty
+                            return ListTile(
+                              title: Text(AppLocalizations.of(context)!.noMistakesMessage),
+                            );
+                          } else {
+                            final question = recentMistakes[index];
+                            return ListTile(
+                              title: Text(question.question),
+                              onTap: () {
+                                _showQuestionDialog(question);
+                              },
+                            );
+                          }
+                        }
                     ),
                     SizedBox(height: 20,),
                     Row(

@@ -15,107 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  void _showResultDialog() {
-    showModalBottomSheet(
-      context: context,
-      isDismissible: true,
-      enableDrag: true,// Запрещаем закрытие при нажатии вне окна
-      builder: (BuildContext context) {
-        return Container(height: 250,
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
 
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    widget.setLocale(Locale("en"));
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('English',style: TextStyle(
-
-                      fontSize: 16
-                  ),),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF7e7e94),
-                    onPrimary: Colors.white, // text color
-                    elevation: 5, // shadow elevation// button padding
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14), // button border radius
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    widget.setLocale(Locale("ru"));
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Russian',style: TextStyle(
-
-                      fontSize: 16
-                  ),),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF7e7e94),
-                    onPrimary: Colors.white, // text color
-                    elevation: 5, // shadow elevation// button padding
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14), // button border radius
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    widget.setLocale(Locale("kk"));
-                    Navigator.of(context).pop();;
-                  },
-                  child: Text('Kazakh',style: TextStyle(
-
-                      fontSize: 16
-                  ),),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF7e7e94),
-                    onPrimary: Colors.white, // text color
-                    elevation: 5, // shadow elevation// button padding
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14), // button border radius
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-        );
-      },
-    );
-  }
-
-
-
-
-
+  
   @override
   Widget build(BuildContext context) {
     return
@@ -139,14 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Image.asset('assets/images/LOGO_MAIN.png',height: 150,width: MediaQuery.of(context).size.width,),],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(onPressed: (){
-                      _showResultDialog();
-                    }, icon: Icon(Icons.language,color: Colors.grey,))
-                  ]
-                ),
+
                 Image.asset('assets/images/Backend.gif',height: 280,width: 500,),
                 SizedBox(height: 20,),
 

@@ -71,8 +71,7 @@ class _AppBarHomeScreenState extends State<AppBarHomeScreen> {
           children: <Widget> [
 
             Image.asset('assets/images/Small_Logo.png',height: 70,width: 150,),
-            SizedBox(width: 33,),
-
+            SizedBox(width: 50,),
 
             Image.asset(
               "assets/images/appBar/crown_stroke.png",

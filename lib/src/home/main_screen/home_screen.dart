@@ -78,7 +78,7 @@ class _chooseState extends State<choose> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20,),
+
               SizedBox(height: 40,),
               Text(AppLocalizations.of(context)!.chstopic,
                 style: TextStyle(
@@ -86,7 +86,7 @@ class _chooseState extends State<choose> {
                   fontSize: 32,
                   color: Colors.black54,
                 ),),
-              SizedBox(height: 60,),
+              SizedBox(height: 30,),
 
               Column(
                 children: [
@@ -115,6 +115,7 @@ class _chooseState extends State<choose> {
                     ],),
                 ],
               ),
+              SizedBox(height: 40,),
             ],
           ),
         ),
