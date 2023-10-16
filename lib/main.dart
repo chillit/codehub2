@@ -133,7 +133,7 @@ class _AuthCheckerState extends State<AuthChecker> {
           return Text('Error: ${snapshot.error}');
         } else {
           final isLoggedIn = snapshot.data ?? false;
-          return isLoggedIn ? Home() : LoginPage(setLocale: widget.setLocale,);
+          return isLoggedIn ? Home(setLocale: widget.setLocale,) : LoginPage(setLocale: widget.setLocale,);
         }
       },
     );

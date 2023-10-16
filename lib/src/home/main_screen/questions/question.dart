@@ -15,6 +15,7 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class VideoScreen extends StatefulWidget {
+  final Function(Locale) setLocale;
   final List<Question> questionss;
   final int pointsto;
   final int level;
@@ -23,7 +24,7 @@ class VideoScreen extends StatefulWidget {
   final String? component;
   final String topic;
   final String language;
-  VideoScreen({required this.pointsto,required this.level,required this.questionss,required this.link,required this.text,this.component,required this.topic,required this.language});
+  VideoScreen({required this.setLocale,required this.pointsto,required this.level,required this.questionss,required this.link,required this.text,this.component,required this.topic,required this.language});
   @override
   State<VideoScreen> createState() => _VideoScreenState();
 }
@@ -84,7 +85,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => widget.language=="ent"?Home(currScreen: HomeScreenEnt(topic:widget.topic)):Home(currScreen: qHomeScreen(topic:widget.topic, component: widget.component!,),),),
+                          builder: (context) => widget.language=="ent"?Home(currScreen: HomeScreenEnt(setLocale: widget.setLocale,topic:widget.topic),setLocale: widget.setLocale,):Home(currScreen: qHomeScreen(setLocale: widget.setLocale,topic:widget.topic, component: widget.component!,),setLocale: widget.setLocale,),),
                     );
                   },
                   child: Text(
@@ -127,6 +128,7 @@ class _VideoScreenState extends State<VideoScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => TextScreen(
+          setLocale: widget.setLocale,
           component: widget.component,
           topic: widget.topic,
           language: widget.language,
@@ -213,6 +215,7 @@ class _VideoScreenState extends State<VideoScreen> {
 
 
 class QuestionScreen extends StatefulWidget {
+  final Function(Locale) setLocale;
   final List<Question> questionss;
   final int pointsto;
   final int level;
@@ -220,7 +223,7 @@ class QuestionScreen extends StatefulWidget {
   final String topic;
   final String language;
 
-  QuestionScreen({required this.questionss,required this.pointsto,required this.level,this.component, required this.topic, required this.language});
+  QuestionScreen({required this.setLocale,required this.questionss,required this.pointsto,required this.level,this.component, required this.topic, required this.language});
 
   @override
   _QuestionScreenState createState() => _QuestionScreenState();
@@ -291,7 +294,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     if (allQuestionsAnswered && currentUser != null) {
       String currentUserUID = currentUser?.uid as String;
       updatelevelInFirebase(currentUserUID);
-      return ResultScreen(score: correctAnswersCount, len: totalQuestionsCount);
+      return ResultScreen(setLocale: widget.setLocale,score: correctAnswersCount, len: totalQuestionsCount);
     }
 
     void _showConfirmation(){
@@ -348,7 +351,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                          builder: (context) => widget.language=="ent"?Home(currScreen: HomeScreenEnt(topic:widget.topic)):Home(currScreen: qHomeScreen(topic:widget.topic, component: widget.component!,),),),
+                          builder: (context) => widget.language=="ent"?Home(currScreen: HomeScreenEnt(topic:widget.topic,setLocale: widget.setLocale,),setLocale: widget.setLocale,):Home(currScreen: qHomeScreen(setLocale: widget.setLocale,topic:widget.topic, component: widget.component!,),setLocale: widget.setLocale,),),
                       );
                     },
                     child: Text(
@@ -1048,6 +1051,7 @@ class ProgressIndicator extends StatelessWidget {
 }
 
 class TextScreen extends StatefulWidget {
+  final Function(Locale) setLocale;
   final List<Question> questionss;
   final int pointsto;
   final int level;
@@ -1055,7 +1059,7 @@ class TextScreen extends StatefulWidget {
   final String? component;
   final String topic;
   final String language;
-  TextScreen({required this.pointsto,required this.level,required this.questionss,required this.text,this.component,required this.topic, required this.language});
+  TextScreen({required this.setLocale,required this.pointsto,required this.level,required this.questionss,required this.text,this.component,required this.topic, required this.language});
   @override
   State<TextScreen> createState() => _TextScreenState();
 }
@@ -1115,7 +1119,7 @@ class _TextScreenState extends State<TextScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => widget.language=="ent"?Home(currScreen: HomeScreenEnt(topic:widget.topic)):Home(currScreen: qHomeScreen(topic:widget.topic, component: widget.component!,),),),
+                          builder: (context) => widget.language=="ent"?Home(currScreen: HomeScreenEnt(setLocale:widget.setLocale,topic:widget.topic),setLocale: widget.setLocale,):Home(currScreen: qHomeScreen(setLocale: widget.setLocale,topic:widget.topic, component: widget.component!,),setLocale: widget.setLocale,),),
                     );
                   },
                   child: Text(
@@ -1201,6 +1205,7 @@ class _TextScreenState extends State<TextScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => QuestionScreen(
+                        setLocale: widget.setLocale,
                         language: widget.language,
                         topic: widget.topic,
                         component: widget.component,

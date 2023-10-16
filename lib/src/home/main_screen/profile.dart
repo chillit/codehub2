@@ -8,7 +8,12 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../../../main.dart';
 import '../login/login_page.dart';
 
+
 class Profile extends StatefulWidget {
+
+  final Function(Locale) setLocale;
+  const Profile({Key? key, required this.setLocale}) : super(key: key);
+
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -23,10 +28,102 @@ class _ProfileState extends State<Profile> {
   String language = '';
   List<Question> recentMistakes = []; // List to store recent mistakes/questions
 
-  @override
-  void initState() {
-    super.initState();
-    _getUserData();
+
+  void _showResultDialog() {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: true,
+      enableDrag: true,// Запрещаем закрытие при нажатии вне окна
+      builder: (BuildContext context) {
+        return Container(height: 250,
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.setLocale(Locale("en"));
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('English',style: TextStyle(
+
+                      fontSize: 16
+                  ),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF7e7e94),
+                    onPrimary: Colors.white, // text color
+                    elevation: 5, // shadow elevation// button padding
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14), // button border radius
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.setLocale(Locale("ru"));
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Russian',style: TextStyle(
+
+                      fontSize: 16
+                  ),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF7e7e94),
+                    onPrimary: Colors.white, // text color
+                    elevation: 5, // shadow elevation// button padding
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14), // button border radius
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.setLocale(Locale("kk"));
+                    Navigator.of(context).pop();;
+                  },
+                  child: Text('Kazakh',style: TextStyle(
+
+                      fontSize: 16
+                  ),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF7e7e94),
+                    onPrimary: Colors.white, // text color
+                    elevation: 5, // shadow elevation// button padding
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14), // button border radius
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+        );
+      },
+    );
   }
 
   Future<void> _getUserData() async {
@@ -143,6 +240,7 @@ class _ProfileState extends State<Profile> {
         context,
         MaterialPageRoute(
           builder: (context) => QuestionScreen(questionss: pythonQuestions,
+            setLocale: widget.setLocale,
             pointsto: 20,
             level: -1,
             language: 'iscse',
@@ -163,7 +261,35 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
-  Widget build(BuildContext context){
+  void initState() {
+    super.initState();
+    _getUserData();
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        // Replace Future.delayed with the actual logic to load localization
+        future: Future.delayed(Duration(seconds: 2), () => true),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error loading localization'));
+          } else if (snapshot.hasData) {
+            return buildContent(context);
+          } else {
+            return Center(child: Text('Unknown error'));
+          }
+        },
+      ),
+    );
+  }
+
+
+  @override
+  Widget buildContent(BuildContext context){
       final locale = Localizations.localeOf(context);
       return Scaffold(
         body: _isLoading ?
@@ -174,6 +300,15 @@ class _ProfileState extends State<Profile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(onPressed: (){
+                      _showResultDialog();
+                    }, icon: Icon(Icons.language,color: Colors.grey,))
+                  ],
+                ),
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -300,18 +435,24 @@ class _ProfileState extends State<Profile> {
                     SizedBox(height: 10),
                     // List of recent mistakes/questions
                     ListView.builder(
-                      shrinkWrap: true, // Add this line
-                      itemCount: recentMistakes.length,
-                      itemBuilder: (context, index) {
-                        final question = recentMistakes[index];
-                        return ListTile(
-                          title: Text(question.question),
-                          onTap: () {
-                            // Show the question and its answer when tapped
-                            _showQuestionDialog(question);
-                          },
-                        );
-                      },
+                        shrinkWrap: true,
+                        itemCount: recentMistakes.isEmpty ? 1 : recentMistakes.length + 1, // +1 for the message
+                        itemBuilder: (context, index) {
+                          if (recentMistakes.isEmpty) {
+                            // Display the message when the list is empty
+                            return ListTile(
+                              title: Text(AppLocalizations.of(context)!.noMistakesMessage),
+                            );
+                          } else {
+                            final question = recentMistakes[index];
+                            return ListTile(
+                              title: Text(question.question),
+                              onTap: () {
+                                _showQuestionDialog(question);
+                              },
+                            );
+                          }
+                        }
                     ),
                     SizedBox(height: 20,),
                     Row(
@@ -361,7 +502,7 @@ class _ProfileState extends State<Profile> {
                                 title: Text(
                                   locale.languageCode=="en"?"Log Out":locale.languageCode=="ru"?"Выйти":"Шығу",),
                                 content: Text(
-                                  locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шыққыңыз келетініне сенімдісіз бе??",
+                                  locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шыққыңыз келетініне сенімдісіз бе?",
                                   ),
                                 actionsPadding: EdgeInsets.symmetric(
                                     horizontal: 16.0),

@@ -49,5 +49,6 @@
     "sureexit": "Are you sure you want to exit?",
     "no": "No",
     "yes": "Yes",
-    "oshibka": "Something went wrong :("
+    "oshibka": "Something went wrong :(",
+    "noMistakesMessage": "You don't have any recent mistakes :)"
 }

@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:duolingo/src/home/main_screen/questions/question.dart';
 
 
-class ResultScreen extends StatelessWidget {
-  const ResultScreen({
-    key,
-    required this.score,
-    required this.len
-  });
-
+class ResultScreen extends StatefulWidget {
+  final Function(Locale) setLocale;
   final int score;
   final int len;
+  const ResultScreen({
+    key,
+    required this.setLocale, required this.score, required this.len
+  });
 
+
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +28,7 @@ class ResultScreen extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(onPressed: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale,)));
           }, icon: Icon(Icons.close_sharp,color: Colors.black,))
         ],
       ),
@@ -49,7 +55,7 @@ class ResultScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                '${(score / len * 100).round()}% Score',
+                '${(widget.score / widget.len * 100).round()}% Score',
                 style: const TextStyle(fontSize: 37,fontFamily: 'Feather',color: Colors.green),
               ),
               SizedBox(height: 24,),

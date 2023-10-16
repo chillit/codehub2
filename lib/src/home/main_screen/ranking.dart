@@ -201,7 +201,7 @@ class _RankingState extends State<Ranking> {
                               color: isCurrentUser ? Colors.green.withOpacity(0.25) : null,
                               child: ListTile(
                                 leading: Container(
-                                  width: 80.0,
+                                  width: 85.0,
                                   child: Row(
                                     children: [
                                       Text('$rankNumber',style: TextStyle(fontSize: 15),),
