@@ -124,6 +124,7 @@ class _VideoScreenState extends State<VideoScreen> {
     super.dispose();
   }
   onPressedContinueButton() {
+    _controller.pause();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -258,19 +259,34 @@ class _QuestionScreenState extends State<QuestionScreen> {
     final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
 
     int pointsToAdd = 50;
+    if(widget.language=="igcse"){
+      databaseReference.child('users/$currentUserUID/topics/${widget.component}/${widget.topic}').once().then((DatabaseEvent snapshot) {
 
-    databaseReference.child('users/$currentUserUID/level').once().then((DatabaseEvent snapshot) {
+        int currentLvl = snapshot.snapshot.value as int ?? 1 ;
+        if (currentLvl == widget.level+1){
+          databaseReference.child('users/$currentUserUID/topics/${widget.component}/${widget.topic}').set(widget.level+2);
+          updatePointsInFirebase(currentUserUID, 50);
 
-      int currentLvl = snapshot.snapshot.value as int ?? 1 ; // Если значение не существует, устанавливаем 0
-      if (currentLvl == widget.level+1){
-        databaseReference.child('users/$currentUserUID/level').set(widget.level+2);
-        updatePointsInFirebase(currentUserUID, 50);
+        }
+        else{
+          updatePointsInFirebase(currentUserUID, 10);
+        }
+      });
+    }
+    else{
+      databaseReference.child('users/$currentUserUID/topics/${widget.topic}').once().then((DatabaseEvent snapshot) {
 
-      }
-      else{
-        updatePointsInFirebase(currentUserUID, 10);
-      }
-    });
+        int currentLvl = snapshot.snapshot.value as int ?? 1 ;
+        if (currentLvl == widget.level+1){
+          databaseReference.child('users/$currentUserUID/topics/${widget.topic}').set(widget.level+2);
+          updatePointsInFirebase(currentUserUID, 50);
+
+        }
+        else{
+          updatePointsInFirebase(currentUserUID, 10);
+        }
+      });
+    }
   }
   User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -1010,7 +1026,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
 
   Future<void> checkAnswer()  async{
     final userAnswer = answerController.text;
-    bool isCorrect = userAnswer == widget.question.correctInputAns;
+    bool isCorrect = userAnswer.toLowerCase() == widget.question.correctInputAns.toLowerCase();
     setState(() {
       isAnswerCorrect = isCorrect;
     });

@@ -156,7 +156,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
     if (user != null) {
       currentUserUID = user.uid;
 
-      final levelRef = _database.reference().child('users/$currentUserUID/level');
+      final levelRef = _database.reference().child('users/$currentUserUID/topics/${widget.component}/${widget.topic}');
       final languageRef = _database.reference().child('users/$currentUserUID/language');
 
 
