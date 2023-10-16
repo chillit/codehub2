@@ -1,6 +1,7 @@
 {
     "haveacc": "Already have an account",
-    "wantlearn": "I want to learn...",
+
+    "wantlearn": "I want to prepare for...",
     "descrip": "The free, fun, and \n effective way to learn  programming!",
     "getstarted": "GET STARTED",
     "createdacc": "You have successfully created an account!!",
@@ -47,5 +48,6 @@
     "logout": "Log Out",
     "sureexit": "Are you sure you want to exit?",
     "no": "No",
-    "yes": "Yes"
+    "yes": "Yes",
+    "oshibka": "Something went wrong :("
 }
