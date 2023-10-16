@@ -164,15 +164,15 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   String _getRankImage() {
-    if (userPoints >= 400) {
+    if (userPoints >= 900) {
       return "r.png";
-    } else if (userPoints >= 350) {
+    } else if (userPoints >= 700) {
       return "i.png";
-    } else if (userPoints >= 300) {
+    } else if (userPoints >= 500) {
       return "a.png";
-    } else if (userPoints >= 250) {
+    } else if (userPoints >= 400) {
       return "d.png";
-    } else if (userPoints >= 200) {
+    } else if (userPoints >= 250) {
       return "p.png";
     } else if (userPoints >= 150) {
       return "g.png";

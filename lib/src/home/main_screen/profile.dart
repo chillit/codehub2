@@ -326,15 +326,15 @@ class _ProfileState extends State<Profile> {
                     Center(
                       child: ClipOval(
                         child: Image.asset(
-                          userPoints >= 400
+                          userPoints >= 900
                               ? "assets/images/ranks/r.png"
-                              : userPoints >= 350
+                              : userPoints >= 700
                               ? "assets/images/ranks/i.png"
-                              : userPoints >= 300
+                              : userPoints >= 500
                               ? "assets/images/ranks/a.png"
-                              : userPoints >= 250
+                              : userPoints >= 400
                               ? "assets/images/ranks/d.png"
-                              : userPoints >= 200
+                              : userPoints >= 250
                               ? "assets/images/ranks/p.png"
                               : userPoints >= 150
                               ? "assets/images/ranks/g.png"
