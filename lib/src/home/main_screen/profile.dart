@@ -444,13 +444,19 @@ class _ProfileState extends State<Profile> {
                               title: Text(AppLocalizations.of(context)!.noMistakesMessage),
                             );
                           } else {
-                            final question = recentMistakes[index];
-                            return ListTile(
-                              title: Text(question.question),
-                              onTap: () {
-                                _showQuestionDialog(question);
-                              },
-                            );
+                            // Check if the index is within the range of the recentMistakes list
+                            if (index < recentMistakes.length) {
+                              final question = recentMistakes[index];
+                              return ListTile(
+                                title: Text(question.question),
+                                onTap: () {
+                                  _showQuestionDialog(question);
+                                },
+                              );
+                            } else {
+                              // Handle cases where the index is out of range
+                              return SizedBox.shrink(); // or return an empty container
+                            }
                           }
                         }
                     ),

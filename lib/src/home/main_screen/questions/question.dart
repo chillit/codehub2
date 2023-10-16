@@ -470,25 +470,22 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
     return messages[random.nextInt(messages.length)];
   }
 
-  void addMistakeToFirebase(Question question) {
+  void addMistakeToFirebase(Question question) async {
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
       final String userMistakesPath = 'users/${user.uid}/mistakes';
 
-      // Проверяем, существует ли уже такой вопрос в списке ошибок пользователя
-      databaseReference.child(userMistakesPath).once().then((DatabaseEvent snapshot) {
-        List<dynamic> mistakes = snapshot.snapshot.value as List<dynamic> ?? [];
+      try {
+        DatabaseEvent snapshot = await databaseReference.child(userMistakesPath).once();
+        List<dynamic> mistakes = snapshot.snapshot.value as List<dynamic>? ?? [];
 
-        // Проверяем, не существует ли уже такого вопроса
         bool questionExists = mistakes.any((mistake) {
-          // Сравниваем вопросы по полям "question" и "questionType"
           return mistake['question'] == question.question;
         });
 
         if (!questionExists) {
-          // Вопрос не существует в списке ошибок, добавляем
           List<dynamic> updatedMistakes = List.from(mistakes);
           updatedMistakes.add(question.toMap());
 
@@ -496,13 +493,16 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
             updatedMistakes.removeAt(0);
           }
 
-          databaseReference.child(userMistakesPath).set(updatedMistakes);
+          await databaseReference.child(userMistakesPath).set(updatedMistakes);
+          print("Error added successfully to the database");
+        } else {
+          print("Error already exists in the database");
         }
-      }).catchError((error) {
-        print("Ошибка при добавлении ошибки в базу данных: $error");
-      });
+      } catch (error) {
+        print("Error adding mistake to the database: $error");
+      }
     } else {
-      // Обработка случая, когда пользователь не аутентифицирован
+      print("User not authenticated");
     }
   }
 
@@ -781,25 +781,22 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
       isButtonDisabled = answerController.text.isEmpty;
     });
   }
-  void addMistakeToFirebase(Question question) {
+  void addMistakeToFirebase(Question question) async {
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
       final String userMistakesPath = 'users/${user.uid}/mistakes';
 
-      // Проверяем, существует ли уже такой вопрос в списке ошибок пользователя
-      databaseReference.child(userMistakesPath).once().then((DatabaseEvent snapshot) {
-        List<dynamic> mistakes = snapshot.snapshot.value as List<dynamic> ?? [];
+      try {
+        DatabaseEvent snapshot = await databaseReference.child(userMistakesPath).once();
+        List<dynamic> mistakes = snapshot.snapshot.value as List<dynamic>? ?? [];
 
-        // Проверяем, не существует ли уже такого вопроса
         bool questionExists = mistakes.any((mistake) {
-          // Сравниваем вопросы по полям "question" и "questionType"
           return mistake['question'] == question.question;
         });
 
         if (!questionExists) {
-          // Вопрос не существует в списке ошибок, добавляем его
           List<dynamic> updatedMistakes = List.from(mistakes);
           updatedMistakes.add(question.toMap());
 
@@ -807,14 +804,16 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
             updatedMistakes.removeAt(0);
           }
 
-          // Устанавливаем обновленный список ошибок обратно в Firebase
-          databaseReference.child(userMistakesPath).set(updatedMistakes);
+          await databaseReference.child(userMistakesPath).set(updatedMistakes);
+          print("Error added successfully to the database");
+        } else {
+          print("Error already exists in the database");
         }
-      }).catchError((error) {
-        print("Ошибка при добавлении ошибки в базу данных: $error");
-      });
+      } catch (error) {
+        print("Error adding mistake to the database: $error");
+      }
     } else {
-      // Обработка случая, когда пользователь не аутентифицирован
+      print("User not authenticated");
     }
   }
 

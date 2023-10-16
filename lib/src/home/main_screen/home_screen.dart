@@ -175,8 +175,8 @@ class _qHomeScreenState extends State<qHomeScreen> {
       isLoading = true;
     });
     final databaseReference = FirebaseDatabase.instance.reference();
-    print("aloha ${widget.component},${widget.topic}");
-    final DatabaseEvent dataSnapshot = userLanguage=="igcse"?await databaseReference.child('exams/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('allq/$userLanguage/${widget.topic}').once();
+    print("aloha ${widget.component},${widget.topic},${level}");
+    final DatabaseEvent dataSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():locale.languageCode=="en"?await databaseReference.child('exams/en/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('exams/kz/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once();
 
     final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
     final List<Question> pythonQuestions = [];
@@ -207,9 +207,8 @@ class _qHomeScreenState extends State<qHomeScreen> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => locale.languageCode == "ru"? VideoScreen(setLocale: widget.setLocale,questionss: pythonQuestions,pointsto: 50,level:level,link: video,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,)
-            : TextScreen(setLocale: widget.setLocale,questionss: pythonQuestions,pointsto: 50,level:level,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,),
-
+        builder: (context) => locale.languageCode == "ru"? VideoScreen(setLocale: widget.setLocale, questionss: pythonQuestions,pointsto: 50,level:level,link: video,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,)
+            : TextScreen(setLocale: widget.setLocale, questionss: pythonQuestions,pointsto: 50,level:level,text: updatedText,topic: widget.topic,language: userLanguage,component: widget.component,),
       ),
     );
 
