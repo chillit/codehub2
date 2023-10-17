@@ -114,6 +114,7 @@ class _ProfileCardState extends State<ProfileCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     _titleText("${AppLocalizations.of(context)!.information}:"),
+                    SizedBox(height: 4,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -145,7 +146,7 @@ class _ProfileCardState extends State<ProfileCard> {
           borderRadius: BorderRadius.circular(10),
         ),
         height: 50,
-        width: MediaQuery.of(context).size.width * 0.40,
+        width: MediaQuery.of(context).size.width * 0.37,
         child: ListTile(
           leading: Icon(
             icon,
