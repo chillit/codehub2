@@ -65,7 +65,7 @@ class _VideoScreenState extends State<VideoScreen> {
                       Navigator.of(context).pop();
                     },
                     child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
-                        fontFamily: 'Feather',
+
                         fontSize: 16
                     ),),
                     style: ElevatedButton.styleFrom(
@@ -199,7 +199,6 @@ class _VideoScreenState extends State<VideoScreen> {
                 child: Text(
                   AppLocalizations.of(context)!.continuee,
                   style: TextStyle(
-                    fontFamily: 'Geo',
                     fontSize: 15,
                   ),
                 ),
@@ -332,7 +331,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             Navigator.of(context).pop();
                       },
                       child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
-                          fontFamily: 'Feather',
+
                           fontSize: 16
                       ),),
                       style: ElevatedButton.styleFrom(
@@ -405,7 +404,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 width: 1.0, // Ширина границы
               ),
             ),
-            child: Text(question.question,style: TextStyle(fontFamily: 'Geo',fontSize: 20),),
+            child: Text(question.question,style: TextStyle(fontSize: 20),),
           ),
           if (question.questionType == QuestionType.multipleChoice)
             MultipleChoiceQuestion(
@@ -541,7 +540,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
             children: [
               Text(
                 AppLocalizations.of(context)!.corrsol,
-                style: TextStyle(fontSize: 20.0, fontFamily: 'Feather',color: Colors.red),
+                style: TextStyle(fontSize: 20.0, color: Colors.red),
               ),
               SizedBox(height: 12.0),
               Column(
@@ -551,7 +550,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                       Expanded(
                         child: Text(
                           '${widget.question.options?[widget.question.correctAnswerIndex!]?.toString() ?? ''}',
-                          style: TextStyle(fontSize: 16.0, color: Colors.red, fontFamily: 'Geo'),
+                          style: TextStyle(fontSize: 16.0, color: Colors.red, ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       )
@@ -579,7 +578,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
                 ),
               ),
             ],
@@ -596,7 +595,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
             children: [
               Text(
                 congratulatoryMessage ,
-                style: TextStyle(fontSize: 20.0, fontFamily: 'Feather',color: Colors.green),
+                style: TextStyle(fontSize: 20.0, color: Colors.green),
               ),
 
               SizedBox(height: 20.0),
@@ -617,7 +616,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
                 ),
               ),
             ],
@@ -707,7 +706,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     checkAnswer();
                   }: null,
                   child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
-                    fontFamily: 'Feather',
+
                     fontSize: 15
                   ),),
                 ),
@@ -854,7 +853,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
             children: [
               Text(
                 AppLocalizations.of(context)!.corrsol,
-                style: TextStyle(fontSize: 20.0, fontFamily: 'Geo',color: Colors.red),
+                style: TextStyle(fontSize: 20.0, color: Colors.red),
               ),
               SizedBox(height: 12.0),
               Column(
@@ -863,7 +862,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     children: <Widget>[
                       Expanded(child:Text(
                         '${widget.question.correctInputAns}',
-                        style: TextStyle(fontSize: 16.0,color: Colors.red, fontFamily: 'Feather'),
+                        style: TextStyle(fontSize: 16.0,color: Colors.red, ),
                         overflow: TextOverflow.ellipsis,
                       )
                       )
@@ -888,7 +887,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
                 ),
               ),
             ],
@@ -905,7 +904,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
             children: [
               Text(
                  congratulatoryMessage,
-                style: TextStyle(fontSize: 20.0, fontFamily: 'Feather',color:  Colors.green),
+                style: TextStyle(fontSize: 20.0,color:  Colors.green),
               ),
               SizedBox(height: 20.0),
               SizedBox(
@@ -923,7 +922,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontFamily: 'Feather',fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
                 ),
               ),
             ],
@@ -993,7 +992,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                   ),
                 ),
                 child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
-                    fontFamily: 'Feather',
+
                     fontSize: 15
                       ),),
                 onPressed:  isButtonDisabled ? null : checkAnswer,
@@ -1099,7 +1098,7 @@ class _TextScreenState extends State<TextScreen> {
                       Navigator.of(context).pop();
                     },
                     child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
-                        fontFamily: 'Feather',
+
                         fontSize: 16
                     ),),
                     style: ElevatedButton.styleFrom(
@@ -1218,7 +1217,7 @@ class _TextScreenState extends State<TextScreen> {
                 child: Text(
                   AppLocalizations.of(context)!.continuee,
                   style: TextStyle(
-                    fontFamily: 'Geo',
+
                     fontSize: 15,
                   ),
                 ),

@@ -218,7 +218,6 @@ class _RankingState extends State<Ranking> {
 
                                 ),),
                                 trailing: Text('$userPoints ${AppLocalizations.of(context)!.points}',style: TextStyle(
-
                                   fontSize: 15,
                                 ),),
                               ),
