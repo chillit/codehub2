@@ -235,6 +235,7 @@ class _CreateUserState extends State<CreateUser> {
         'points': 0,
         'level': 1,
         'locale': locale.languageCode,
+        'role': "student",
         'topics': (language == "ent")
             ? {
           '0': 1,

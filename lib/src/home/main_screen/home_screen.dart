@@ -1,5 +1,7 @@
 import 'package:duolingo/src/components/circle_avatar.dart';
 import 'package:duolingo/src/home/main_screen/home.dart';
+import 'package:duolingo/src/home/main_screen/questions/createq.dart';
+import 'package:duolingo/src/home/main_screen/questions/levelvar.dart';
 import 'package:flutter/material.dart';
 import 'package:duolingo/src/home/main_screen/questions/question.dart';
 import 'package:duolingo/src/home/main_screen/home_screen_ent.dart';
@@ -141,6 +143,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
   String currentUserUID = "";
   int userLevel = 0;
   String userLanguage = "";
+  String userLocale = "";
 
 
   bool isLoading = true; // Add this variable to track loading state
@@ -158,11 +161,13 @@ class _qHomeScreenState extends State<qHomeScreen> {
 
       final levelRef = _database.reference().child('users/$currentUserUID/topics/${widget.component}/${widget.topic}');
       final languageRef = _database.reference().child('users/$currentUserUID/language');
+      final localeSnapshot = await _database.reference().child('users/$currentUserUID/locale').once();
 
 
       DatabaseEvent levelSnapshot = await levelRef.once();
       DatabaseEvent languageSnapshot = await languageRef.once();
       userLevel = levelSnapshot.snapshot.value as int;
+      userLocale = localeSnapshot.snapshot.value?.toString() ?? '';
       userLanguage = languageSnapshot.snapshot.value?.toString() ?? '';
       setState(() {
         isLoading = false; // Set loading to false when data is fetched
@@ -176,8 +181,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
     });
     final databaseReference = FirebaseDatabase.instance.reference();
     print("aloha ${widget.component},${widget.topic},${level}");
-    final DatabaseEvent dataSnapshot = locale.languageCode=="ru"?await databaseReference.child('exams/ru/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():locale.languageCode=="en"?await databaseReference.child('exams/en/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once():await databaseReference.child('exams/kz/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once();
-
+    final DatabaseEvent dataSnapshot =await databaseReference.child('exams/${userLocale}/allq/$userLanguage/${widget.component}/${widget.topic}/${level}').once();
     final questionsData = dataSnapshot.snapshot.value as List<dynamic>;
     final List<Question> pythonQuestions = [];
     print(userLanguage);
@@ -282,7 +286,10 @@ class _qHomeScreenState extends State<qHomeScreen> {
                   children: <Widget>[
                     InkWell(
                       onTap: () async {
-                        userLevel>=1?getPythonQuestions(0):null;
+                        userLevel>=1?Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => YourPage(setLocale: widget.setLocale,component: widget.component,level: 0,userLanguage: userLanguage,userLocale: userLocale,topic: widget.topic,)),
+                        ):null;
                       },
                       child: userLevel<1?
                       CircleAvatarIndicator(Color(0xFF808080),"assets/images/mark.png"):userLevel>1?
@@ -573,7 +580,10 @@ class _qHomeScreenState extends State<qHomeScreen> {
                       ),
                       GestureDetector(
                         onTap: (){
-                          getpractice();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  MyForm()),
+                          );
                         },
                         child: Image.asset(
                           "assets/images/home_screen/lesson_divisor_castle.png",

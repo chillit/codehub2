@@ -26,10 +26,23 @@ class _MyAppState extends State<MyApp> {
   String getFontFamily() {
     return _locale.languageCode == 'en' ? 'en' : 'kz';
   }
-  void setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  DatabaseReference _databaseReference = FirebaseDatabase.instance.reference();
+
+  void setLocale(Locale locale) async {
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      String currentUserUid = user.uid;
+      setState(() {
+        _locale = locale;
+      });
+
+      await _databaseReference
+          .child('users')
+          .child(currentUserUid)
+          .update({'locale': locale.toString()});
+    } else {
+    }
   }
 
   @override

@@ -63,7 +63,9 @@ class _AppBarHomeScreenState extends State<AppBarHomeScreen> {
       leading: IconButton(
         padding: const EdgeInsets.only(left: 16),
         icon: Image.asset(image),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
       elevation: 3,
       actions: <Widget>[

@@ -1,7 +1,7 @@
 import 'package:duolingo/src/home/main_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:duolingo/src/home/main_screen/questions/question.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ResultScreen extends StatefulWidget {
   final Function(Locale) setLocale;
@@ -35,8 +35,16 @@ class _ResultScreenState extends State<ResultScreen> {
       body: Center(
         child: Container(
           decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.6),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0,3),
+              )
+            ],
             borderRadius: BorderRadius.circular(25),
-            color: Colors.white30,
+            color: Colors.grey.withOpacity(0.3),
           ),
 
           height: MediaQuery.of(context).size.width * 0.95,
@@ -50,19 +58,19 @@ class _ResultScreenState extends State<ResultScreen> {
                 child: Image.asset('assets/images/Trophy.gif')),
               SizedBox(height: 10),
               Text(
-                'Congrats!!',
-                style: TextStyle(fontFamily: 'Feather', fontSize: 23),
+                '${AppLocalizations.of(context)!.cong}',
+                style: TextStyle( fontSize: 23),
               ),
               SizedBox(height: 20),
               Text(
-                '${(widget.score / widget.len * 100).round()}% Score',
-                style: const TextStyle(fontSize: 37,fontFamily: 'Feather',color: Colors.green),
+                '${AppLocalizations.of(context)!.proscore}: ${(widget.score / widget.len * 100).round()}%',
+                style: const TextStyle(fontSize: 37,color: Colors.green),
               ),
               SizedBox(height: 24,),
               Text(
-                'Level completed successfully.'
+                '${AppLocalizations.of(context)!.lvlcomp}'
                   ,style: TextStyle(
-                  fontSize: 18,fontFamily: 'Feather',
+                  fontSize: 18,
               ),
               ),
             ],
