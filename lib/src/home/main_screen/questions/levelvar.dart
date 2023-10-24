@@ -1,4 +1,5 @@
 import 'package:duolingo/src/home/main_screen/questions/question.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -32,6 +33,7 @@ class _YourPageState extends State<YourPage> {
   bool isLoading = true;
   String video = "";
   String text = "";
+  final _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
@@ -39,17 +41,28 @@ class _YourPageState extends State<YourPage> {
   }
 
   void fetchData() async {
-    final DatabaseEvent dataSnapshot = await databaseReference.child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/0').once();
+    print(_auth.currentUser?.uid);
+    final DatabaseEvent dataSnapshot = await databaseReference.child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/${widget.level}').once();
     print("${widget.userLocale}, ${widget.userLanguage} ${widget.component}, ${widget.topic}, ${widget.level}");
     Map<dynamic, dynamic> values = dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
     if (values != null) {
       values.forEach((key, value) {
         dataList.add({...value, 'userId': key});
       });
-
       filteredList = List.from(dataList);
       setState(() {});
-      print(filteredList);
+    }
+    print(filteredList);
+  }
+  void _deleteData(String userId) async {
+    try {
+      await databaseReference
+          .child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/${widget.level}/${userId}')
+          .remove();
+        dataList.removeWhere((element) => element['userId'] == userId);
+        filteredList.removeWhere((element) => element['userId'] == userId);
+    } catch (e) {
+      print('Failed to delete: $e');
     }
   }
   void _filterSearchResults(String query) {
@@ -144,6 +157,11 @@ class _YourPageState extends State<YourPage> {
                 return ListTile(
                   title: Text('Teacher: ${filteredList[index]['teacher']}'),
                   subtitle: Text('Date: ${filteredList[index]['date']}'),
+                  trailing: _auth.currentUser?.uid == filteredList[index]['userId']
+                  ?IconButton(
+                      onPressed: (){print(filteredList[index]["userId"]);_deleteData(filteredList[index]['userId']);},
+                      icon: Icon(Icons.delete)):
+                      null,
                   onTap: (){
                     getPythonQuestions(filteredList[index]);
                   },
