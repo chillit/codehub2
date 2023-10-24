@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class MyForm extends StatefulWidget {
   @override
   State<MyForm> createState() => _MyFormState();
@@ -14,15 +14,18 @@ class _MyFormState extends State<MyForm> {
   List<Map<String, dynamic>> _formData = [];
   List<Map<String, dynamic>> _questionsData = [];
   String textAnswerValue = '';
-  String component = 'Первый';
+  String component = "";
   int topic = 1;
-  String exam = "igcse";
+  String exam = "";
   int levelValue = 1;
   String linkValue = '';
   String bigTextValue = '';
   String language = "ru";
+  bool isUntSelected = false;
+
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   String name = "";
+
 
   void _saveToDatabase() async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
@@ -80,7 +83,7 @@ class _MyFormState extends State<MyForm> {
               SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Выберите язык: '),
+                  Text('${AppLocalizations.of(context)!.chooselan}: '),
                   DropdownButton<String>(
                     value: language,
                     items: <String>['ru', 'en', 'kz'].map((String value) {
@@ -100,10 +103,10 @@ class _MyFormState extends State<MyForm> {
               SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Выберите экзамен: '),
+                  Text('${AppLocalizations.of(context)!.chooseexam}: '),
                   DropdownButton<String>(
                     value: exam,
-                    items: <String>['igcse', 'ent'].map((String value) {
+                    items: <String>["",'${AppLocalizations.of(context)!.igcse}', '${AppLocalizations.of(context)!.unt}'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -112,18 +115,24 @@ class _MyFormState extends State<MyForm> {
                     onChanged: (String? newValue) {
                       setState(() {
                         exam = newValue!;
+                        if (newValue == '${AppLocalizations.of(context)!.unt}') {
+                          isUntSelected = true;
+                        } else {
+                          isUntSelected = false;
+                        }
                       });
                     },
                   ),
+
                 ],
               ),
               SizedBox(height: 20),
-              Row(
+              !isUntSelected?Row(
                 children: [
-                  Text('Выберите компонент: '),
+                  Text('${AppLocalizations.of(context)!.choosecom}: '),
                   DropdownButton<String>(
                     value: component,
-                    items: <String>['Первый', 'Второй'].map((String value) {
+                    items: <String>["",'${AppLocalizations.of(context)!.first}', '${AppLocalizations.of(context)!.second}'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -136,11 +145,11 @@ class _MyFormState extends State<MyForm> {
                     },
                   ),
                 ],
-              ),
-              SizedBox(height: 20),
+              ):Container(),
+              !isUntSelected?SizedBox(height: 20):Container(),
               Row(
                 children: [
-                  Text('Выберите тему: '),
+                  Text('${AppLocalizations.of(context)!.chstopic}: '),
                   DropdownButton<int>(
                     value: topic,
                     items: <int>[1, 2, 3, 4, 5, 6].map((int value) {
@@ -160,7 +169,7 @@ class _MyFormState extends State<MyForm> {
               SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Выберите уровень: '),
+                  Text('${AppLocalizations.of(context)!.chooselvl}: '),
                   DropdownButton<int>(
                     value: levelValue,
                     items: <int>[1, 2, 3, 4, 5, 6].map((int value) {
@@ -185,7 +194,7 @@ class _MyFormState extends State<MyForm> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: 'Введите ссылку',
+                  labelText: '${AppLocalizations.of(context)!.typelink}',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -198,7 +207,7 @@ class _MyFormState extends State<MyForm> {
                 },
                 maxLines: 5,
                 decoration: InputDecoration(
-                  labelText: 'Введите большой текст',
+                  labelText: '${AppLocalizations.of(context)!.typebigt}',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -207,13 +216,13 @@ class _MyFormState extends State<MyForm> {
                 return Column(
                   children: [
                     for (var question in _questionsData) ...[
-                      Text("Question: ${question['question']}"),
-                      Text("Type: ${question['questionType']}"),
+                      Text("${AppLocalizations.of(context)!.question}: ${question['question']}"),
+                      Text("${AppLocalizations.of(context)!.type}: ${question['questionType']}"),
                       if (question['questionType'] == 'Выборочная') ...[
-                        Text("Options: ${question['options']}"),
-                        Text("Correct Answer Index: ${question['correctAnswerIndex']}"),
+                        Text("${AppLocalizations.of(context)!.options}: ${question['options']}"),
+                        Text("${AppLocalizations.of(context)!.correctansi}: ${question['correctAnswerIndex']}"),
                       ] else ...[
-                        Text("Answer: ${question['textAnswer']}"),
+                        Text("${AppLocalizations.of(context)!.answer}: ${question['textAnswer']}"),
                       ],
                       SizedBox(height: 10),
                     ],
@@ -244,14 +253,14 @@ class _MyFormState extends State<MyForm> {
                                               newQuestion = value;
                                             },
                                             decoration: InputDecoration(
-                                              labelText: 'Введите вопрос',
+                                              labelText: '${AppLocalizations.of(context)!.typeque}',
                                               border: OutlineInputBorder(),
                                             ),
                                           ),
                                           SizedBox(height: 20),
                                           DropdownButton<String>(
                                             value: questionType,
-                                            items: <String>['Выборочная', 'Текстовая'].map((String value) {
+                                            items: <String>['${AppLocalizations.of(context)!.multiplech}', '${AppLocalizations.of(context)!.textinput}'].map((String value) {
                                               return DropdownMenuItem<String>(
                                                 value: value,
                                                 child: Text(value),
@@ -263,7 +272,7 @@ class _MyFormState extends State<MyForm> {
                                                 options.clear();
                                               });
                                             },
-                                            hint: Text('Выберите тип вопроса'),
+                                            hint: Text('${AppLocalizations.of(context)!.choosetypeq}'),
                                           ),
                                           SizedBox(height: 20),
                                           if (questionType == 'Выборочная') ...{
@@ -275,7 +284,7 @@ class _MyFormState extends State<MyForm> {
                                                     options.add(value);
                                                   },
                                                   decoration: InputDecoration(
-                                                    labelText: 'Введите вариант ответа ${i + 1}',
+                                                    labelText: '${AppLocalizations.of(context)!.choosetypeq} ${i + 1}',
                                                     border: OutlineInputBorder(),
                                                   ),
                                                 ),
@@ -285,7 +294,7 @@ class _MyFormState extends State<MyForm> {
                                                 correctAnswerIndex = int.tryParse(value) ?? 0;
                                               },
                                               decoration: InputDecoration(
-                                                labelText: 'Индекс правильного ответа',
+                                                labelText: '${AppLocalizations.of(context)!.correctansi}',
                                                 border: OutlineInputBorder(),
                                               ),
                                             ),
@@ -295,7 +304,7 @@ class _MyFormState extends State<MyForm> {
                                                 textAnswerValue = value;
                                               },
                                               decoration: InputDecoration(
-                                                labelText: 'Введите правильный ответ',
+                                                labelText: '${AppLocalizations.of(context)!.typecorans}',
                                                 border: OutlineInputBorder(),
                                               ),
                                             ),
@@ -326,7 +335,7 @@ class _MyFormState extends State<MyForm> {
                                               });
                                               Navigator.of(context).pop();
                                             },
-                                            child: Text('Добавить'),
+                                            child: Text('${AppLocalizations.of(context)!.add}'),
                                           ),
                                         ],
                                       ),

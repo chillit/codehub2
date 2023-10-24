@@ -2,7 +2,7 @@ import 'package:duolingo/src/home/main_screen/questions/question.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'models/question_class.dart';
 
 class YourPage extends StatefulWidget {
@@ -141,8 +141,8 @@ class _YourPageState extends State<YourPage> {
                 _filterSearchResults(value);
               },
               decoration: InputDecoration(
-                labelText: "Search by Teacher",
-                hintText: "Search by Teacher",
+                labelText: "${AppLocalizations.of(context)!.searchbyt}",
+                hintText: "${AppLocalizations.of(context)!.searchbyt}",
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -155,8 +155,8 @@ class _YourPageState extends State<YourPage> {
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('Teacher: ${filteredList[index]['teacher']}'),
-                  subtitle: Text('Date: ${filteredList[index]['date']}'),
+                  title: Text('${AppLocalizations.of(context)!.teacher}: ${filteredList[index]['teacher']}'),
+                  subtitle: Text('${AppLocalizations.of(context)!.date}: ${filteredList[index]['date']}'),
                   trailing: _auth.currentUser?.uid == filteredList[index]['userId']
                   ?IconButton(
                       onPressed: (){print(filteredList[index]["userId"]);_deleteData(filteredList[index]['userId']);},
