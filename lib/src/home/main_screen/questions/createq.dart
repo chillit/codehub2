@@ -15,40 +15,78 @@ class _MyFormState extends State<MyForm> {
   List<Map<String, dynamic>> _questionsData = [];
   String textAnswerValue = '';
   String component = "";
-  int topic = 1;
+  String topic = '';
   String exam = "";
-  int levelValue = 1;
+  String levelValue = '';
   String linkValue = '';
   String bigTextValue = '';
-  String language = "ru";
+  String language = "";
   bool isUntSelected = false;
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   String name = "";
 
-
+  void _addQuestion(String newQuestion, String questionType, List<String> options, int correctAnswerIndex, String textAnswerValue) {
+    setState(() {
+      if (questionType == '${AppLocalizations.of(context)!.multiplech}') {
+        _questionsData.add({
+          'question': newQuestion,
+          'questionType': "multipleChoice",
+          'options': List.from(options),
+          'correctAnswerIndex': correctAnswerIndex,
+        });
+      } else {
+        _questionsData.add({
+          'question': newQuestion,
+          'questionType': "textInput",
+          'textAnswer': textAnswerValue,
+        });
+      }
+    });
+  }
   void _saveToDatabase() async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user == null) {
         print('User is currently signed out!');
       } else {
-        String currentDate = DateTime.now().toIso8601String().split('T')[0];
-        final nameSnapshot =
-        await _database.reference().child('users/${user.uid}/Username').once();
-        name = nameSnapshot.snapshot.value?.toString() ?? '';
-        referenceDatabase
-            .child(
-            'exams/${language}/${exam}/${component == "Первый" ? 0 : 1}/${topic - 1}/${levelValue - 1}/${user.uid}')
-            .set({
-          'link': linkValue,
-          'Text': bigTextValue,
-          'teacher': name,
-          'date': currentDate,
-          'questions': _questionsData,
-        });
+        if (language.isEmpty || exam.isEmpty || (isUntSelected && component.isEmpty) || topic.isEmpty || levelValue.isEmpty) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text('Please fill in all dropdowns.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          String currentDate = DateTime.now().toIso8601String().split('T')[0];
+          final nameSnapshot =
+          await _database.reference().child('users/${user.uid}/Username').once();
+          name = nameSnapshot.snapshot.value?.toString() ?? '';
+          referenceDatabase
+              .child(
+              'exams/${language}/${exam}/${component == "${AppLocalizations.of(context)!.first}" ? 0 : 1}/${int.parse(topic) - 1}/${int.parse(levelValue) - 1}/${user.uid}')
+              .set({
+            'link': linkValue,
+            'Text': bigTextValue,
+            'teacher': name,
+            'date': currentDate,
+            'questions': _questionsData,
+          });
+        }
       }
     });
   }
+
 
   void _getDataFromDatabase() {
     referenceDatabase.child('formData').once().then((DatabaseEvent snapshot) {
@@ -86,7 +124,7 @@ class _MyFormState extends State<MyForm> {
                   Text('${AppLocalizations.of(context)!.chooselan}: '),
                   DropdownButton<String>(
                     value: language,
-                    items: <String>['ru', 'en', 'kz'].map((String value) {
+                    items: <String>['','ru', 'en', 'kz'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -132,7 +170,7 @@ class _MyFormState extends State<MyForm> {
                   Text('${AppLocalizations.of(context)!.choosecom}: '),
                   DropdownButton<String>(
                     value: component,
-                    items: <String>["",'${AppLocalizations.of(context)!.first}', '${AppLocalizations.of(context)!.second}'].map((String value) {
+                    items: <String>['','${AppLocalizations.of(context)!.first}', '${AppLocalizations.of(context)!.second}'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -150,15 +188,15 @@ class _MyFormState extends State<MyForm> {
               Row(
                 children: [
                   Text('${AppLocalizations.of(context)!.chstopic}: '),
-                  DropdownButton<int>(
+                  DropdownButton<String>(
                     value: topic,
-                    items: <int>[1, 2, 3, 4, 5, 6].map((int value) {
-                      return DropdownMenuItem<int>(
+                    items: <String>['','1','2','3','4','5','6'].map((String value) {
+                      return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value.toString()),
+                        child: Text(value),
                       );
                     }).toList(),
-                    onChanged: (int? newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
                         topic = newValue!;
                       });
@@ -170,15 +208,15 @@ class _MyFormState extends State<MyForm> {
               Row(
                 children: [
                   Text('${AppLocalizations.of(context)!.chooselvl}: '),
-                  DropdownButton<int>(
+                  DropdownButton<String>(
                     value: levelValue,
-                    items: <int>[1, 2, 3, 4, 5, 6].map((int value) {
-                      return DropdownMenuItem<int>(
+                    items: <String>['','1','2','3','4','5','6'].map((String value) {
+                      return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value.toString()),
+                        child: Text(value),
                       );
                     }).toList(),
-                    onChanged: (int? newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
                         levelValue = newValue!;
                       });
@@ -232,7 +270,7 @@ class _MyFormState extends State<MyForm> {
                           context: context,
                           builder: (BuildContext context) {
                             String newQuestion = '';
-                            String questionType = 'Выборочная';
+                            String questionType = '';
                             List<String> options = [];
                             int correctAnswerIndex = 0;
                             String textAnswerValue = '';
@@ -260,7 +298,7 @@ class _MyFormState extends State<MyForm> {
                                           SizedBox(height: 20),
                                           DropdownButton<String>(
                                             value: questionType,
-                                            items: <String>['${AppLocalizations.of(context)!.multiplech}', '${AppLocalizations.of(context)!.textinput}'].map((String value) {
+                                            items: <String>['','${AppLocalizations.of(context)!.multiplech}', '${AppLocalizations.of(context)!.textinput}'].map((String value) {
                                               return DropdownMenuItem<String>(
                                                 value: value,
                                                 child: Text(value),
@@ -275,7 +313,7 @@ class _MyFormState extends State<MyForm> {
                                             hint: Text('${AppLocalizations.of(context)!.choosetypeq}'),
                                           ),
                                           SizedBox(height: 20),
-                                          if (questionType == 'Выборочная') ...{
+                                          if (questionType == '${AppLocalizations.of(context)!.multiplech}') ...{
                                             for (int i = 0; i < 4; i++)
                                               Padding(
                                                 padding: EdgeInsets.only(bottom: 10),
@@ -312,27 +350,7 @@ class _MyFormState extends State<MyForm> {
                                           SizedBox(height: 20),
                                           ElevatedButton(
                                             onPressed: () {
-                                              setState(() {
-                                                if (questionType == 'Выборочная') {
-                                                  _questionsData.add({
-                                                    'question': newQuestion,
-                                                    'questionType': "multipleChoice",
-                                                    'options': List.from(options),
-                                                    'correctAnswerIndex': correctAnswerIndex,
-                                                  });
-                                                } else {
-                                                  _questionsData.add({
-                                                    'question': newQuestion,
-                                                    'questionType': "textInput",
-                                                    'correctInputAns': textAnswerValue,
-                                                  });
-                                                }
-                                                newQuestion = '';
-                                                questionType = 'Выборочная';
-                                                options.clear();
-                                                correctAnswerIndex = 0;
-                                                textAnswerValue = '';
-                                              });
+                                              _addQuestion(newQuestion, questionType, options, correctAnswerIndex, textAnswerValue);
                                               Navigator.of(context).pop();
                                             },
                                             child: Text('${AppLocalizations.of(context)!.add}'),
@@ -358,13 +376,6 @@ class _MyFormState extends State<MyForm> {
                   _saveToDatabase();
                 },
                 child: Text('Отправить'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _getDataFromDatabase();
-                },
-                child: Text('Получить данные'),
               ),
             ],
           ),
