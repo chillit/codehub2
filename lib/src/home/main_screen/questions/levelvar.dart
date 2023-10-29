@@ -42,8 +42,8 @@ class _YourPageState extends State<YourPage> {
 
   void fetchData() async {
     print(_auth.currentUser?.uid);
-    final DatabaseEvent dataSnapshot = await databaseReference.child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/${widget.level}').once();
-    print("${widget.userLocale}, ${widget.userLanguage} ${widget.component}, ${widget.topic}, ${widget.level}");
+    final DatabaseEvent dataSnapshot = widget.userLanguage == "igcse"?await databaseReference.child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/${widget.level}').once()
+        :await databaseReference.child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.topic}/${widget.level}').once();
     Map<dynamic, dynamic> values = dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
     if (values != null) {
       values.forEach((key, value) {
@@ -55,14 +55,31 @@ class _YourPageState extends State<YourPage> {
     print(filteredList);
   }
   void _deleteData(String userId) async {
-    try {
-      await databaseReference
-          .child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/${widget.level}/${userId}')
-          .remove();
-        dataList.removeWhere((element) => element['userId'] == userId);
-        filteredList.removeWhere((element) => element['userId'] == userId);
-    } catch (e) {
-      print('Failed to delete: $e');
+    if (widget.userLanguage == "igcse") {
+      try {
+        await databaseReference
+            .child(
+            'exams/${widget.userLocale}/${widget.userLanguage}/${widget.component}/${widget.topic}/${widget.level}/${userId}')
+            .remove();
+        setState(() {
+          dataList.removeWhere((element) => element['userId'] == userId);
+          filteredList.removeWhere((element) => element['userId'] == userId);
+        });
+      } catch (e) {
+        print('Failed to delete: $e');
+      }
+    } else {
+      try {
+        await databaseReference
+            .child('exams/${widget.userLocale}/${widget.userLanguage}/${widget.topic}/${widget.level}/${userId}')
+            .remove();
+        setState(() {
+          dataList.removeWhere((element) => element['userId'] == userId);
+          filteredList.removeWhere((element) => element['userId'] == userId);
+        });
+      } catch (e) {
+        print('Failed to delete: $e');
+      }
     }
   }
   void _filterSearchResults(String query) {
