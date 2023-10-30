@@ -365,10 +365,7 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             height: 50,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width * 0.40,
+                            width: MediaQuery.of(context).size.width * 0.40,
                             child: ListTile(
                                 leading: Icon(
                                   Icons.local_fire_department_rounded,
@@ -383,28 +380,23 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Card(
-                          child: Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              height: 50,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.40,
-                              child: ListTile(
-                                  leading: Icon(
-                                    Icons.language,
-                                    color: Colors.amber,
-                                  ),
-                                  title: Text(
-                                    language == "CS" ? "C#" : "$language",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  )),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
                             ),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.40,
+                            child: ListTile(
+                                leading: Icon(
+                                  Icons.language,
+                                  color: Colors.amber,
+                                ),
+                                title: Text(
+                                  language == "CS" ? "C#" : "$language",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                )),
                           ),
                         ),
                       ],
