@@ -143,8 +143,16 @@ class _YourPageState extends State<YourPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Page'),
-      ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Color.fromRGBO(126,74,59, 1),size: 32),
+        flexibleSpace: Center(
+        child: Image.asset(
+        'assets/images/Small_Logo.png',
+        height: MediaQuery.of(context).size.width, // Adjust the height as needed
+        width: MediaQuery.of(context).size.width, // Use the full width of the screen
+    ),
+    ),),
       body: dataList.isEmpty
           ? Center(
         child: CircularProgressIndicator(),

@@ -118,286 +118,363 @@ class _MyFormState extends State<MyForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.grey,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text('${AppLocalizations.of(context)!.chooselan}: '),
-                  DropdownButton<String>(
-                    value: language,
-                    items: <String>['','ru', 'en', 'kz'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        language = newValue!;
-                      });
-                    },
-                  ),
-                ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/Background.png"), // Replace with your image asset path
+                fit: BoxFit.cover,
               ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text('${AppLocalizations.of(context)!.chooseexam}: '),
-                  DropdownButton<String>(
-                    value: exam,
-                    items: <String>["",'${AppLocalizations.of(context)!.igcse}', '${AppLocalizations.of(context)!.unt}'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        exam = newValue!;
-                        if (newValue == '${AppLocalizations.of(context)!.unt}') {
-                          isUntSelected = true;
-                        } else {
-                          isUntSelected = false;
-                        }
-                      });
-                    },
-                  ),
-
-                ],
-              ),
-              SizedBox(height: 20),
-              !isUntSelected?Row(
-                children: [
-                  Text('${AppLocalizations.of(context)!.choosecom}: '),
-                  DropdownButton<String>(
-                    value: component,
-                    items: <String>['','${AppLocalizations.of(context)!.first}', '${AppLocalizations.of(context)!.second}'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        component = newValue!;
-                      });
-                    },
-                  ),
-                ],
-              ):Container(),
-              !isUntSelected?SizedBox(height: 20):Container(),
-              Row(
-                children: [
-                  Text('${AppLocalizations.of(context)!.chstopic}: '),
-                  DropdownButton<String>(
-                    value: topic,
-                    items: <String>['','1','2','3','4','5','6'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        topic = newValue!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text('${AppLocalizations.of(context)!.chooselvl}: '),
-                  DropdownButton<String>(
-                    value: levelValue,
-                    items: <String>['','1','2','3','4','5','6'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        levelValue = newValue!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    linkValue = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: '${AppLocalizations.of(context)!.typelink}',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    bigTextValue = value;
-                  });
-                },
-                maxLines: 5,
-                decoration: InputDecoration(
-                  labelText: '${AppLocalizations.of(context)!.typebigt}',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 20),
-              StatefulBuilder(builder: (context, setState) {
-                return Column(
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsetsDirectional.only(top:8.0,start: 16,end: 16),
+                child: Column(
                   children: [
-                    for (var question in _questionsData) ...[
-                      Text("${AppLocalizations.of(context)!.question}: ${question['question']}"),
-                      Text("${AppLocalizations.of(context)!.type}: ${question['questionType']}"),
-                      if (question['questionType'] == 'Выборочная') ...[
-                        Text("${AppLocalizations.of(context)!.options}: ${question['options']}"),
-                        Text("${AppLocalizations.of(context)!.correctansi}: ${question['correctAnswerIndex']}"),
-                      ] else ...[
-                        Text("${AppLocalizations.of(context)!.answer}: ${question['textAnswer']}"),
+                    SizedBox(height: 15,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          iconSize: 38,
+                          icon: Icon(
+
+                            Icons.arrow_back,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ],
-                      SizedBox(height: 10),
-                    ],
-                    ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            String newQuestion = '';
-                            String questionType = '';
-                            List<String> options = [];
-                            int correctAnswerIndex = 0;
-                            String textAnswerValue = '';
-                            return StatefulBuilder(
-                              builder: (context, setState) {
-                                return Dialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.all(20),
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          TextFormField(
-                                            onChanged: (value) {
-                                              newQuestion = value;
-                                            },
-                                            decoration: InputDecoration(
-                                              labelText: '${AppLocalizations.of(context)!.typeque}',
-                                              border: OutlineInputBorder(),
-                                            ),
-                                          ),
-                                          SizedBox(height: 20),
-                                          DropdownButton<String>(
-                                            value: questionType,
-                                            items: <String>['','${AppLocalizations.of(context)!.multiplech}', '${AppLocalizations.of(context)!.textinput}'].map((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                            onChanged: (String? newValue) {
-                                              setState(() {
-                                                questionType = newValue!;
-                                                options.clear();
-                                              });
-                                            },
-                                            hint: Text('${AppLocalizations.of(context)!.choosetypeq}'),
-                                          ),
-                                          SizedBox(height: 20),
-                                          if (questionType == '${AppLocalizations.of(context)!.multiplech}') ...{
-                                            for (int i = 0; i < 4; i++)
-                                              Padding(
-                                                padding: EdgeInsets.only(bottom: 10),
-                                                child: TextFormField(
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${AppLocalizations.of(context)!.chooselan}: '),
+                        SizedBox(width: 10,),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.grey.withOpacity(0.4),
+                              border: Border.all()),
+                          child: DropdownButton<String>(
+                            value: language,
+                            items: <String>['','ru', 'en', 'kz'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                language = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${AppLocalizations.of(context)!.chooseexam}: '),
+                        SizedBox(width: 10,),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.grey.withOpacity(0.4),
+                              border: Border.all()),
+                          child: DropdownButton<String>(
+                            value: exam,
+                            items: <String>["",'${AppLocalizations.of(context)!.igcse}', '${AppLocalizations.of(context)!.unt}'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                exam = newValue!;
+                                if (newValue == '${AppLocalizations.of(context)!.unt}') {
+                                  isUntSelected = true;
+                                } else {
+                                  isUntSelected = false;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    !isUntSelected?Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${AppLocalizations.of(context)!.choosecom}: '),
+                        SizedBox(width: 10,),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.grey.withOpacity(0.4),
+                              border: Border.all()),
+                          child: DropdownButton<String>(
+                            value: component,
+                            items: <String>['','${AppLocalizations.of(context)!.first}', '${AppLocalizations.of(context)!.second}'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                component = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ):Container(),
+                    !isUntSelected?SizedBox(height: 20):Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${AppLocalizations.of(context)!.chstopic}: '),
+                        SizedBox(width: 10,),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.grey.withOpacity(0.4),
+                              border: Border.all()),
+                          child: DropdownButton<String>(
+                            value: topic,
+                            items: <String>['','1','2','3','4','5','6'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                topic = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${AppLocalizations.of(context)!.chooselvl}: '),
+                        SizedBox(width: 10,),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.grey.withOpacity(0.4),
+                              border: Border.all()),
+                          child: DropdownButton<String>(
+                            value: levelValue,
+                            items: <String>['','1','2','3','4','5','6'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                levelValue = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          linkValue = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '${AppLocalizations.of(context)!.typelink}',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          bigTextValue = value;
+                        });
+                      },
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        labelText: '${AppLocalizations.of(context)!.typebigt}',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    StatefulBuilder(builder: (context, setState) {
+                      return Column(
+                        children: [
+                          for (var question in _questionsData) ...[
+                            Text("${AppLocalizations.of(context)!.question}: ${question['question']}"),
+                            Text("${AppLocalizations.of(context)!.type}: ${question['questionType']}"),
+                            if (question['questionType'] == 'Выборочная') ...[
+                              Text("${AppLocalizations.of(context)!.options}: ${question['options']}"),
+                              Text("${AppLocalizations.of(context)!.correctansi}: ${question['correctAnswerIndex']}"),
+                            ] else ...[
+                              Text("${AppLocalizations.of(context)!.answer}: ${question['textAnswer']}"),
+                            ],
+                            SizedBox(height: 10),
+                          ],
+                          ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  String newQuestion = '';
+                                  String questionType = '';
+                                  List<String> options = [];
+                                  int correctAnswerIndex = 0;
+                                  String textAnswerValue = '';
+                                  return StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return Dialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.all(20),
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                TextFormField(
                                                   onChanged: (value) {
-                                                    options.add(value);
+                                                    newQuestion = value;
                                                   },
                                                   decoration: InputDecoration(
-                                                    labelText: '${AppLocalizations.of(context)!.choosetypeq} ${i + 1}',
+                                                    labelText: '${AppLocalizations.of(context)!.typeque}',
                                                     border: OutlineInputBorder(),
                                                   ),
                                                 ),
-                                              ),
-                                            TextFormField(
-                                              onChanged: (value) {
-                                                correctAnswerIndex = int.tryParse(value) ?? 0;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: '${AppLocalizations.of(context)!.correctansi}',
-                                                border: OutlineInputBorder(),
-                                              ),
+                                                SizedBox(height: 20),
+                                                DropdownButton<String>(
+                                                  value: questionType,
+                                                  items: <String>['','${AppLocalizations.of(context)!.multiplech}', '${AppLocalizations.of(context)!.textinput}'].map((String value) {
+                                                    return DropdownMenuItem<String>(
+                                                      value: value,
+                                                      child: Text(value),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (String? newValue) {
+                                                    setState(() {
+                                                      questionType = newValue!;
+                                                      options.clear();
+                                                    });
+                                                  },
+                                                  hint: Text('${AppLocalizations.of(context)!.choosetypeq}'),
+                                                ),
+                                                SizedBox(height: 20),
+                                                if (questionType == '${AppLocalizations.of(context)!.multiplech}') ...{
+                                                  for (int i = 0; i < 4; i++)
+                                                    Padding(
+                                                      padding: EdgeInsets.only(bottom: 10),
+                                                      child: TextFormField(
+                                                        onChanged: (value) {
+                                                          options.add(value);
+                                                        },
+                                                        decoration: InputDecoration(
+                                                          labelText: '${AppLocalizations.of(context)!.choosetypeq} ${i + 1}',
+                                                          border: OutlineInputBorder(),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  TextFormField(
+                                                    onChanged: (value) {
+                                                      correctAnswerIndex = int.tryParse(value) ?? 0;
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      labelText: '${AppLocalizations.of(context)!.correctansi}',
+                                                      border: OutlineInputBorder(),
+                                                    ),
+                                                  ),
+                                                } else ...{
+                                                  TextFormField(
+                                                    onChanged: (value) {
+                                                      textAnswerValue = value;
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      labelText: '${AppLocalizations.of(context)!.typecorans}',
+                                                      border: OutlineInputBorder(),
+                                                    ),
+                                                  ),
+                                                },
+                                                SizedBox(height: 20),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    _addQuestion(newQuestion, questionType, options, correctAnswerIndex, textAnswerValue);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('${AppLocalizations.of(context)!.add}'),
+                                                ),
+                                              ],
                                             ),
-                                          } else ...{
-                                            TextFormField(
-                                              onChanged: (value) {
-                                                textAnswerValue = value;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: '${AppLocalizations.of(context)!.typecorans}',
-                                                border: OutlineInputBorder(),
-                                              ),
-                                            ),
-                                          },
-                                          SizedBox(height: 20),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              _addQuestion(newQuestion, questionType, options, correctAnswerIndex, textAnswerValue);
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('${AppLocalizations.of(context)!.add}'),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      child: Icon(Icons.add),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            child: Icon(Icons.add),
+                            style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(126,74,59, 1), // Set the button background color
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0), // Add rounded corners
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 20.0), // Adjust horizontal padding
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                    SizedBox(height: 20),
+                     Container(
+                       decoration: BoxDecoration(
+                         border: Border.all(color: Colors.black54, width: 1.0),
+                         borderRadius: BorderRadius.circular(15.0),
+                       ),
+                       child: IconButton(
+                        onPressed: () {
+                          _saveToDatabase();
+                        },
+                        icon: Icon(Icons.send), // Use the send icon
+                        iconSize: 68, // Adjust the icon size
+                        color: Color.fromRGBO(126,74,59, 1), // Change the icon color
                     ),
+                     ),
+                    SizedBox(height: 50,)
                   ],
-                );
-              }),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _saveToDatabase();
-                },
-                child: Text('Отправить'),
+                ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
