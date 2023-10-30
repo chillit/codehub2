@@ -1,6 +1,5 @@
 {
     "haveacc": "Already have an account",
-
     "wantlearn": "I want to prepare for...",
     "descrip": "The free, fun, and \n effective way to learn  programming!",
     "getstarted": "GET STARTED",
@@ -76,5 +75,6 @@
     "typeoption": "Type the option",
     "indexofcorans": "Index of the correct answer",
     "typecorans": "Type the correct answer",
-    "add": "ADD"
+    "add": "ADD",
+    "forgot": "If you forgot your data contact us:"
 }

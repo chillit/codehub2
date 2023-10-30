@@ -73,7 +73,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(AppLocalizations.of(context)!.getstarted,
                       style: TextStyle(
-
                         fontSize: 13,
                         color: Color.fromRGBO(221,196,173, 1),
                       ),),
@@ -106,7 +105,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(AppLocalizations.of(context)!.haveacc.toUpperCase(),style:
                     TextStyle(
-
                       fontSize: 13,
                       color: Color.fromRGBO(221,196,173, 1),
                     ),),

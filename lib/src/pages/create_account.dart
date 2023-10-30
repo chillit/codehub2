@@ -897,7 +897,6 @@ class _LogINaccountState extends State<LogINaccount> {
                   SizedBox(height: 30,),
                   RichText(
                     text: TextSpan(
-
                       children: <TextSpan>[
                         TextSpan(text: AppLocalizations.of(context)!.dontacc),
                         TextSpan(
@@ -908,6 +907,34 @@ class _LogINaccountState extends State<LogINaccount> {
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage(setLocale: widget.setLocale,)));
                               }),
                       ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Text(
+                        AppLocalizations.of(context)!.forgot,
+                        style: TextStyle(
+
+                          fontSize: 16, // You can adjust the font size as needed
+                          color: Colors.black54, // You can adjust the text color
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Text(
+                        "nazarakanov@gmail.com",
+                        style: TextStyle(
+                          fontSize: 16, // You can adjust the font size as needed
+                          color: Colors.black54, // You can adjust the text color
+                        ),
+                      ),
                     ),
                   ),
                 ],
