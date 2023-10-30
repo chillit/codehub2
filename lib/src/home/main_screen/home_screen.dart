@@ -144,6 +144,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
   int userLevel = 0;
   String userLanguage = "";
   String userLocale = "";
+  String role = "";
 
 
   bool isLoading = true; // Add this variable to track loading state
@@ -162,13 +163,14 @@ class _qHomeScreenState extends State<qHomeScreen> {
       final levelRef = _database.reference().child('users/$currentUserUID/topics/${widget.component}/${widget.topic}');
       final languageRef = _database.reference().child('users/$currentUserUID/language');
       final localeSnapshot = await _database.reference().child('users/$currentUserUID/locale').once();
-
+      final roleSnapshot = await _database.ref().child('users/$currentUserUID/role').once();
 
       DatabaseEvent levelSnapshot = await levelRef.once();
       DatabaseEvent languageSnapshot = await languageRef.once();
       userLevel = levelSnapshot.snapshot.value as int;
       userLocale = localeSnapshot.snapshot.value?.toString() ?? '';
       userLanguage = languageSnapshot.snapshot.value?.toString() ?? '';
+      role = roleSnapshot.snapshot.value?.toString() ?? "";
       setState(() {
         isLoading = false; // Set loading to false when data is fetched
       });
@@ -580,10 +582,10 @@ class _qHomeScreenState extends State<qHomeScreen> {
                       ),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(
+                          role=="teacher"?Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) =>  MyForm()),
-                          );
+                          ):null;
                         },
                         child: Image.asset(
                           "assets/images/home_screen/lesson_divisor_castle.png",

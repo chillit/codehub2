@@ -49,7 +49,7 @@ class _MyFormState extends State<MyForm> {
       if (user == null) {
         print('User is currently signed out!');
       } else {
-        if (language.isEmpty || exam.isEmpty || (isUntSelected && component.isEmpty) || topic.isEmpty || levelValue.isEmpty) {
+        if ((exam == "igcse" && (language.isEmpty || exam.isEmpty || (isUntSelected && component.isEmpty) || topic.isEmpty || levelValue.isEmpty)) || (isUntSelected && language.isEmpty || exam.isEmpty || topic.isEmpty || levelValue.isEmpty)) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -68,20 +68,38 @@ class _MyFormState extends State<MyForm> {
             },
           );
         } else {
-          String currentDate = DateTime.now().toIso8601String().split('T')[0];
-          final nameSnapshot =
-          await _database.reference().child('users/${user.uid}/Username').once();
-          name = nameSnapshot.snapshot.value?.toString() ?? '';
-          referenceDatabase
-              .child(
-              'exams/${language}/${exam}/${component == "${AppLocalizations.of(context)!.first}" ? 0 : 1}/${int.parse(topic) - 1}/${int.parse(levelValue) - 1}/${user.uid}')
-              .set({
-            'link': linkValue,
-            'Text': bigTextValue,
-            'teacher': name,
-            'date': currentDate,
-            'questions': _questionsData,
-          });
+          if(isUntSelected){
+            String currentDate = DateTime.now().toIso8601String().split('T')[0];
+            final nameSnapshot =
+            await _database.reference().child('users/${user.uid}/Username').once();
+            name = nameSnapshot.snapshot.value?.toString() ?? '';
+            referenceDatabase
+                .child(
+                'exams/${language}/ent/${int.parse(topic) - 1}/${int.parse(levelValue) - 1}/${user.uid}')
+                .set({
+              'link': linkValue,
+              'Text': bigTextValue,
+              'teacher': name,
+              'date': currentDate,
+              'questions': _questionsData,
+            });
+          }
+          else{
+            String currentDate = DateTime.now().toIso8601String().split('T')[0];
+            final nameSnapshot =
+            await _database.reference().child('users/${user.uid}/Username').once();
+            name = nameSnapshot.snapshot.value?.toString() ?? '';
+            referenceDatabase
+                .child(
+                'exams/${language}/igcse/${component == "${AppLocalizations.of(context)!.first}" ? 0 : 1}/${int.parse(topic) - 1}/${int.parse(levelValue) - 1}/${user.uid}')
+                .set({
+              'link': linkValue,
+              'Text': bigTextValue,
+              'teacher': name,
+              'date': currentDate,
+              'questions': _questionsData,
+            });
+          }
         }
       }
     });

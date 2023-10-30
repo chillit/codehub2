@@ -1,5 +1,7 @@
 import 'package:duolingo/src/components/circle_avatar.dart';
 import 'package:duolingo/src/home/main_screen/home.dart';
+import 'package:duolingo/src/home/main_screen/questions/createq.dart';
+import 'package:duolingo/src/home/main_screen/questions/levelvar.dart';
 import 'package:flutter/material.dart';
 import 'package:duolingo/src/home/main_screen/questions/question.dart';
 
@@ -21,7 +23,7 @@ class chooseent extends StatefulWidget {
 class _chooseentState extends State<chooseent> {
   void pree(topic){
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => HomeScreenEnt(setLocale: widget.setLocale,topic: topic,)));
+        MaterialPageRoute(builder: (context) => Home(currScreen: HomeScreenEnt(setLocale: widget.setLocale,topic: topic,),setLocale: widget.setLocale,)));
   }
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,8 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
   String userLanguage = "";
   String video = "";
   String text = "";
+  String userLocale = "";
+  String role = '';
 
   bool isLoading = true; // Add this variable to track loading state
 
@@ -110,15 +114,19 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
     final user = _auth.currentUser;
     if (user != null) {
       currentUserUID = user.uid;
+      currentUserUID = user.uid;
 
       final levelRef = _database.reference().child('users/$currentUserUID/topics/${widget.topic}');
       final languageRef = _database.reference().child('users/$currentUserUID/language');
-
+      final localeSnapshot = await _database.reference().child('users/$currentUserUID/locale').once();
+      final roleSnapshot = await _database.ref().child('users/$currentUserUID/role').once();
 
       DatabaseEvent levelSnapshot = await levelRef.once();
       DatabaseEvent languageSnapshot = await languageRef.once();
       userLevel = levelSnapshot.snapshot.value as int;
+      userLocale = localeSnapshot.snapshot.value?.toString() ?? '';
       userLanguage = languageSnapshot.snapshot.value?.toString() ?? '';
+      role = roleSnapshot.snapshot.value?.toString() ?? "";
       setState(() {
         isLoading = false; // Set loading to false when data is fetched
       });
@@ -220,7 +228,10 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
                   children: <Widget>[
                     InkWell(
                       onTap: () async {
-                        userLevel>=1?getPythonQuestions(0):null;
+                        userLevel>=1?Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => YourPage(setLocale: widget.setLocale,level: 0,userLanguage: userLanguage,userLocale: userLocale,topic: widget.topic,)),
+                        ):null;
                       },
                       child: userLevel<1?
                       CircleAvatarIndicator(Color(0xFF808080),"assets/images/mark.png"):userLevel>1?
@@ -509,9 +520,17 @@ class _HomeScreenEntState extends State<HomeScreenEnt> {
                               height: 50,
                             )),
                       ),
-                      Image.asset(
-                        "assets/images/home_screen/lesson_divisor_castle.png",
-                        height: 85,
+                      GestureDetector(
+                        onTap: (){
+                          role=="teacher"?Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  MyForm()),
+                          ):null;
+                        },
+                        child: Image.asset(
+                          "assets/images/home_screen/lesson_divisor_castle.png",
+                          height: 85,
+                        ),
                       ),
                       Expanded(
                         child: Container(
