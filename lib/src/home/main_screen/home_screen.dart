@@ -306,7 +306,10 @@ class _qHomeScreenState extends State<qHomeScreen> {
                         SizedBox(width: 110,),
                         InkWell(
                           onTap: () async {
-                            userLevel>=2?getPythonQuestions(1):null;
+                            userLevel>=2?Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => YourPage(setLocale: widget.setLocale,component: widget.component,level: 1,userLanguage: userLanguage,userLocale: userLocale,topic: widget.topic,)),
+                            ):null;
                           },
                           child: Column(
                             children: <Widget>[

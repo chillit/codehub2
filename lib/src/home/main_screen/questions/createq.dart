@@ -27,6 +27,7 @@ class _MyFormState extends State<MyForm> {
   String name = "";
 
   void _addQuestion(String newQuestion, String questionType, List<String> options, int correctAnswerIndex, String textAnswerValue) {
+    print(options);
     setState(() {
       if (questionType == '${AppLocalizations.of(context)!.multiplech}') {
         _questionsData.add({
@@ -385,6 +386,7 @@ class _MyFormState extends State<MyForm> {
                                   List<String> options = [];
                                   int correctAnswerIndex = 0;
                                   String textAnswerValue = '';
+                                  List<TextEditingController> optionControllers = List.generate(4, (index) => TextEditingController());
                                   return StatefulBuilder(
                                     builder: (context, setState) {
                                       return Dialog(
@@ -429,8 +431,9 @@ class _MyFormState extends State<MyForm> {
                                                     Padding(
                                                       padding: EdgeInsets.only(bottom: 10),
                                                       child: TextFormField(
+                                                        controller: optionControllers[i], // Используйте контроллеры
                                                         onChanged: (value) {
-                                                          options.add(value);
+                                                          options[i] = value; // Обновите соответствующий элемент в массиве options
                                                         },
                                                         decoration: InputDecoration(
                                                           labelText: '${AppLocalizations.of(context)!.choosetypeq} ${i + 1}',
@@ -461,6 +464,11 @@ class _MyFormState extends State<MyForm> {
                                                 SizedBox(height: 20),
                                                 ElevatedButton(
                                                   onPressed: () {
+                                                    // Пройдем по всем контроллерам, извлекаем их значения и добавляем в options
+                                                    for (var controller in optionControllers) {
+                                                      options.add(controller.text);
+                                                    }
+                                                    // Далее добавляем остальные значения
                                                     _addQuestion(newQuestion, questionType, options, correctAnswerIndex, textAnswerValue);
                                                     Navigator.of(context).pop();
                                                   },
