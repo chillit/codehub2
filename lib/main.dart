@@ -11,15 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();  await Firebase.initializeApp(
-      options: FirebaseOptions(
-          apiKey: "AIzaSyBHk2iDtSmaKDpYJNW9-vBIaKmwhf5ew7A",
-          authDomain: "codehub-c7682.firebaseapp.com",
-          databaseURL: "https://codehub-c7682-default-rtdb.europe-west1.firebasedatabase.app",
-          projectId: "codehub-c7682",
-          storageBucket: "codehub-c7682.appspot.com",
-          messagingSenderId: "396706515159",
-          appId: "1:396706515159:web:4c03e6fe2ad02db10b8892",
-          measurementId: "G-RKWVTXJTVZ"    )
+
   );  runApp(MyApp());
 }
 

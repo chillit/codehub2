@@ -83,6 +83,24 @@ class _MyFormState extends State<MyForm> {
               'date': currentDate,
               'questions': _questionsData,
             });
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("Created a level for UNT!"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+
           }
           else{
             String currentDate = DateTime.now().toIso8601String().split('T')[0];
@@ -103,6 +121,23 @@ class _MyFormState extends State<MyForm> {
         }
       }
     });
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Created a level for an IGCSE!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Ваша логика для isUntSelected is false
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
 
