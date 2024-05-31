@@ -19,8 +19,8 @@
     "sign_inb": "SIGN UP",
     "unt": "UNT",
     "igcse": "IGCSE",
-    "fcomp": "1 component",
-    "scomp": "2 component",
+    "fcomp": "Earthquake",
+    "scomp": "Flood",
     "chstopic": "Choose the topic...",
     "topic": "topic",
     "surequit": "Are you sure you want to quit?",
@@ -57,7 +57,7 @@
     "teacher": "Teacher",
     "date": "Date",
     "chooselan": "Choose the language",
-    "chooseexam": "Choose the exam",
+    "chooseexam": "Select amplitude...",
     "choosecom": "Choose the component",
     "first": "First",
     "second": "Second",
@@ -76,5 +76,6 @@
     "indexofcorans": "Index of the correct answer",
     "typecorans": "Type the correct answer",
     "add": "ADD",
-    "forgot": "If you forgot your data contact us:"
+    "forgot": "If you forgot your data contact us:",
+    "chooseamplitude": "Select amplitude..."
 }

@@ -46,9 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SquareImageTextWidget(imageUrl: 'assets/images/kz/earthquake.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
+                  SquareImageTextWidgetIM(imageUrl: 'assets/images/kz/earthquake.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
                   SizedBox(width: 20,),
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
+                  SquareImageTextWidgetIM(imageUrl: 'assets/images/kz/flood.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
                 ],),
             ],
           ),
@@ -82,7 +82,7 @@ class _chooseState extends State<choose> {
             children: [
 
               SizedBox(height: 40,),
-              Text(AppLocalizations.of(context)!.chstopic,
+              Text(AppLocalizations.of(context)!.chooseexam,
                 style: TextStyle(
 
                   fontSize: 32,
@@ -95,26 +95,20 @@ class _chooseState extends State<choose> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/1.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
-                      SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/2.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
+                      SquareImageTextWidgetAM(imageUrl: 'assets/images/safety/odin_chetyre.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
                     ],),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 25,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/3.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
-                      SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/4.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
-                    ],),
-                  SizedBox(height: 10,),
+                      SquareImageTextWidgetAM(imageUrl: 'assets/images/safety/chetyre.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5),
+                      ],),
+                  SizedBox(height: 25,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/5.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
-                      SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/6.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
-                    ],),
+                      SquareImageTextWidgetAM(imageUrl: 'assets/images/safety/sem.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
+                      ],),
                 ],
               ),
               SizedBox(height: 40,),
@@ -610,6 +604,68 @@ class _qHomeScreenState extends State<qHomeScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}class SquareImageTextWidgetIM extends StatelessWidget {
+  const SquareImageTextWidgetIM({
+    Key? key,
+    required this.imageUrl,
+    required this.text,
+    required this.language,
+    this.bg = const Color.fromRGBO(191, 153, 130, 0.3),
+    required this.press,
+    this.height = 1.8,
+  }) : super(key: key);
+  final void Function() press;
+  final String imageUrl;
+  final String text;
+  final String language;
+  final Color bg;
+  final double? height;
+  @override
+  Widget build(BuildContext context) {
+    // Get the screen dimensions
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+
+    double containerSize = screenWidth * 0.45;
+
+    return GestureDetector(
+      onTap: () {
+        press();
+      },
+      child: Container(
+        width: containerSize,
+        height: screenHeight/height!,
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: Color.fromRGBO(126, 74, 59, 1),
+            width: 1.5,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imageUrl,
+              width: containerSize * 0.8,
+              height: containerSize * 0.8,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 10), // Space between image and text
+            Text(
+              text,
+              style: TextStyle(
+
+                fontSize: containerSize * 0.1, // Adjust this factor as needed
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

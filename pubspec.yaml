@@ -142,6 +142,11 @@ flutter:
   - assets/images/kz/user.png
   - assets/images/kz/user-selected.jpg
   - assets/images/kz/earthquake.png
+  - assets/images/kz/flood.png
+  - assets/images/safety/safety-Appbar.png
+  - assets/images/safety/odin_chetyre.png
+  - assets/images/safety/chetyre.png
+  - assets/images/safety/sem.png
   
   
   #  - images/a_dot_ham.jpeg

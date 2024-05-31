@@ -143,6 +143,65 @@ class SquareImageTextWidget extends StatelessWidget {
   }
 }
 
+
+class SquareImageTextWidgetAM extends StatelessWidget {
+  const SquareImageTextWidgetAM({
+    Key? key,
+    required this.imageUrl,
+    required this.text,
+    required this.language,
+    this.bg = const Color.fromRGBO(191, 153, 130, 0.3),
+    required this.press,
+    this.height = 1.8,
+  }) : super(key: key);
+  final void Function() press;
+  final String imageUrl;
+  final String text;
+  final String language;
+  final Color bg;
+  final double? height;
+  @override
+  Widget build(BuildContext context) {
+    // Get the screen dimensions
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+
+    double containerSize = screenWidth * 0.45;
+
+    return GestureDetector(
+      onTap: () {
+        press();
+      },
+      child: Container(
+        width: screenWidth,
+        height: screenHeight/height!,
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: Color.fromRGBO(126, 74, 59, 1),
+            width: 1.5,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imageUrl,
+              width: containerSize * 0.8,
+              height: containerSize * 0.6,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 10), // Space between image and text
+
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class CreateUser extends StatefulWidget {
   final Function(Locale) setLocale;
   const CreateUser({Key? key,  required this.language,required this.setLocale}) : super(key: key);
