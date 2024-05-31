@@ -65,8 +65,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    const double _iconSize = 40;
-    const double _iconSizeSelected = 50;
+    const double _iconSize = 55;
+    const double _iconSizeSelected = 70;
     final AppBarHomeScreen appBar = AppBarHomeScreen();
 
     return isloading?
@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 120,
               child: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
                 currentIndex: _currentIndex,
@@ -108,8 +108,9 @@ class _HomeState extends State<Home> {
                     label: '',
                     icon: IconButton(
                       icon: _currentIndex == 0
-                          ? Images.selectedLessons
-                          : Images.tabLessons,
+                          ? Image.asset("assets/images/kz/book.png", width: _currentIndex == 0 ? _iconSizeSelected : _iconSize )
+                          : Image.asset("assets/images/kz/knigaBez.png", width: _currentIndex == 0 ? _iconSizeSelected : _iconSize),
+
                       onPressed: () {
                         fetchUser();
                         setState(() {
@@ -124,8 +125,8 @@ class _HomeState extends State<Home> {
                     label: '',
                     icon: IconButton(
                       icon: _currentIndex == 1
-                          ? Images.selectedRanking
-                          : Images.tabRanking,
+                          ? Image.asset("assets/images/kz/shitBez.png", width: _currentIndex == 1 ? 58: _iconSize)
+                          : Image.asset("assets/images/kz/shit.png", width: _currentIndex == 1 ? _iconSizeSelected : _iconSize),
                       onPressed: () {
                         setState(() {
                           _currentIndex = 1;
@@ -140,8 +141,9 @@ class _HomeState extends State<Home> {
                     label: '',
                     icon: IconButton(
                       icon: _currentIndex == 2
-                          ? Images.selectedProfile
-                          : Images.tabProfile,
+                          ? Image.asset("assets/images/kz/profile_kz.png", width: _currentIndex == 2 ? _iconSizeSelected : _iconSize)
+                          : Image.asset("assets/images/kz/profile_kzBez.png", width: _currentIndex == 2 ? _iconSizeSelected : _iconSize),
+
                       onPressed: () {
                         setState(() {
                           _currentIndex = 2;
