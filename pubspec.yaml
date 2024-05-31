@@ -139,6 +139,9 @@ flutter:
   - assets/images/kz/kozi.png
   - assets/images/kz/tarihnama.png
   - assets/images/kz/TN.png
+  - assets/images/kz/user.png
+  - assets/images/kz/user-selected.jpg
+  - assets/images/kz/earthquake.png
   
   
   #  - images/a_dot_ham.jpeg

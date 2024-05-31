@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/1.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
+                  SquareImageTextWidget(imageUrl: 'assets/images/kz/earthquake.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
                   SizedBox(width: 20,),
                   SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
                 ],),

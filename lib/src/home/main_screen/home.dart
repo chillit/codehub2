@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
                     icon: IconButton(
                       icon: _currentIndex == 1
                           ? Image.asset("assets/images/kz/shitBez.png", width: _currentIndex == 1 ? 58: _iconSize)
-                          : Image.asset("assets/images/kz/shit.png", width: _currentIndex == 1 ? _iconSizeSelected : _iconSize),
+                          : Image.asset("assets/images/kz/shit.png", width: _currentIndex == 1 ? _iconSizeSelected : 45),
                       onPressed: () {
                         setState(() {
                           _currentIndex = 1;
@@ -141,9 +141,8 @@ class _HomeState extends State<Home> {
                     label: '',
                     icon: IconButton(
                       icon: _currentIndex == 2
-                          ? Image.asset("assets/images/kz/profile_kz.png", width: _currentIndex == 2 ? _iconSizeSelected : _iconSize)
-                          : Image.asset("assets/images/kz/profile_kzBez.png", width: _currentIndex == 2 ? _iconSizeSelected : _iconSize),
-
+                          ?  Image.asset("assets/images/kz/user-selected.jpg", width: _currentIndex == 2 ? _iconSizeSelected : _iconSize)
+                          :  Image.asset("assets/images/kz/user.png", width:_currentIndex == 2 ? _iconSizeSelected : 45),
                       onPressed: () {
                         setState(() {
                           _currentIndex = 2;
