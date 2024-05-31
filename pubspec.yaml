@@ -127,6 +127,18 @@ flutter:
   - assets/images/exams/topics/4.png
   - assets/images/exams/topics/5.png
   - assets/images/exams/topics/6.png
+  #may-31-june-1-hackathon
+  - assets/images/kz/profile_kz.png
+  - assets/images/kz/shit.png
+  - assets/images/kz/book.png
+  - assets/images/kz/FlagF.png
+  - assets/images/kz/FlagS.png
+  - assets/images/kz/profile_kzBez.png
+  - assets/images/kz/shitBez.png
+  - assets/images/kz/knigaBez.png
+  - assets/images/kz/kozi.png
+  - assets/images/kz/tarihnama.png
+  - assets/images/kz/TN.png
   
   
   #  - images/a_dot_ham.jpeg
