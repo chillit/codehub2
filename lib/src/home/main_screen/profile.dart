@@ -360,45 +360,28 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Card(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                          child: Center(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.70,
+                              child: ListTile(
+                                  leading: Icon(
+                                    Icons.local_fire_department_rounded,
+                                    color: Colors.amber,
+                                  ),
+                                  title: Text(
+                                    "$userPoints",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )),
                             ),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.40,
-                            child: ListTile(
-                                leading: Icon(
-                                  Icons.local_fire_department_rounded,
-                                  color: Colors.amber,
-                                ),
-                                title: Text(
-                                  "$userPoints",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
                           ),
                         ),
-                        Card(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.40,
-                            child: ListTile(
-                                leading: Icon(
-                                  Icons.language,
-                                  color: Colors.amber,
-                                ),
-                                title: Text(
-                                  language == "CS" ? "C#" : "$language",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
-                          ),
-                        ),
+
                       ],
                     ),
                     const SizedBox(height: 30),
@@ -501,7 +484,8 @@ class _ProfileState extends State<Profile> {
                                   locale.languageCode=="en"?"Log Out":locale.languageCode=="ru"?"Выйти":"Шығу",),
                                 content: Text(
                                   locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шыққыңыз келетініне сенімдісіз бе?",
-                                  ),
+
+                                ),
                                 actionsPadding: EdgeInsets.symmetric(
                                     horizontal: 16.0),
                                 buttonPadding: EdgeInsets.all(0),
@@ -543,7 +527,8 @@ class _ProfileState extends State<Profile> {
                                             }
                                           },
                                           child: Text(
-                                            locale.languageCode=="en"?"Yes":locale.languageCode=="ru"?"Да":"Иә",),
+                                            locale.languageCode=="en"?"Yes":locale.languageCode=="ru"?"Да":"Иә",
+                                          style: TextStyle(color: Colors.white),),
                                         ),
                                       ],
                                     ),
@@ -556,6 +541,7 @@ class _ProfileState extends State<Profile> {
                         child: Text(
                           AppLocalizations.of(context)!.logout,
                           style: TextStyle(
+                            color: Colors.white,
                               fontSize: 16.0,),
                         ),
                       ),

@@ -20,6 +20,7 @@ class _ProfileCardState extends State<ProfileCard> {
   late DatabaseReference _databaseReference;
   bool _isLoading = true;
   String name = '';
+  String email = '';
   int userPoints = 0;
   String rank = '';
   String language = '';
@@ -54,12 +55,13 @@ class _ProfileCardState extends State<ProfileCard> {
         if (mounted) {
           setState(() {
             name = userData['Username'] ?? '';
+            email = userData['email'] ?? '';
             userPoints = userData['points'] ?? 0;
             rank = userData['rank'] ?? '';
             language = userData['language'] ?? '';
             _isLoading = false;
           });
-          print("$name+$userPoints+$rank+$language+${widget.nickname}");
+          print("$name+$userPoints+$rank+$language+${widget.nickname}+$email");
         }
       } else {
         // Handle the case where the user with the specified nickname is not found.
@@ -115,17 +117,62 @@ class _ProfileCardState extends State<ProfileCard> {
                   children: <Widget>[
                     _titleText("${AppLocalizations.of(context)!.information}:"),
                     SizedBox(height: 4,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: <Widget>[
-                        _buildInfoCard(
-                          Icons.local_fire_department_rounded,
-                          "$userPoints",
+
+                    Card(
+                    child: Container(
+                        decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.37,
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.local_fire_department_rounded,
+                                color: Colors.amber,
+                              ),
+                              title: Text(
+                                '$userPoints',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                      ),
+                        Card(
+                          child: Container(
+
+                            decoration: BoxDecoration(
+
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width ,
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.email,
+                                color: Colors.amber,
+                              ),
+                              title: Text(
+                                "$email",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        _buildInfoCard(
-                          Icons.language,
-                          "$language",
-                        ),
+
+
+
+
+
                       ],
                     ),
                   ],
@@ -139,30 +186,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   }
 
-  Widget _buildInfoCard(IconData icon, String text) {
-    return Card(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        height: 50,
-        width: MediaQuery.of(context).size.width * 0.37,
-        child: ListTile(
-          leading: Icon(
-            icon,
-            color: Colors.amber,
-          ),
-          title: Text(
-            text,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+
 
   String _getRankImage() {
     if (userPoints >= 900) {

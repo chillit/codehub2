@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed:
                         (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage(setLocale: widget.setLocale,)));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CreateUser(setLocale: widget.setLocale, language: 'igcse',)));
                     },
                     child: Text(AppLocalizations.of(context)!.getstarted,
                       style: TextStyle(

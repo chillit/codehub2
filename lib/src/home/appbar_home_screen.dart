@@ -60,13 +60,7 @@ class _AppBarHomeScreenState extends State<AppBarHomeScreen> {
         Container():
     AppBar(
       backgroundColor: Colors.white,
-      leading: IconButton(
-        padding: const EdgeInsets.only(left: 16),
-        icon: Image.asset(image),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
+      automaticallyImplyLeading: false,
       elevation: 3,
       actions: <Widget>[
         Row(
