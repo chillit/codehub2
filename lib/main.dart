@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale("en");
+  Locale _locale = Locale("kz");
   String getFontFamily() {
     return _locale.languageCode == 'en' ? 'en' : 'kz';
   }
@@ -62,9 +62,9 @@ class _MyAppState extends State<MyApp> {
         AppLocalizations.delegate,
       ],
 
-      title: "Code-Hub",
+      title: "Tarihnama",
       theme: ThemeData(primaryColor: Colors.white,
-      fontFamily: getFontFamily()
+      fontFamily: "kz"
       ),
       home: AuthChecker(setLocale: setLocale,),
     );

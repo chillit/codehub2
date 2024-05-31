@@ -29,9 +29,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void pree(component){
     print(component);
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Home(currScreen: choose(component: component,setLocale: widget.setLocale,), setLocale: widget.setLocale,)));
-  }
+    if(component == '1')
+      {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => Home(currScreen: choose(component: component,setLocale: widget.setLocale,), setLocale: widget.setLocale,)));
+      }
+    else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => Home(currScreen: choosef(component: component,setLocale: widget.setLocale,), setLocale: widget.setLocale,)));
+    }
+    }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,10 +53,80 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/1.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
+                  SquareImageTextWidgetIM(imageUrl: 'assets/images/kz/FlagF.png',text: "1906-1945 жж",language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
                   SizedBox(width: 20,),
-                  SquareImageTextWidget(imageUrl: 'assets/images/exams/comps/2.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
+                  SquareImageTextWidgetIM(imageUrl: 'assets/images/kz/FlagS.png',text: "1946-2017 жж",language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
                 ],),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+class choosef extends StatefulWidget {
+  final String component;
+  final Function(Locale) setLocale; // Add this line
+  choosef({required this.component, required this.setLocale});
+
+  @override
+  _choosefState createState() => _choosefState();
+}
+
+class _choosefState extends State<choosef> {
+  void pree(topic){
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale, currScreen: qHomeScreen(setLocale: widget.setLocale, topic: topic, component: widget.component,),)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              SizedBox(height: 40,),
+              Text("Тақырыпты таңданыз...",
+                style: TextStyle(
+
+                  fontSize: 32,
+                  color: Colors.black54,
+                ),),
+              SizedBox(height: 30,),
+
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "XX ғ. БАСЫ",language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
+                      SizedBox(width: 20,),
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "КЕҢЕС БИЛІГІ", language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
+                    ],),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ТОТА-ЫҚ ЖҮЙЕ",language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
+                      SizedBox(width: 20,),
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "КЕҢЕСТІК БІЛІМ",language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
+                    ],),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "КЕҢЕСТІК ҒЫЛЫМ",language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
+                      SizedBox(width: 20,),
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ҰОС ЖЫЛДАРЫ",language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
+                    ],),
+                ],
+              ),
+              SizedBox(height: 40,),
             ],
           ),
         ),
@@ -82,7 +159,7 @@ class _chooseState extends State<choose> {
             children: [
 
               SizedBox(height: 40,),
-              Text(AppLocalizations.of(context)!.chstopic,
+              Text("Тақырыпты таңданыз...",
                 style: TextStyle(
 
                   fontSize: 32,
@@ -95,25 +172,25 @@ class _chooseState extends State<choose> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/1.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ҰОС кейінгі жылдар",language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/2.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ЖЫЛЫМЫҚ", language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5)
                     ],),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/3.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ТОҚЫРАУ",language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/4.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "КЕҢЕСТІК УАҚЫТЫ",language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("3");},height: 5)
                     ],),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/5.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ҚАЙТА ЖАҢҒЫРУ",language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("4");},height: 5),
                       SizedBox(width: 20,),
-                      SquareImageTextWidget(imageUrl: 'assets/images/exams/topics/6.png',text: AppLocalizations.of(context)!.topic,language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
+                      SquareImageTextWidget(imageUrl: 'assets/images/kz/kozi.png',text: "ҚР ДАМУЫ",language: 'topic', bg: Color(0xFFFFFFFF),press: (){pree("5");},height: 5)
                     ],),
                 ],
               ),
@@ -297,7 +374,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
                       CircleAvatarIndicator(Color(0xFF808080),"assets/images/mark.png"):userLevel>1?
                       CircleAvatarIndicator(Color(0xFFFFFF00),"assets/images/mark.png"):
                       CircleAvatarIndicator(Color(0xFF55acf3),
-                          "assets/images/home_screen/lesson_egg.png"),
+                          "assets/images/kz/TN.png"),
                     ),
                     const SizedBox(height: 30),
                     Row(
@@ -316,7 +393,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
                               userLevel<2?CircleAvatarIndicator(Color(0xFF808080),"assets/images/lock.png"):userLevel>2?
                               CircleAvatarIndicator(Color(0xFFFFFF00),"assets/images/mark.png"):
                               CircleAvatarIndicator(Color(0xFF55acf3),
-                                  "assets/images/home_screen/lesson_dialog.png"),
+                                  "assets/images/kz/TN.png"),
 
                             ],
                           ),
@@ -337,7 +414,7 @@ class _qHomeScreenState extends State<qHomeScreen> {
                               userLevel<3?CircleAvatarIndicator(Color(0xFF808080),"assets/images/lock.png"):userLevel>3?
                               CircleAvatarIndicator(Color(0xFFFFFF00),"assets/images/mark.png"):
                               CircleAvatarIndicator(Color(0xFF55acf3),
-                                  "assets/images/home_screen/lesson_airplane.png"),
+                                  "assets/images/kz/TN.png"),
                             ],
                           ),
                         ),

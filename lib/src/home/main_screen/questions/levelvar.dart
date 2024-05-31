@@ -143,14 +143,14 @@ class _YourPageState extends State<YourPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Color.fromRGBO(126,74,59, 1),size: 32),
+        iconTheme: IconThemeData(color: Colors.black54,size: 32),
         flexibleSpace: Center(
         child: Image.asset(
-        'assets/images/Small_Logo.png',
-        height: MediaQuery.of(context).size.width, // Adjust the height as needed
-        width: MediaQuery.of(context).size.width, // Use the full width of the screen
+        'assets/images/kz/tarihnama.png',
+          height: 70,width: 150, // Use the full width of the screen
     ),
     ),),
       body: dataList.isEmpty
@@ -166,8 +166,8 @@ class _YourPageState extends State<YourPage> {
                 _filterSearchResults(value);
               },
               decoration: InputDecoration(
-                labelText: "${AppLocalizations.of(context)!.searchbyt}",
-                hintText: "${AppLocalizations.of(context)!.searchbyt}",
+                labelText: "мұғалімді іздеу",
+                hintText: "мұғалімді іздеу",
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -180,8 +180,8 @@ class _YourPageState extends State<YourPage> {
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('${AppLocalizations.of(context)!.teacher}: ${filteredList[index]['teacher']}'),
-                  subtitle: Text('${AppLocalizations.of(context)!.date}: ${filteredList[index]['date']}'),
+                  title: Text('мұғалім: ${filteredList[index]['teacher']}'),
+                  subtitle: Text('Күн: ${filteredList[index]['date']}'),
                   trailing: _auth.currentUser?.uid == filteredList[index]['userId']
                   ?IconButton(
                       onPressed: (){print(filteredList[index]["userId"]);_deleteData(filteredList[index]['userId']);},

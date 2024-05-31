@@ -29,7 +29,7 @@ class _ResultScreenState extends State<ResultScreen> {
         actions: [
           IconButton(onPressed: (){
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale,)));
-          }, icon: Icon(Icons.close_sharp,color: Colors.black,))
+          }, icon: Icon(Icons.close_sharp,color: Colors.black,size: 23,))
         ],
       ),
       body: Center(
@@ -58,17 +58,17 @@ class _ResultScreenState extends State<ResultScreen> {
                 child: Image.asset('assets/images/Trophy.gif')),
               SizedBox(height: 10),
               Text(
-                '${AppLocalizations.of(context)!.cong}',
+                'Құттықтаймыз',
                 style: TextStyle( fontSize: 23),
               ),
               SizedBox(height: 20),
               Text(
-                '${AppLocalizations.of(context)!.proscore}: ${(widget.score / widget.len * 100).round()}%',
+                'Нәтиже: ${(widget.score / widget.len * 100).round()}%',
                 style: const TextStyle(fontSize: 37,color: Colors.green),
               ),
               SizedBox(height: 24,),
               Text(
-                '${AppLocalizations.of(context)!.lvlcomp}'
+                'Деңгей сәтті өттілді.}'
                   ,style: TextStyle(
                   fontSize: 18,
               ),

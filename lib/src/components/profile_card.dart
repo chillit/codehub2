@@ -113,7 +113,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    _titleText("${AppLocalizations.of(context)!.information}:"),
+                    _titleText("Мәлімет:"),
                     SizedBox(height: 4,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -122,10 +122,7 @@ class _ProfileCardState extends State<ProfileCard> {
                           Icons.local_fire_department_rounded,
                           "$userPoints",
                         ),
-                        _buildInfoCard(
-                          Icons.language,
-                          "$language",
-                        ),
+
                       ],
                     ),
                   ],

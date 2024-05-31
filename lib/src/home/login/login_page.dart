@@ -38,13 +38,13 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/LOGO_MAIN.png',height: 150,width: MediaQuery.of(context).size.width,),],
+                    Image.asset('assets/images/kz/tarihnama.png',height: 150,width: MediaQuery.of(context).size.width,),],
                 ),
 
                 Image.asset('assets/images/Backend.gif',height: 280,width: 500,),
                 SizedBox(height: 20,),
 
-                Text(AppLocalizations.of(context)!.descrip,
+                Text("Қазақстан тарихты меңгеруде үшін тегін, жеңіл және қолайлы жол!",
                 style: TextStyle(
 
                   fontWeight: FontWeight.bold,
@@ -69,9 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed:
                         (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage(setLocale: widget.setLocale,)));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CreateUser(setLocale: widget.setLocale, language: 'igcse',)));
                     },
-                    child: Text(AppLocalizations.of(context)!.getstarted,
+                    child: Text("БАСТАУ",
                       style: TextStyle(
                         fontSize: 13,
                         color: Color.fromRGBO(221,196,173, 1),
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                         (){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogINaccount(setLocale: widget.setLocale),));
                     },
-                    child: Text(AppLocalizations.of(context)!.haveacc.toUpperCase(),style:
+                    child: Text("АККАУНТКЕ КІРУ",style:
                     TextStyle(
                       fontSize: 13,
                       color: Color.fromRGBO(221,196,173, 1),

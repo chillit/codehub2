@@ -98,20 +98,9 @@ class _RankingState extends State<Ranking> {
   }
 
   String getOrdinalSuffix(int number) {
-    if (number % 100 >= 11 && number % 100 <= 13) {
-      return '$number' + 'th';
-    } else {
-      switch (number % 10) {
-        case 1:
-          return '$number' + 'st';
-        case 2:
-          return '$number' + 'nd';
-        case 3:
-          return '$number' + 'rd';
-        default:
-          return '$number' + 'th';
-      }
-    }
+
+      return '$number' + '-ші';
+
   }
 
 
@@ -120,7 +109,7 @@ class _RankingState extends State<Ranking> {
 
   Widget build(BuildContext context) {
 
-    String pointsProfile = rankNumber != null ? getOrdinalSuffix(rankNumber) : '';
+    String pointsProfile = getOrdinalSuffix(rankNumber);
     return Scaffold(
       body: _isLoading?
         Center(child: CircularProgressIndicator(),):
@@ -135,7 +124,7 @@ class _RankingState extends State<Ranking> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(AppLocalizations.of(context)!.leaderboard,style: TextStyle(fontSize: 17),),
+                        Text("Лидердік кесте",style: TextStyle(fontSize: 17,fontFamily: "kz"),),
 
                       ],
                     ),
@@ -165,7 +154,7 @@ class _RankingState extends State<Ranking> {
 
                               Expanded(
                                 child: Text(
-                                  "$userPoints pts",
+                                  "$userPoints балл",
                                   style: TextStyle( fontSize: 25),
                                   textAlign: TextAlign.center,
                                 ),

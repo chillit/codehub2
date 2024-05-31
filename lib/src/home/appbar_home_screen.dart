@@ -59,20 +59,16 @@ class _AppBarHomeScreenState extends State<AppBarHomeScreen> {
     return isLoading?
         Container():
     AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
-      leading: IconButton(
-        padding: const EdgeInsets.only(left: 16),
-        icon: Image.asset(image),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
+
       elevation: 3,
       actions: <Widget>[
         Row(
+
           children: <Widget> [
 
-            Image.asset('assets/images/Small_Logo.png',height: 70,width: 150,),
+            Image.asset('assets/images/kz/tarihnama.png',height: 70,width: 150,),
             SizedBox(width: 50,),
 
             Image.asset(

@@ -48,7 +48,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                     },
                     child: Container(
                         padding: EdgeInsetsDirectional.only(start: 30),
-                        child: Image.asset('assets/images/Small_Logo.png',height: 70,width: 150,)),
+                        child: Image.asset('assets/images/kz/tarihnama.png',height: 60,width: 150,)),
                   ),
                 ],
               ),
@@ -124,8 +124,70 @@ class SquareImageTextWidget extends StatelessWidget {
           children: [
             Image.asset(
               imageUrl,
-              width: containerSize * 0.4,
+              width: containerSize * 0.6,
               height: containerSize * 0.4,
+              fit: BoxFit.fill,
+            ),
+            SizedBox(height: 10), // Space between image and text
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: containerSize * 0.1, // Adjust this factor as needed
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+class SquareImageTextWidgetIM extends StatelessWidget {
+  const SquareImageTextWidgetIM({
+    Key? key,
+    required this.imageUrl,
+    required this.text,
+    required this.language,
+    this.bg = const Color.fromRGBO(191, 153, 130, 0.3),
+    required this.press,
+    this.height = 1.8,
+  }) : super(key: key);
+  final void Function() press;
+  final String imageUrl;
+  final String text;
+  final String language;
+  final Color bg;
+  final double? height;
+  @override
+  Widget build(BuildContext context) {
+    // Get the screen dimensions
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+
+    double containerSize = screenWidth * 0.45;
+
+    return GestureDetector(
+      onTap: () {
+        press();
+      },
+      child: Container(
+        width: containerSize,
+        height: screenHeight/height!,
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: Color.fromRGBO(126, 74, 59, 1),
+            width: 1.5,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imageUrl,
+              width: containerSize * 0.8,
+              height: containerSize * 0.8,
               fit: BoxFit.fitHeight,
             ),
             SizedBox(height: 10), // Space between image and text
@@ -155,7 +217,7 @@ class CreateUser extends StatefulWidget {
 
 class _CreateUserState extends State<CreateUser> {
 
-  Locale _locale = Locale("en");
+  Locale _locale = Locale("kz");
   String getFontFamily() {
     return _locale.languageCode == 'en' ? 'en' : 'kz';
   }
@@ -275,7 +337,7 @@ class _CreateUserState extends State<CreateUser> {
           dialogType: DialogType.success,
           animType: AnimType.topSlide,
           showCloseIcon:false,
-          title: AppLocalizations.of(context)!.createdacc,
+          title: "Сіз сәтті аккаунт жасадыңыз!",
           btnOkOnPress: (){
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale,)));
           },
@@ -291,8 +353,8 @@ class _CreateUserState extends State<CreateUser> {
           dialogType: DialogType.error,
           animType: AnimType.topSlide,
           showCloseIcon:false,
-          title:AppLocalizations.of(context)!.oshibka,
-          desc: AppLocalizations.of(context)!.checkcreate,
+          title:"Бірдеңе дұрыс емес болып кетті :(",
+          desc: "Мәліметтерді дұрыс енгізгеніңізді тексеріңіз",
       ).show();
       print('Ошибка отправки данных в Firebase: $e');
     }
@@ -335,7 +397,7 @@ class _CreateUserState extends State<CreateUser> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppLocalizations.of(context)!.createacc,style: TextStyle(fontSize: 25),),
+                  Text("Аккаунт жасау",style: TextStyle(fontSize: 25),),
                 ],
               ),
               Column(
@@ -346,7 +408,7 @@ class _CreateUserState extends State<CreateUser> {
                     children: [
                       Padding(
                         padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/10),
-                        child: Text(AppLocalizations.of(context)!.username,style: TextStyle(
+                        child: Text("Пайдаланушы аты",style: TextStyle(
                           fontSize: 15,
                         ),),
                       ),
@@ -444,7 +506,7 @@ class _CreateUserState extends State<CreateUser> {
                     children: [
                       Padding(
                         padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/10,),
-                        child: Text(AppLocalizations.of(context)!.password,style: TextStyle(
+                        child: Text("Құпия сөз",style: TextStyle(
                           fontSize: 15,
 
                         ),),
@@ -509,7 +571,7 @@ class _CreateUserState extends State<CreateUser> {
                             (){
                                sendDataToFirebaseStudent();
                         },
-                        child: Text(AppLocalizations.of(context)!.createaccb,style: TextStyle(
+                        child: Text("АККАУНТТЫ ЖАСАУ",style: TextStyle(
 
                           fontSize: 18
                         ),),
@@ -537,7 +599,7 @@ class _CreateUserState extends State<CreateUser> {
                       Expanded(
                         child: Center(
                           child: Text(
-                            AppLocalizations.of(context)!.or,
+                            "НЕМЕСЕ",
                             style: TextStyle(color: Colors.grey[700],
 
                                 fontSize: 17,
@@ -560,10 +622,10 @@ class _CreateUserState extends State<CreateUser> {
 
               ),
               children: <TextSpan>[
-                TextSpan(text: AppLocalizations.of(context)!.haveacc,style: TextStyle(fontFamily: _locale.languageCode)),
+                TextSpan(text: "Аккаунты бар ма?     ",style: TextStyle(fontFamily: _locale.languageCode)),
                 TextSpan(
-                    text: AppLocalizations.of(context)!.log_inb,
-                    style: TextStyle(color: Color.fromRGBO	(160,82,45,1),),
+                    text: "КІРУ",
+                    style: TextStyle(color: Color.fromRGBO	(160,82,45,1), fontFamily: _locale.languageCode),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogINaccount(setLocale: widget.setLocale)));
@@ -671,14 +733,14 @@ class _LogINaccountState extends State<LogINaccount> {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         SnackBarService.showSnackBar(
           context,
-          'Wrong email or password. Try again',
+          'Эл.поштасы немесе құпия сөз дұрыс емес',
           true,
         );
         return;
       } else {
         SnackBarService.showSnackBar(
           context,
-          'Wrong email or password. Try again',
+          'Эл.поштасы немесе құпия сөз дұрыс емес',
           true,
         );
         return;
@@ -723,7 +785,7 @@ class _LogINaccountState extends State<LogINaccount> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppLocalizations.of(context)!.log_in,style: TextStyle(fontSize: 25),),
+                  Text("Кіру",style: TextStyle(fontSize: 25),),
                 ],
               ),
               Column(
@@ -785,7 +847,7 @@ class _LogINaccountState extends State<LogINaccount> {
                     children: [
                       Padding(
                         padding:  EdgeInsetsDirectional.only(start: MediaQuery.of(context).size.width/10,),
-                        child: Text(AppLocalizations.of(context)!.password,style: TextStyle(
+                        child: Text("Құпия сөз",style: TextStyle(
                           fontSize: 15,
 
                         ),),
@@ -803,7 +865,7 @@ class _LogINaccountState extends State<LogINaccount> {
                           obscureText: _obscurePassword,
                           validator: (value)=>
                           value !=null && value.length<6
-                              ? 'Write correct password!!'
+                              ? 'ДҰрыс құпия сөзді жазу керек!!'
                               : null,
                           decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
@@ -850,7 +912,7 @@ class _LogINaccountState extends State<LogINaccount> {
                             (){
                           login();
                         },
-                        child: Text(AppLocalizations.of(context)!.log_inb,style: TextStyle(
+                        child: Text("КІРУ",style: TextStyle(
 
                             fontSize: 18
                         ),),
@@ -878,7 +940,7 @@ class _LogINaccountState extends State<LogINaccount> {
                       Expanded(
                         child: Center(
                           child: Text(
-                            AppLocalizations.of(context)!.or,
+                            "НЕМЕСЕ",
                             style: TextStyle(color: Colors.grey[700],
 
                               fontSize: 17,
@@ -898,45 +960,22 @@ class _LogINaccountState extends State<LogINaccount> {
                   RichText(
                     text: TextSpan(
                       children: <TextSpan>[
-                        TextSpan(text: AppLocalizations.of(context)!.dontacc),
+                        TextSpan(text: "Сізде аккаунт жоқ па?    ",style: TextStyle(
+                          color: Colors.black54
+                        )),
+
                         TextSpan(
-                            text: AppLocalizations.of(context)!.sign_inb,
-                            style: TextStyle(color: Color.fromRGBO	(160,82,45,1)),
+                            text: "ТІРКЕЛУ",
+                            style: TextStyle(color: Color.fromRGBO	(160,82,45,1),),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseLanguage(setLocale: widget.setLocale,)));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CreateUser(setLocale: widget.setLocale, language: 'igcse',)));
                               }),
                       ],
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: Text(
-                        AppLocalizations.of(context)!.forgot,
-                        style: TextStyle(
 
-                          fontSize: 16, // You can adjust the font size as needed
-                          color: Colors.black54, // You can adjust the text color
-                        ),
-                      ),
-                    ),
-                  ),
 
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Text(
-                        "nazarakanov@gmail.com",
-                        style: TextStyle(
-                          fontSize: 16, // You can adjust the font size as needed
-                          color: Colors.black54, // You can adjust the text color
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               )
             ],

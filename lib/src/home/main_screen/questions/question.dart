@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:duolingo/src/home/main_screen/home_screen_ent.dart';
+import 'package:translator/translator.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:duolingo/src/home/main_screen/home.dart';
 import 'package:duolingo/src/home/main_screen/home_screen.dart';
@@ -43,12 +44,12 @@ class _VideoScreenState extends State<VideoScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 10,),
-                Text(AppLocalizations.of(context)!.surequit,style: TextStyle(
+                Text('Шығу керек пе?',style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),),
                 SizedBox(height: 10,),
-                Text(AppLocalizations.of(context)!.lostprgrs,style: TextStyle(
+                Text("Барлық жасалу кетеді",style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey
                 ),),
@@ -64,7 +65,7 @@ class _VideoScreenState extends State<VideoScreen> {
                         (){
                       Navigator.of(context).pop();
                     },
-                    child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
+                    child: Text("ҚАЛУ",style: TextStyle(
 
                         fontSize: 16
                     ),),
@@ -89,7 +90,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     );
                   },
                   child: Text(
-                      AppLocalizations.of(context)!.quitb,
+                      "ШЫҒУ",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -198,7 +199,7 @@ class _VideoScreenState extends State<VideoScreen> {
                   onPressedContinueButton();
                 },
                 child: Text(
-                  AppLocalizations.of(context)!.continuee,
+                  "жалғастыру",
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -325,12 +326,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 10,),
-                  Text(AppLocalizations.of(context)!.surequit,style: TextStyle(
+                  Text("Шығу керек пе?",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
                   SizedBox(height: 10,),
-                  Text(AppLocalizations.of(context)!.lostprgrs,style: TextStyle(
+                  Text("Барлық жасалу кетеді",style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey
                   ),),
@@ -346,8 +347,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           (){
                             Navigator.of(context).pop();
                       },
-                      child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
-
+                      child: Text("ҚАЛУ",style: TextStyle(
                           fontSize: 16
                       ),),
                       style: ElevatedButton.styleFrom(
@@ -370,7 +370,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       );
                     },
                     child: Text(
-                        AppLocalizations.of(context)!.quitb,
+                        "ШЫҒУ",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -547,7 +547,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
       enableDrag: false,// Запрещаем закрытие при нажатии вне окна
       builder: (BuildContext context) {
         return !isCorrect?Container(
-          height: 150,
+          height: 170,
           color: Colors.red[300]?.withOpacity(0.45),
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -555,7 +555,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!.corrsol,
+                "Дұрыс жауап: ",
                 style: TextStyle(fontSize: 20.0, color: Colors.red),
               ),
               SizedBox(height: 12.0),
@@ -594,7 +594,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text("ЖАЛҒАСТЫРУ",style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -602,7 +602,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
         )
             :
         Container(
-          height: 120,
+          height: 130,
           color: Colors.green[400]?.withOpacity(0.45),
           padding: EdgeInsets.only(left: 16,right: 16,top: 16),
           child: Column(
@@ -632,7 +632,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text("ЖАЛҒАСТЫРУ",style: TextStyle(fontSize: 15,color: Colors.white),)
                 ),
               ),
             ],
@@ -646,11 +646,11 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
   @override
   Widget build(BuildContext context) {
     congratulatoryMessages = [
-      AppLocalizations.of(context)!.gj,
-      AppLocalizations.of(context)!.great,
-      AppLocalizations.of(context)!.wd,
-      AppLocalizations.of(context)!.fantastic,
-      AppLocalizations.of(context)!.awesome
+      "Жақсы істеу!",
+      "Қайырлы!",
+      "Өте жақсы!",
+      "Керемет!",
+      "Асқан!"
     ];
     return Expanded(
       child: Column(
@@ -685,7 +685,6 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                       SizedBox(height: isSelected? 25: 20,),
                       Expanded(
                         child: Text(
-
                           option,
                           textAlign: TextAlign.center, // Выравниваем текст по центру
                           style: TextStyle(
@@ -721,7 +720,8 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                   onPressed: selectedOptionIndex != null ? () {
                     checkAnswer();
                   }: null,
-                  child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
+                  child: Text("ТЕКСЕРУ",style: TextStyle(
+                    color: Colors.white,
 
                     fontSize: 15
                   ),),
@@ -860,7 +860,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
       enableDrag: false,// Запрещаем закрытие при нажатии вне окна
       builder: (BuildContext context) {
         return !isCorrect?Container(
-          height: 150,
+          height: 170,
           color: Colors.red[300]?.withOpacity(0.45),
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -868,7 +868,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!.corrsol,
+                "Дұрыс жауап:",
                 style: TextStyle(fontSize: 20.0, color: Colors.red),
               ),
               SizedBox(height: 12.0),
@@ -903,7 +903,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text("ЖАЛҒАСТЫРУ",style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -938,7 +938,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text("ЖАЛҒАСТЫРУ",style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -952,11 +952,11 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
   @override
   Widget build(BuildContext context) {
     congratulatoryMessages = [
-      AppLocalizations.of(context)!.gj,
-      AppLocalizations.of(context)!.great,
-      AppLocalizations.of(context)!.wd,
-      AppLocalizations.of(context)!.fantastic,
-      AppLocalizations.of(context)!.awesome
+      "Жақсы істеу!",
+      "Қайырлы!",
+      "Өте жақсы!",
+      "Керемет!",
+      "Асқан!"
     ];
     return Expanded(
       child: SingleChildScrollView(
@@ -981,7 +981,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                 ),
                 controller: answerController,
                 decoration: InputDecoration(
-                    hintText:AppLocalizations.of(context)!.wiritesol ,
+                    hintText:"Сіздің жауабыңызды осы жерге жазыңыз" ,
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -1007,7 +1007,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     borderRadius: BorderRadius.circular(17.0),
                   ),
                 ),
-                child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
+                child: Text("ТЕКСЕРУ",style: TextStyle(color: Colors.white,
 
                     fontSize: 15
                       ),),
@@ -1079,6 +1079,33 @@ class TextScreen extends StatefulWidget {
 }
 
 class _TextScreenState extends State<TextScreen> {
+  void _showTranslation(String word) async {
+    try {
+      // The translate method returns a Future<Translation> so we await it
+      final translation = await word.translate(from: 'kk', to: 'ru');
+
+      // Use the translated text
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Аудармасы'),
+            content: Text("${word} : ${translation.text}"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Handle any errors here
+      print(e);
+    }
+  }
+
   void _showConfirmation(){
     showModalBottomSheet(
         context: context,
@@ -1092,12 +1119,12 @@ class _TextScreenState extends State<TextScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 10,),
-                Text(AppLocalizations.of(context)!.surequit,style: TextStyle(
-                  fontSize: 20,
+                Text("Сіз шыққыңыз келетініне сенімдісіз бе?",style: TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),),
                 SizedBox(height: 10,),
-                Text(AppLocalizations.of(context)!.lostprgrs,style: TextStyle(
+                Text("Барлық жасалу кетеді",style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey
                 ),),
@@ -1113,7 +1140,7 @@ class _TextScreenState extends State<TextScreen> {
                         (){
                       Navigator.of(context).pop();
                     },
-                    child: Text(AppLocalizations.of(context)!.stayb,style: TextStyle(
+                    child: Text("ҚАЛУ",style: TextStyle(
 
                         fontSize: 16
                     ),),
@@ -1137,7 +1164,7 @@ class _TextScreenState extends State<TextScreen> {
                     );
                   },
                   child: Text(
-                      AppLocalizations.of(context)!.quitb,
+                      "ШЫҒУ",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -1155,6 +1182,7 @@ class _TextScreenState extends State<TextScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final words = widget.text.split(' ');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -1193,7 +1221,12 @@ class _TextScreenState extends State<TextScreen> {
                         width: 1.0, // Ширина границы
                       ),
                     ),
-                    child: Text(widget.text),
+                    child: Wrap(
+                      children: words.map((word) => GestureDetector(
+                        onTap: () => _showTranslation(word),
+                        child: Text("$word ", style: TextStyle()), // Highlight words for demonstration
+                      )).toList(),
+                    ),
                   ),
                 ],
               ),
@@ -1231,8 +1264,9 @@ class _TextScreenState extends State<TextScreen> {
                   );
                 },
                 child: Text(
-                  AppLocalizations.of(context)!.continuee,
+                  "ЖАЛҒАСТЫРУ",
                   style: TextStyle(
+                    color: Colors.white,
 
                     fontSize: 15,
                   ),
@@ -1246,4 +1280,7 @@ class _TextScreenState extends State<TextScreen> {
   }
 
 }
+
+
+
 

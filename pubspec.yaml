@@ -23,7 +23,7 @@ dependencies:
   firebase_core: any
   firebase_database: ^10.2.3
   firebase_auth: ^4.4.2
-  cloud_firestore: any
+  cloud_firestore:
   cloud_functions: ^4.3.3
   email_validator:
   awesome_dialog: ^3.1.0
@@ -32,6 +32,7 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   just_audio: ^0.9.32
   audioplayers:
+  translator:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -127,6 +128,17 @@ flutter:
   - assets/images/exams/topics/4.png
   - assets/images/exams/topics/5.png
   - assets/images/exams/topics/6.png
+  - assets/images/kz/profile_kz.png
+  - assets/images/kz/shit.png
+  - assets/images/kz/book.png
+  - assets/images/kz/FlagF.png
+  - assets/images/kz/FlagS.png
+  - assets/images/kz/profile_kzBez.png
+  - assets/images/kz/shitBez.png
+  - assets/images/kz/knigaBez.png
+  - assets/images/kz/kozi.png
+  - assets/images/kz/tarihnama.png
+  - assets/images/kz/TN.png
   
   
   #  - images/a_dot_ham.jpeg

@@ -300,14 +300,8 @@ class _ProfileState extends State<Profile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(onPressed: (){
-                      _showResultDialog();
-                    }, icon: Icon(Icons.language,color: Colors.grey,))
-                  ],
-                ),
+                SizedBox(height: 20,),
+
 
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -355,7 +349,7 @@ class _ProfileState extends State<Profile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: 10,),
-                    _titleText("${AppLocalizations.of(context)!.information}:"),
+                    _titleText("Мәлімет:"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -365,47 +359,39 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             height: 50,
-                            width: MediaQuery.of(context).size.width * 0.40,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: ListTile(
-                                leading: Icon(
-                                  Icons.local_fire_department_rounded,
-                                  color: Colors.amber,
-                                ),
-                                title: Text(
-                                  "$userPoints",
-                                  style: TextStyle(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.local_fire_department_rounded,
+                                    color: Colors.amber,
+                                  ),
+                                  SizedBox(width: 10), // Adjust spacing between icon and text
+                                  Text(
+                                    "$userPoints",
+                                    style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
-                          ),
-                        ),
-                        Card(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.40,
-                            child: ListTile(
-                                leading: Icon(
-                                  Icons.language,
-                                  color: Colors.amber,
-                                ),
-                                title: Text(
-                                  language == "CS" ? "C#" : "$language",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
                           ),
                         ),
+
+
+
                       ],
                     ),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _titleText(AppLocalizations.of(context)!.lastmis),
+                        _titleText("Соңғы қателер"),
                         Container(
                           height: 40,
                           decoration: BoxDecoration(
@@ -417,7 +403,7 @@ class _ProfileState extends State<Profile> {
                               onPressed: () {
                                 getPythonQuestions();
                               },
-                              child: Text(AppLocalizations.of(context)!.trainb,
+                              child: Text("ҚАЙТАЛАУ",
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.orange),)),
@@ -433,7 +419,7 @@ class _ProfileState extends State<Profile> {
                           if (recentMistakes.isEmpty) {
                             // Display the message when the list is empty
                             return ListTile(
-                              title: Text(AppLocalizations.of(context)!.noMistakesMessage),
+                              title: Text("Сізде соңғы қателер жоқ :)"),
                             );
                           } else {
                             // Check if the index is within the range of the recentMistakes list
@@ -464,7 +450,7 @@ class _ProfileState extends State<Profile> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(7, 0, 7, 0),
                           child: Text(
-                            AppLocalizations.of(context)!.dangerz,
+                            "Қауіпті бөлге",
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -498,9 +484,11 @@ class _ProfileState extends State<Profile> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text(
-                                  locale.languageCode=="en"?"Log Out":locale.languageCode=="ru"?"Выйти":"Шығу",),
+
+                                  "Шығу",
+                                ),
                                 content: Text(
-                                  locale.languageCode=="en"?"Are you sure you want to exit?":locale.languageCode=="ru"?"Вы уверены, что хотите выйти?":"Сіз шыққыңыз келетініне сенімдісіз бе?",
+                                  "Сіз шыққыңыз келетініне сенімдісіз бе?",
                                   ),
                                 actionsPadding: EdgeInsets.symmetric(
                                     horizontal: 16.0),
@@ -516,7 +504,7 @@ class _ProfileState extends State<Profile> {
                                             Navigator.of(context).pop();
                                           },
                                           child: Text(
-                                            locale.languageCode=="en"?"No":locale.languageCode=="ru"?"Нет":"Жоқ",
+                                            "Жоқ",
                                             style: TextStyle(
 
                                                 color: Colors.grey),),
@@ -531,7 +519,7 @@ class _ProfileState extends State<Profile> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => MyApp(),
+                                                builder: (context) => LoginPage(setLocale: widget.setLocale,),
                                               ),
                                             );
 
@@ -543,7 +531,8 @@ class _ProfileState extends State<Profile> {
                                             }
                                           },
                                           child: Text(
-                                            locale.languageCode=="en"?"Yes":locale.languageCode=="ru"?"Да":"Иә",),
+                                            "Иә",
+                                          style:TextStyle(color: Colors.white),),
                                         ),
                                       ],
                                     ),
@@ -554,9 +543,10 @@ class _ProfileState extends State<Profile> {
                           );
                         },
                         child: Text(
-                          AppLocalizations.of(context)!.logout,
+                          "Шығу",
                           style: TextStyle(
-                              fontSize: 16.0,),
+                              fontSize: 19.0,
+                          color: Colors.white),
                         ),
                       ),
                     ),

@@ -15,13 +15,14 @@ class Images {
 
   //BottomNavigationBar selected
   static final Image selectedLessons = Image.asset(
-      "assets/images/bottom_navigation_bar/tab_lessons_selected.png");
+      "assets/images/kz/book.png");
   static final Image selectedStories = Image.asset(
       "assets/images/bottom_navigation_bar/tab_stories_selected.png");
   static final Image selectedProfile = Image.asset(
-      "assets/images/bottom_navigation_bar/tab_profile_selected.png");
+      "assets/images/kz/profile_kz.png",
+    fit: BoxFit.cover,);
   static final Image selectedRanking = Image.asset(
-      "assets/images/bottom_navigation_bar/tab_ranking_selected.png");
+      "assets/images/kz/shit.png");
   static final Image selectedStore =
       Image.asset("assets/images/bottom_navigation_bar/tab_store_selected.png");
 }
