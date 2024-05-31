@@ -594,7 +594,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -632,7 +632,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     });
                     widget.onNextQuestion(); // Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -722,6 +722,7 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                     checkAnswer();
                   }: null,
                   child: Text(AppLocalizations.of(context)!.checkb,style: TextStyle(
+                    color: Colors.white,
 
                     fontSize: 15
                   ),),
@@ -903,7 +904,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -938,7 +939,7 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                     answerController.clear();
                     widget.onNextQuestion();// Перейти к следующему вопросу
                   },
-                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15),),
+                  child: Text(AppLocalizations.of(context)!.continueb,style: TextStyle(fontSize: 15,color: Colors.white),),
                 ),
               ),
             ],
@@ -1233,6 +1234,7 @@ class _TextScreenState extends State<TextScreen> {
                 child: Text(
                   AppLocalizations.of(context)!.continuee,
                   style: TextStyle(
+                    color: Colors.white,
 
                     fontSize: 15,
                   ),

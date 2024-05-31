@@ -32,6 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => Home(currScreen: choose(component: component,setLocale: widget.setLocale,), setLocale: widget.setLocale,)));
   }
+  void pree1(component){
+    print(component);
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => Home(currScreen: chooses(component: component,setLocale: widget.setLocale,), setLocale: widget.setLocale,)));
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,14 +47,72 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 30,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SquareImageTextWidgetIM(imageUrl: 'assets/images/kz/earthquake.png',text: AppLocalizations.of(context)!.fcomp,language: '0',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 1.5,),
-                  SizedBox(width: 20,),
-                  SquareImageTextWidgetIM(imageUrl: 'assets/images/kz/flood.png',text: AppLocalizations.of(context)!.scomp,language: '1', bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 1.5)
-                ],),
+              SizedBox(height: 15,),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SquareImageTextWidgetIM(
+                      imageUrl: 'assets/images/kz/earthquake.png',
+                      text: AppLocalizations.of(context)!.fcomp,
+                      language: '0',
+                      bg: Color(0xFFFFFFFF),
+                      press: (){ pree("0"); },
+                      height: 1.7,
+                    ),
+                    SizedBox(width: 20,),
+                    SquareImageTextWidgetIM(
+                      imageUrl: 'assets/images/kz/flood.png',
+                      text: AppLocalizations.of(context)!.scomp,
+                      language: '1',
+                      bg: Color(0xFFFFFFFF),
+                      press: (){ pree1("1"); },
+                      height: 1.7,
+                    ),
+                    SizedBox(width: 20,),
+                    SquareImageTextWidgetIM(
+                      imageUrl: 'assets/images/safety/pozhar.jpg',
+                      text: AppLocalizations.of(context)!.type,
+                      language: '1',
+                      bg: Color(0xFFFFFFFF),
+                      press: (){  },
+                      height: 1.7,
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 15,),
+              Container(width: MediaQuery.of(context).size.width,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+
+                  borderRadius: BorderRadius.circular(12.0), // Border radius
+                ),
+                child: ElevatedButton(
+                  onPressed: () {  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(126, 74, 59, 1),// Background color
+               // Text color
+                     // Shadow color
+                    elevation: 5, // Elevation
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                    ),
+                  ),
+
+
+                  child: Text(AppLocalizations.of(context)!.multiplech,style: TextStyle(fontSize: 24,color: Colors.white),),
+
+
+                ),
+
+              ),
+              SizedBox(height: 25,),
+
+
             ],
           ),
         ),
@@ -57,6 +120,71 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+class chooses extends StatefulWidget {
+  @override
+  _choosesState createState() => _choosesState();
+  final String component;
+  final Function(Locale) setLocale; // Add this line
+  chooses({required this.component, required this.setLocale});
+}
+
+class _choosesState extends State<chooses> {
+  void pree(topic){
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => Home(setLocale: widget.setLocale ,currScreen: qHomeScreen(setLocale: widget.setLocale,topic: topic,component: widget.component,),)));
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              SizedBox(height: 40,),
+              Text(AppLocalizations.of(context)!.typelink,
+                style: TextStyle(
+
+                  fontSize: 28,
+                  color: Colors.black54,
+                ),),
+              SizedBox(height: 30,),
+
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareImageTextWidgetAM(imageUrl: 'assets/images/safety/zero.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("0");},height: 5,),
+                    ],),
+                  SizedBox(height: 25,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareImageTextWidgetAM(imageUrl: 'assets/images/safety/two.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("1");},height: 5),
+                    ],),
+                  SizedBox(height: 25,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareImageTextWidgetAM(imageUrl: 'assets/images/safety/three.png',text: AppLocalizations.of(context)!.topic,language: 'topic',bg: Color(0xFFFFFFFF),press: (){pree("2");},height: 5),
+                    ],),
+                ],
+              ),
+              SizedBox(height: 40,),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 class choose extends StatefulWidget {
   @override
   _chooseState createState() => _chooseState();

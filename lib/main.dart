@@ -152,3 +152,7 @@ class _AuthCheckerState extends State<AuthChecker> {
     );
   }
 }
+
+
+
+// todo: сделай чтобы контейнер подстраивался под текст в вопросах

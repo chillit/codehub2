@@ -132,8 +132,7 @@ class _YourPageState extends State<YourPage> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => locale.languageCode == "ru"? VideoScreen(setLocale: widget.setLocale, questionss: pythonQuestions,pointsto: 50,level:0,link: video,text: updatedText,topic: widget.topic,language: widget.userLanguage,component: widget.component,)
-            : TextScreen(setLocale: widget.setLocale, questionss: pythonQuestions,pointsto: 50,level:0,text: updatedText,topic: widget.topic,language: widget.userLanguage,component: widget.component,),
+        builder: (context) => TextScreen(setLocale: widget.setLocale, questionss: pythonQuestions,pointsto: 50,level:0,text: updatedText,topic: widget.topic,language: widget.userLanguage,component: widget.component,),
       ),
     );
 
@@ -148,48 +147,47 @@ class _YourPageState extends State<YourPage> {
         iconTheme: IconThemeData(color: Color.fromRGBO(126,74,59, 1),size: 32),
         flexibleSpace: Center(
         child: Image.asset(
-        'assets/images/Small_Logo.png',
-        height: MediaQuery.of(context).size.width, // Adjust the height as needed
-        width: MediaQuery.of(context).size.width, // Use the full width of the screen
+        'assets/images/safety/safety-Appbar.png',
+        height: MediaQuery.of(context).size.width/2, // Adjust the height as needed
+        width: MediaQuery.of(context).size.width/2, // Use the full width of the screen
     ),
     ),),
       body: dataList.isEmpty
           ? Center(
         child: CircularProgressIndicator(),
       )
-          : Column(
+          : Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (value) {
-                _filterSearchResults(value);
-              },
-              decoration: InputDecoration(
-                labelText: "${AppLocalizations.of(context)!.searchbyt}",
-                hintText: "${AppLocalizations.of(context)!.searchbyt}",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('${AppLocalizations.of(context)!.teacher}: ${filteredList[index]['teacher']}'),
-                  subtitle: Text('${AppLocalizations.of(context)!.date}: ${filteredList[index]['date']}'),
-                  trailing: _auth.currentUser?.uid == filteredList[index]['userId']
-                  ?IconButton(
-                      onPressed: (){print(filteredList[index]["userId"]);_deleteData(filteredList[index]['userId']);},
-                      icon: Icon(Icons.delete)):
-                      null,
-                  onTap: (){
-                    getPythonQuestions(filteredList[index]);
-                  },
+                return Container(
+                  width: 100,
+                  height: 200,
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: Card(
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16.0),
+                      title: Center(child: Text('${filteredList[index]['teacher']}',style: TextStyle(fontSize: 32),)),
+
+                      trailing: _auth.currentUser?.uid == filteredList[index]['userId']
+                          ? IconButton(
+                          onPressed: () {
+                            print(filteredList[index]["userId"]);
+                            _deleteData(filteredList[index]['userId']);
+                          },
+                          icon: Icon(Icons.delete))
+                          : null,
+                      onTap: () {
+                        getPythonQuestions(filteredList[index]);
+                      },
+                    ),
+                  ),
                 );
               },
             ),
